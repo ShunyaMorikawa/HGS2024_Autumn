@@ -15,210 +15,210 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\billboard.cpp">
+    <ClCompile Include="code\billboard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\bullet.cpp">
+    <ClCompile Include="code\bullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\camera.cpp">
+    <ClCompile Include="code\camera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\character.cpp">
+    <ClCompile Include="code\character.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\debugproc.cpp">
+    <ClCompile Include="code\debugproc.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\effect.cpp">
+    <ClCompile Include="code\effect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\enemy.cpp">
+    <ClCompile Include="code\enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\fade.cpp">
+    <ClCompile Include="code\fade.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\field.cpp">
+    <ClCompile Include="code\field.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\game.cpp">
+    <ClCompile Include="code\game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\gauge.cpp">
+    <ClCompile Include="code\gauge.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\idxmeshfield.cpp">
+    <ClCompile Include="code\idxmeshfield.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\input.cpp">
+    <ClCompile Include="code\input.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\light.cpp">
+    <ClCompile Include="code\light.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\lockonMarker.cpp">
+    <ClCompile Include="code\lockonMarker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\main.cpp">
+    <ClCompile Include="code\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\manager.cpp">
+    <ClCompile Include="code\manager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\mapobject.cpp">
+    <ClCompile Include="code\mapobject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\model.cpp">
+    <ClCompile Include="code\model.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\motion.cpp">
+    <ClCompile Include="code\motion.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\object.cpp">
+    <ClCompile Include="code\object.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\object2D.cpp">
+    <ClCompile Include="code\object2D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\object3D.cpp">
+    <ClCompile Include="code\object3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\objectX.cpp">
+    <ClCompile Include="code\objectX.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\particle.cpp">
+    <ClCompile Include="code\particle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\player.cpp">
+    <ClCompile Include="code\player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\precompile.cpp">
+    <ClCompile Include="code\precompile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\renderer.cpp">
+    <ClCompile Include="code\renderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\sound.cpp">
+    <ClCompile Include="code\sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\texture.cpp">
+    <ClCompile Include="code\texture.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\title.cpp">
+    <ClCompile Include="code\title.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\tutorial.cpp">
+    <ClCompile Include="code\tutorial.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\useful.cpp">
+    <ClCompile Include="code\useful.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\wall.cpp">
+    <ClCompile Include="code\wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\billboard.h">
+    <ClInclude Include="code\billboard.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\bullet.h">
+    <ClInclude Include="code\bullet.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\camera.h">
+    <ClInclude Include="code\camera.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\character.h">
+    <ClInclude Include="code\character.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\debugproc.h">
+    <ClInclude Include="code\debugproc.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\effect.h">
+    <ClInclude Include="code\effect.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\enemy.h">
+    <ClInclude Include="code\enemy.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\fade.h">
+    <ClInclude Include="code\fade.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\field.h">
+    <ClInclude Include="code\field.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\game.h">
+    <ClInclude Include="code\game.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\gauge.h">
+    <ClInclude Include="code\gauge.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\idxmeshfield.h">
+    <ClInclude Include="code\idxmeshfield.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\input.h">
+    <ClInclude Include="code\input.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\light.h">
+    <ClInclude Include="code\light.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\lockonMarker.h">
+    <ClInclude Include="code\lockonMarker.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\main.h">
+    <ClInclude Include="code\main.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\manager.h">
+    <ClInclude Include="code\manager.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\mapobject.h">
+    <ClInclude Include="code\mapobject.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\model.h">
+    <ClInclude Include="code\model.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\motion.h">
+    <ClInclude Include="code\motion.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\object.h">
+    <ClInclude Include="code\object.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\object2D.h">
+    <ClInclude Include="code\object2D.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\object3D.h">
+    <ClInclude Include="code\object3D.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\objectX.h">
+    <ClInclude Include="code\objectX.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\particle.h">
+    <ClInclude Include="code\particle.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\player.h">
+    <ClInclude Include="code\player.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\precompile.h">
+    <ClInclude Include="code\precompile.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\renderer.h">
+    <ClInclude Include="code\renderer.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\sound.h">
+    <ClInclude Include="code\sound.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\texture.h">
+    <ClInclude Include="code\texture.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\title.h">
+    <ClInclude Include="code\title.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\tutorial.h">
+    <ClInclude Include="code\tutorial.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\useful.h">
+    <ClInclude Include="code\useful.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BladeKnight\00_ソースコード\BladeKnight\code\wall.h">
+    <ClInclude Include="code\wall.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
