@@ -61,41 +61,20 @@ CTitle* CTitle::Create(void)
 //=======================================
 HRESULT CTitle::Init(void)
 {
-	// カメラの情報取得
-	CCamera* pCamera = CManager::GetInstance()->GetCamera();
-
 	//テクスチャのポインタ
 	CTexture *pTexture = CManager::GetInstance()->GetTexture();
 
-	pCamera->Init();
+	// インスタンス生成
+	m_pObj2D = CObject2D::Create();
 
-	if (m_pObj2D == nullptr)
-	{
-	}
+	// 位置設定
+	m_pObj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
-	// プレイヤー生成
-	CPlayer::Create("data//FILE//player.txt");
+	// サイズ設定
+	m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	// マップオブジェクト生成
-	CMapObject::Create();
-
-	// フィールド生成
-	CField::Create();
-	
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// 4方向に壁生成
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
-	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, -D3DX_PI * 0.5f, 0.0f));
-	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI * 0.5f, 0.0f));
-
-	// サウンド停止
-	pSound->Stop();
-
-	// サウンド再生
-	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TITLE);
+	// テクスチャ設定
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\title.png"));
 
 	//成功を返す
 	return S_OK;
@@ -113,27 +92,17 @@ void CTitle::Uninit(void)
 //=======================================
 void CTitle::Update(void)
 {
-	//CInputKeyboard型のポインタ
-	CInputKeyboard *pInputKeyboard = pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-	
-	//CInputPad型のポインタ
+	// キーボードとパッドのポインタ
+	CInputKeyboard *pInputKeyboard = pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	
 	CInputPad *pInputPad = pInputPad = CManager::GetInstance()->GetInputPad();
 	
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
 	// カメラの情報取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
-
-	// タイトルカメラ
-	pCamera->TitleCamera();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) == true || 
 		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0) == true ||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0) == true)
 	{
-		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_ENTER);
-
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TUTORIAL);
 	}

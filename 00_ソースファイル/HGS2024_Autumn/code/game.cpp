@@ -75,50 +75,17 @@ HRESULT CGame::Init(void)
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
-	// プレイヤー生成
-	CPlayer::Create("data//FILE//player.txt");
-
-	// フィールド生成
-	CField::Create();
-
-	// エネミー生成
-	CEnemy::Create("data//FILE//motion.txt");
-
-	// 4方向に壁生成
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, -4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, 0.0f, 0.0f));
-	CWall::Create(D3DXVECTOR3(0.0f, 2000.0f, 4000.0f), D3DXVECTOR3(D3DX_PI * 0.5f, D3DX_PI, 0.0f));
-	CWall::Create(D3DXVECTOR3(4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  -D3DX_PI * 0.5f, 0.0f));
-	CWall::Create(D3DXVECTOR3(-4000.0f, 2000.0f, 0.0f), D3DXVECTOR3(D3DX_PI * 0.5f,  D3DX_PI * 0.5f, 0.0f));
-
-	// マップオブジェクト生成
-	CMapObject::Create();
-
-	// 遷移時間
-	m_nTransition = 0;
-
-	//ポーズの状態
-	m_bPause = false;
-
 	// インスタンス生成
 	m_pObj2D = CObject2D::Create();
 
 	// 位置設定
-	m_pObj2D->SetPos(D3DXVECTOR3(1100.0f, 300.0f, 0.0f));
+	m_pObj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
 	// サイズ設定
-	m_pObj2D->SetSize(300.0f, 350.0f);
+	m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\guide_game.png"));
-
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_TUTORIAL);
-
-	// サウンド再生
-	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_GAME);
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\game.png"));
 
 	return S_OK;
 }
