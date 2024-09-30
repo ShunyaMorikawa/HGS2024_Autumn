@@ -31,8 +31,7 @@ public:
 	~CObstacle();		//デストラクタ
 
 	// メンバ関数
-	HRESULT Init(void) { return S_OK; }	// 純粋仮想
-	HRESULT Init(const EType type);
+	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);

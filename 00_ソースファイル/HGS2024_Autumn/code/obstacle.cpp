@@ -18,7 +18,14 @@
 //========================================
 namespace
 {
-
+	const char* MODEL[] =		// モデルのパス
+	{
+		"data\\MODEL\\obstacle\\wood00.x",		// 木
+		"data\\MODEL\\obstacle\\wood00.x",		// 川
+		"data\\MODEL\\obstacle\\wood00.x",		// 石
+		"data\\MODEL\\obstacle\\wood00.x",		// 穴
+		"data\\MODEL\\obstacle\\wood00.x",		// 柔らかい岩
+	};
 }
 
 //========================================
@@ -39,7 +46,7 @@ CObstacle::~CObstacle()
 //========================================
 // 初期化
 //========================================
-HRESULT CObstacle::Init(const EType type)
+HRESULT CObstacle::Init(void)
 {
 	if (FAILED(CStageObj::Init()))
 	{ // 初期化に失敗した場合
@@ -130,8 +137,11 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 		break;
 	}
 
-	// 初期化処理に失敗したら、停止
-	if (FAILED(pObstacle->Init(type))) { assert(false); return nullptr; }
+	// モデル生成
+	pObstacle->m_pModel = CModel::Create(MODEL[type]);
+	pObstacle->m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
+	pObstacle->SetPos(rPos);
+	pObstacle->SetRot(rRot);
 
 	// ポインタを返す
 	return pObstacle;
