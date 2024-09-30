@@ -35,6 +35,8 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	void Kill() override;
+
 	virtual bool Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize) override;	// プレイヤーとの当たり判定
 
 	// 静的メンバ関数
