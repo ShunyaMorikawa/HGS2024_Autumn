@@ -14,6 +14,7 @@
 
 #include "timer.h"
 #include "field.h"
+#include "sky.h"
 #include "stageobj.h"
 #include "stagemanager.h"
 #ifdef _DEBUG
@@ -83,6 +84,7 @@ HRESULT CGame::Init(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	CField::Create();
+	CSky::Create();
 
 	// プレイヤーの生成
 	if (m_pPlayer == nullptr)
@@ -155,7 +157,7 @@ void CGame::Uninit(void)
 //========================================
 void CGame::Update(void)
 {
-	// タイマーが0を下回った場合終了
+	// タイマーか体力が0を下回った場合終了
 	if (m_pTimer->GetTimeZero() || CPlayer::GetInstance()->GetLife() <= 0.0f)
 	{
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
