@@ -25,8 +25,6 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	bool Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) override;	// ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
-
 private:
 
 
