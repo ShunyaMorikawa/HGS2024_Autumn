@@ -82,7 +82,7 @@ CGoal* CGoal::Create()
 
 	// 位置・向き・種類設定
 	pGoal->SetType(CModel::TYPE_NOT_HIERARCHY);
-	pGoal->SetPos(D3DXVECTOR3(50000.0f, 0.0f, 0.0f));
+	pGoal->SetPosition(D3DXVECTOR3(50000.0f, 0.0f, 0.0f));
 	pGoal->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	// ポインタを返す
