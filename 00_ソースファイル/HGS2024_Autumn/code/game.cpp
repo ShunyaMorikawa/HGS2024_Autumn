@@ -11,6 +11,7 @@
 #include "sound.h"
 #include "texture.h"
 #include "fade.h"
+#include "object2D.h"
 
 #include "timer.h"
 #include "field.h"
@@ -45,6 +46,7 @@ CGame::CGame() :
 	m_bPause(false),
 	m_pFade(nullptr),
 	m_pTimer(nullptr),
+	m_Obj2D(nullptr),
 	m_bOver(false),
 	m_bClear(false),
 	m_pStageManager(nullptr)
@@ -148,6 +150,12 @@ void CGame::Uninit(void)
 		m_pStageManager = nullptr;
 	}
 
+	if (m_Obj2D != nullptr)
+	{
+		m_Obj2D->Uninit();
+		m_Obj2D = nullptr;
+	}
+
 #ifdef _DEBUG
 
 	if (m_pEdittor != nullptr)
@@ -175,17 +183,20 @@ void CGame::Update(void)
 		// タイトルに遷移
 		m_bOver = true;
 
-		// インスタンス生成
-		CObject2D* Obj2D = CObject2D::Create();
+		if (m_Obj2D == nullptr)
+		{
+			// インスタンス生成
+			m_Obj2D = CObject2D::Create();
 
-		// 位置設定
-		Obj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
+			// 位置設定
+			m_Obj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
-		// サイズ設定
-		Obj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+			// サイズ設定
+			m_Obj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		// テクスチャ設定
-		Obj2D->BindTexture(pTexture->Regist("data\\texture\\over.png"));
+			// テクスチャ設定
+			m_Obj2D->BindTexture(pTexture->Regist("data\\texture\\over.png"));
+		}
 	}
 
 	// ゴール
@@ -194,17 +205,20 @@ void CGame::Update(void)
 		// リザルトに遷移
 		m_bClear = true;
 
-		// インスタンス生成
-		CObject2D* Obj2D = CObject2D::Create();
+		if (m_Obj2D == nullptr)
+		{
+			// インスタンス生成
+			m_Obj2D = CObject2D::Create();
 
-		// 位置設定
-		Obj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
+			// 位置設定
+			m_Obj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
 
-		// サイズ設定
-		Obj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+			// サイズ設定
+			m_Obj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		// テクスチャ設定
-		Obj2D->BindTexture(pTexture->Regist("data\\texture\\clear.png"));
+			// テクスチャ設定
+			m_Obj2D->BindTexture(pTexture->Regist("data\\texture\\clear.png"));
+		}
 	}
 
 	if (m_bOver || m_bClear)
