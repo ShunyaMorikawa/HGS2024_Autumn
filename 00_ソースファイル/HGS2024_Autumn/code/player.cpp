@@ -433,13 +433,13 @@ void CPlayer::CollisionReverseObj()
 	CReverse* pObj = nullptr;
 
 	// 位置取得
-	MyLib::Vector3 pos = GetPos();
+	D3DXMATRIX mtx = GetmtxWorld();
 
 	// 終端までループ
 	while (list.ListLoop(itr))
 	{
 		CReverse* pObj = *itr;
-		if (pObj->Collision(pos, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
+		if (pObj->Collision(mtx, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
 		{
 			// 反転
 			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
@@ -484,6 +484,7 @@ void CPlayer::Collision()
 		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
 		{ // 当たり判定に当たった場合
 
+			int n = 0;
 			// 体力減る？
 		}
 	}

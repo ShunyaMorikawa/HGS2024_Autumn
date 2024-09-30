@@ -77,14 +77,15 @@ void CReverse::Update(void)
 //========================================
 // プレイヤーとの当たり判定
 //========================================
-bool CReverse::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CReverse::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
 {
 	bool bHit = false;
 
 	// 位置取得
 	MyLib::Vector3 pos = GetPos();
+	MyLib::Vector3 posTarget = UtilFunc::Transformation::WorldMtxChangeToPosition(rMtx);
 
-	if (UtilFunc::Collision::CircleRange3D(pos, rPos, COLLISIONRANGE, rSize.x))
+	if (UtilFunc::Collision::CircleRange3D(pos, posTarget, COLLISIONRANGE, rSize.x))
 	{
 		Uninit();
 		bHit = true;
