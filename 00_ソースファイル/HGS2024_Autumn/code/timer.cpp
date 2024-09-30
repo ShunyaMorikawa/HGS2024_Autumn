@@ -46,11 +46,19 @@ HRESULT CTimer::Init()
 	m_fTimer = INIT_TIME;
 
 	// ”š‚ğ¶¬
+
+	D3DXVECTOR3 pos = NUMBER_POS;
+
 	for (int i = 0; i < DIGIT; ++i)
 	{
 		m_pNumber[i] = CNumber::Create();
-		D3DXVECTOR3 pos = NUMBER_POS;
-		pos.x += 80.0f * i;
+		m_pNumber[i]->SetSize(60.0f, 60.0f);
+		pos.x += 55.0f;
+
+		if (i % 2 == 0)
+		{
+			pos.x += 15.0f;
+		}
 
 		m_pNumber[i]->SetPos(pos);
 		m_pNumber[i]->SetPosVertex();
