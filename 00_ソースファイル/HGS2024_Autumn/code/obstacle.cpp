@@ -9,6 +9,7 @@
 #include "obstacleTree.h"
 #include "obstacleRiver.h"
 #include "obstacleStone.h"
+#include "obstacleHole.h"
 
 //========================================
 //–¼‘O‹óŠÔ
@@ -108,7 +109,7 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 
 	case CObstacle::TYPE_HOLE:
 
-
+		pObstacle = new CObstacleHole;
 
 		break;
 
