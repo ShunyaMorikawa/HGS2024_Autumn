@@ -26,7 +26,7 @@ public:
 	void SetCamera(void);
 	void CameraMoveV(void);
 	float RotNor(float RotN);
-	void following(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
+	void Following(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 	void TitleCamera();
 	void CollisionArena();
 
