@@ -32,6 +32,7 @@ public:
 	// Ã“Iƒƒ“ƒoŠÖ”
 	static CTimer* Create(); // ¶¬ˆ—
 	static float GetTime() { return m_fTimer; } // ŠÔ‚Ìæ“¾
+	static float GetInitTime(); // §ŒÀŠÔ‚Ìæ“¾
 
 private:
 
