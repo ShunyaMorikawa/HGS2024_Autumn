@@ -30,6 +30,8 @@ public:
 		SOUND_LABEL_SE_HIT,			// プレイヤーヒット
 		SOUND_LABEL_SE_ENEMYHIT,	// 敵ヒット
 		SOUND_LABEL_SE_ENTER,	// 敵ヒット
+		SOUND_LABEL_SE_JUMP,	// ジャンプ
+		SOUND_LABEL_SE_ROWLING,	// 回転
 		SOUND_LABEL_MAX,
 	} SOUND_LABEL;
 
@@ -76,6 +78,8 @@ private:
 		{ "data\\SE\\dmg_01.wav", 0 },		//プレイヤーのヒット
 		{ "data\\SE\\EnemyDamage.wav", 0 },		//敵ヒット
 		{ "data\\SE\\Enter.wav", 0 },		//敵ヒット
+		{ "data\\SE\\se_jump.wav", 0 },		//敵ヒット
+		{ "data\\SE\\se_drift.wav", 0 },		//敵ヒット
 	};
 };
 

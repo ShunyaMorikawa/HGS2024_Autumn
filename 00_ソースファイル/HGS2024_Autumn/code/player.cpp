@@ -415,7 +415,7 @@ void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		pSound->Stop();
 
 		// サウンド再生
-		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_JUMP);
 	}
 }
 
@@ -468,7 +468,7 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		pSound->Stop();
 
 		// サウンド再生
-		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_ROWLING);
 	}
 }
 
