@@ -34,7 +34,7 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
-	const float SPEED = 240.0f;		// 速度
+	const float SPEED = 500.0f;		// 速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float ROLL_TIME = 1.0f;	// 転がり継続時間

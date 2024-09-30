@@ -58,7 +58,8 @@ public:
 	float GetRadius() { return m_fRadius; }		// 半径取得
 	int GetLife() { return m_nLife; }			// 体力取得
 	int GetState() { return m_State; }			// 状態取得
-	void SetType(const PLAYERTYPE type) { m_typeDefault = type; } // デフォルトタイプの変更
+	void SetDefaultType(const PLAYERTYPE type) { m_typeDefault = type; } // デフォルトタイプの変更
+	PLAYERTYPE GetDefaultType() { return m_typeDefault; } // デフォルトタイプの取得
 	PLAYERTYPE GetType() { return m_type; } // タイプの取得
 
 	// 静的メンバ関数

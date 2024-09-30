@@ -26,7 +26,8 @@ namespace
 	const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
 	const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
 	const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
-	const D3DXVECTOR3 DISTANCE_V_R = D3DXVECTOR3(0.0f, 0.0f, -1000.0f);
+	const D3DXVECTOR3 DISTANCE_R = D3DXVECTOR3(500.0f, 250.0f, 0.0f);
+	const D3DXVECTOR3 DISTANCE_V = D3DXVECTOR3(0.0f, 250.0f, -1000.0f);
 }
 
 //=======================================
@@ -61,7 +62,7 @@ HRESULT CCamera::Init(void)
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//視点
-	m_posV = m_posR + DISTANCE_V_R;
+	m_posV = m_posR + DISTANCE_V;
 
 	//上方向ベクトル
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -108,19 +109,12 @@ void CCamera::SetCamera(void)
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxProjection);
 
-	////プロジェクションマトリックスを作成[透視投影]
-	//D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
-	//							D3DXToRadian(100.0f),	//視野角
-	//							(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
-	//							10.0f,		//Z値の最小値
-	//							400000.0f);	//Z値の最大値(描画距離)
-
 	//プロジェクションマトリックスを設定[平行投影]
 	D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
 						SCREEN_WIDTH,	//画面の幅
 						SCREEN_HEIGHT,	//画面の高さ
 						10.0f,		//Z値の最小値
-						1000.0f);	//Z値の最大値
+						10000.0f);	//Z値の最大値
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
@@ -206,7 +200,9 @@ float CCamera::RotNor(float RotN)
 void CCamera::Following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	m_posR = pos;
-	m_posV = m_posR + DISTANCE_V_R;
+	m_posR.y = DISTANCE_R.y;
+	m_posR.x += DISTANCE_R.x;
+	m_posV = m_posR + DISTANCE_V;
 }
 
 //=======================================
