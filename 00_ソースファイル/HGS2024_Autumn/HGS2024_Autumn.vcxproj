@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.cpp" />
     <ClCompile Include="code\billboard.cpp" />
     <ClCompile Include="code\bullet.cpp" />
     <ClCompile Include="code\camera.cpp" />
@@ -40,6 +39,7 @@
     <ClCompile Include="code\mapobject.cpp" />
     <ClCompile Include="code\model.cpp" />
     <ClCompile Include="code\motion.cpp" />
+    <ClCompile Include="code\mylib.cpp" />
     <ClCompile Include="code\object.cpp" />
     <ClCompile Include="code\object2D.cpp" />
     <ClCompile Include="code\object3D.cpp" />
@@ -58,10 +58,9 @@
     <ClCompile Include="code\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\calculation.h" />
-    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.h" />
     <ClInclude Include="code\billboard.h" />
     <ClInclude Include="code\bullet.h" />
+    <ClInclude Include="code\calculation.h" />
     <ClInclude Include="code\camera.h" />
     <ClInclude Include="code\character.h" />
     <ClInclude Include="code\debugproc.h" />
@@ -80,6 +79,7 @@
     <ClInclude Include="code\mapobject.h" />
     <ClInclude Include="code\model.h" />
     <ClInclude Include="code\motion.h" />
+    <ClInclude Include="code\mylib.h" />
     <ClInclude Include="code\object.h" />
     <ClInclude Include="code\object2D.h" />
     <ClInclude Include="code\object3D.h" />
