@@ -38,7 +38,7 @@ namespace
 {
 	const int LIFE = 3;			// 体力
 	const float SPEED = 500.0f;		// 速度
-	const float SPEED_SCALE = 20.0f; // 加速度
+	const float SPEED_SCALE = 75.0f; // 加速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float ROLL_TIME = 1.0f;	// 転がり継続時間
@@ -388,7 +388,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	pSound->Stop();
 
 	// サウンド再生
-	pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
+	//pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 }
 
 //==========================================
