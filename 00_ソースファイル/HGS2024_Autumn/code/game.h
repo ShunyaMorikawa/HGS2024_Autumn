@@ -17,6 +17,7 @@ class CFade;
 class CTimer;
 class CStageManager;
 class CStageEdittor;
+class CObject2D;
 
 //========================================
 //ゲームクラス
@@ -42,6 +43,8 @@ private:
 	static CGame *m_pGame;		// ゲームマネージャーのポインタ
 
 	int m_nTransition;			// カウンター
+	bool m_bOver; // フェード設定フラグ
+	bool m_bClear; // フェード設定フラグ
 
 	bool m_bPause;				// ポーズ状態のON/OFF
 
@@ -49,6 +52,7 @@ private:
 	CPlayer* m_pPlayer;				// プレイヤーポインタ
 	CTimer* m_pTimer;				// タイマーのポインタ
 	CStageManager* m_pStageManager;	// ステージマネージャー
+	CObject2D* m_Obj2D;
 
 #ifdef _DEBUG
 
