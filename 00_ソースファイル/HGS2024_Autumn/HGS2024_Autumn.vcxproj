@@ -45,6 +45,7 @@
     <ClCompile Include="code\object2D.cpp" />
     <ClCompile Include="code\object3D.cpp" />
     <ClCompile Include="code\objectX.cpp" />
+    <ClCompile Include="code\obstacle.cpp" />
     <ClCompile Include="code\particle.cpp" />
     <ClCompile Include="code\player.cpp" />
     <ClCompile Include="code\precompile.cpp">
@@ -87,6 +88,7 @@
     <ClInclude Include="code\object2D.h" />
     <ClInclude Include="code\object3D.h" />
     <ClInclude Include="code\objectX.h" />
+    <ClInclude Include="code\obstacle.h" />
     <ClInclude Include="code\particle.h" />
     <ClInclude Include="code\player.h" />
     <ClInclude Include="code\precompile.h" />
