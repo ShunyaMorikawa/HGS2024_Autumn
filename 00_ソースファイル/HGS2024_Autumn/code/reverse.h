@@ -25,9 +25,11 @@ public:
 	void Update(void) override;
 
 	virtual bool Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) override;	// プレイヤーとの当たり判定
+	static CListManager<CReverse> GetList() { return m_List; }	// リスト取得
 
 private:
 
+	static CListManager<CReverse> m_List;	// リスト
 };
 
 #endif

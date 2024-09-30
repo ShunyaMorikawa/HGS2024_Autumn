@@ -16,6 +16,7 @@ namespace
 	const char* MODEL = "data\\MODEL\\obstacle\\wood00.x";	// モデルのパス
 	const float COLLISIONRANGE = 200.0f;	// 有効範囲
 }
+CListManager<CReverse> CReverse::m_List = {};	// リスト
 
 //========================================
 //コンストラクタ
@@ -38,6 +39,9 @@ CReverse::~CReverse()
 //========================================
 HRESULT CReverse::Init(void)
 {
+	// リストに追加
+	m_List.Regist(this);
+
 	// モデル生成
 	m_pModel = CModel::Create(MODEL);
 
@@ -54,6 +58,9 @@ HRESULT CReverse::Init(void)
 //========================================
 void CReverse::Uninit(void)
 {
+	// リストから削除
+	m_List.Delete(this);
+
 	// 終了
 	CStageObj::Uninit();
 }
@@ -79,7 +86,7 @@ bool CReverse::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 
 	if (UtilFunc::Collision::CircleRange3D(pos, rPos, COLLISIONRANGE, rSize.x))
 	{
-		Kill();
+		Uninit();
 		bHit = true;
 	}
 

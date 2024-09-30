@@ -27,6 +27,7 @@
 #include "lockonMarker.h"
 
 #include "stageobj.h"
+#include "reverse.h"
 
 //========================================
 // 定数定義
@@ -176,6 +177,9 @@ void CPlayer::Update(void)
 	// ステージオブジェとの範囲チェック
 	CheckStageObjRange();
 
+	// 反転オブジェの当たり判定
+	CollisionReverseObj();
+
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
 
@@ -266,6 +270,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	{
 		return;
 	}
+
 #endif
 
 	// 状態の切り替え
@@ -397,7 +402,7 @@ void CPlayer::Land(D3DXVECTOR3& pos, D3DXVECTOR3& move)
 //==========================================
 void CPlayer::CheckStageObjRange()
 {
-	// 障害物のリスト取得
+	// ステージオブジェのリスト取得
 	CListManager<CStageObj> list = CStageObj::GetList();
 
 	// 終端を保存
@@ -412,5 +417,33 @@ void CPlayer::CheckStageObjRange()
 	{
 		CStageObj* pObj = *itr;
 		pObj->CollisionRange(pos);
+	}
+}
+
+//==========================================
+// 反転オブジェの当たり判定
+//==========================================
+void CPlayer::CollisionReverseObj()
+{
+	// 反転オブジェのリスト取得
+	CListManager<CReverse> list = CReverse::GetList();
+
+	// 終端を保存
+	std::list<CReverse*>::iterator itr = list.GetEnd();
+	CReverse* pObj = nullptr;
+
+	// 位置取得
+	MyLib::Vector3 pos = GetPos();
+
+	// 終端までループ
+	while (list.ListLoop(itr))
+	{
+		CReverse* pObj = *itr;
+		if (pObj->Collision(pos, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
+		{
+			// 反転
+			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
+			return;
+		}
 	}
 }
