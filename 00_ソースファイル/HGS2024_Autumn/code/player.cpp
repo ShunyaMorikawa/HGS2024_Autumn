@@ -49,6 +49,8 @@ namespace
 
 	const char* RABBIT_PASS = "data\\FILE\\rabbit.txt"; // 兎パス
 	const char* TURTLE_PASS = "data\\FILE\\turtle.txt"; // 亀パス
+
+	const float WALK_COUNT = 0.3f; // 歩行音のインターバル
 }
 
 //========================================
@@ -372,7 +374,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	m_fWalkSound += fDeltaTime;
 
 	// サウンド再生
-	if (m_fWalkSound >= 0.5f)
+	if (m_fWalkSound >= WALK_COUNT)
 	{
 		CSound* pSound = CManager::GetInstance()->GetSound();
 		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
