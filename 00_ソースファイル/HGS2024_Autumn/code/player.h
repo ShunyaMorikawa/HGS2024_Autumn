@@ -45,18 +45,21 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void Act(float fSpeed);
-	void Motion();
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
 	int GetLife() { return m_nLife; }			// 体力取得
 	int GetState() { return m_State; }			// 状態取得
 
+	// 静的メンバ関数
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
 
-	//メンバ変数
+	// メンバ関数
+	void Motion();
+	void Move(D3DXVECTOR3& pos, const float fDeltaTime);
+
+	// メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション

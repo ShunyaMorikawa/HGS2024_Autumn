@@ -32,12 +32,8 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
-	const float NOCKBACK = 50.0f;	// ノックバック値
-	const float SPEED = 4.0f;		// 速度
-	const float INERTIA = 0.3f;		// 慣性
+	const float SPEED = 240.0f;		// 速度
 	const float RADIUS = 50.0f;		// 半径
-	const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
-	const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
 }
 
 //========================================
@@ -103,7 +99,10 @@ HRESULT CPlayer::Init(std::string pfile)
 	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
 
 	// 向き設定
-	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetRot(D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
+
+	// 移動量設定
+	SetMove(D3DXVECTOR3(SPEED, 0.0f, 0.0));
 
 	// 歩行時のカウンター
 	m_WalkCounter = 0;
@@ -145,39 +144,32 @@ void CPlayer::Uninit(void)
 //========================================
 void CPlayer::Update(void)
 {
-	// キーボードの情報取得
-	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	// コントローラーの情報取得	
-	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
-
-	//テクスチャの情報取得
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// 位置取得
+	// 自身の情報を取得
 	D3DXVECTOR3 pos = GetPos();
-
-	// 移動量取得
 	D3DXVECTOR3 move = GetMove();
-
-	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
+
+	// デルタタイムの取得
+	const float fDeltaTime = CManager::GetInstance()->GetDeltaTime();
 
 	// カメラの追従設定
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
-	pCamera->Following(pos, rot);
+	pCamera->Following(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
-	// プレイヤー行動
-	Act(SPEED);
+	// 移動処理
+	Move(pos, fDeltaTime);
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
 
 	if (m_nLife <= 0)
 	{
+		//テクスチャの情報取得
+		CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
 		// 生成
 		CObject2D* pObje2D = CObject2D::Create();
 
@@ -200,8 +192,16 @@ void CPlayer::Update(void)
 		Uninit();
 	}
 
+	// モーション
+	Motion();
+
+	// 情報を設定
+	SetPos(pos);
+	SetMove(move);
+	SetRot(rot);
+
 	// デバッグ表示
-	DebugProc::Print(DebugProc::POINT_LEFT, "\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの体力：%d\n", m_nLife);
@@ -217,33 +217,6 @@ void CPlayer::Draw(void)
 }
 
 //========================================
-// 行動
-//========================================
-void CPlayer::Act(float fSpeed)
-{
-	// キーボードの情報取得
-	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	// コントローラーの情報取得	
-	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
-
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// 移動量取得
-	D3DXVECTOR3 move = GetMove();
-
-	// 位置設定
-	SetPos(pos);
-
-	// 移動量設定
-	SetMove(move);
-
-	// モーション
-	Motion();
-}
-
-//========================================
 // モーション管理
 //========================================
 void CPlayer::Motion()
@@ -251,6 +224,14 @@ void CPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
+	// モーションがnullの場合関数を抜ける
+	if (pMotion == nullptr)
+	{
+		assert(false);
+		return;
+	}
+
+	// モーションを設定
 	switch (m_State)
 	{
 	case STATE_NORMAL: // 通常状態
@@ -271,8 +252,32 @@ void CPlayer::Motion()
 		break;
 	}
 
-	if (pMotion != nullptr)
-	{// モーション更新
-		pMotion->Update();
+	// モーションを更新
+	pMotion->Update();
+}
+
+//==========================================
+//  移動処理
+//==========================================
+void CPlayer::Move(D3DXVECTOR3& pos, const float fDeltaTime)
+{
+	// インプット情報の取得
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
+	CInputPad* pPad = CManager::GetInstance()->GetInputPad();
+
+#ifdef _DEBUG
+	// デバッグ中は右シフトを押さないと動かない
+	if (!pKeyboard->GetPress(DIK_RSHIFT))
+	{
+		return;
 	}
+#endif
+
+	// 自身の情報を取得
+	D3DXVECTOR3 move = GetMove();
+
+	// TODO : タイマーが出来次第加速処理を追加
+
+	// 座標に移動量を加算
+	pos += move * fDeltaTime;
 }
