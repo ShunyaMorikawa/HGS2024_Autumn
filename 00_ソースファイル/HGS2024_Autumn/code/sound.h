@@ -33,6 +33,7 @@ public:
 		SOUND_LABEL_SE_ROWLING,	// ‰ñ“]
 		SOUND_LABEL_SE_CHANGE,	// ‰ñ“]
 		SOUND_LABEL_SE_CLASH,	// ”j‰ó‰¹
+		SOUND_LABEL_SE_REVERSE,	// ”j‰ó‰¹
 		SOUND_LABEL_MAX,
 	} SOUND_LABEL;
 
@@ -82,6 +83,7 @@ private:
 		{ "data\\SE\\se_drift.wav", 0 },		//“Gƒqƒbƒg
 		{ "data\\SE\\change.wav", 0 },		//“Gƒqƒbƒg
 		{ "data\\SE\\clash.wav", 0 },		//“Gƒqƒbƒg
+		{ "data\\SE\\reverse.wav", 0 },		//“Gƒqƒbƒg
 	};
 };
 

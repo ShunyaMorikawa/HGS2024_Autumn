@@ -8,6 +8,7 @@
 #include "manager.h"
 #include "texture.h"
 #include "calculation.h"
+#include "sound.h"
 #include "input.h"
 
 //==========================================================================
@@ -101,6 +102,12 @@ HRESULT CReverse_Direction::Init()
 
 	// 状態遷移
 	SetState(State::STATE_APPEARANCE);
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド再生
+	pSound->PlaySound(CSound::SOUND_LABEL_SE_REVERSE);
 
 	return S_OK;
 }
