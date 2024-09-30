@@ -23,6 +23,7 @@ public:
 		TYPE_RIVER,		// ì
 		TYPE_STONE,		// Î
 		TYPE_HOLE,		// ŒŠ
+		TYPE_SOFTROCK,	// _‚ç‚©‚¢Šâ
 		TYPE_MAX		// —ñ‹“Œ^‚Ì‘”
 	};
 
