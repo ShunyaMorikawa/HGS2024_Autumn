@@ -33,7 +33,7 @@ CGoal::~CGoal()
 //========================================
 HRESULT CGoal::Init(void)
 {
-	if (FAILED(CModel::Init("data\\MODEL\\box.x")))
+	if (FAILED(CModel::Init("data\\MODEL\\flag.x")))
 	{ // 初期化に失敗した場合
 
 		// 失敗を返す
@@ -77,9 +77,12 @@ CGoal* CGoal::Create()
 {
 	CGoal* pGoal = new CGoal;
 
+	// 初期化処理
+	pGoal->Init();
+
 	// 位置・向き・種類設定
 	pGoal->SetType(CModel::TYPE_NOT_HIERARCHY);
-	pGoal->SetPosition(D3DXVECTOR3(50000.0f, 0.0f, 0.0f));
+	pGoal->SetPos(D3DXVECTOR3(50000.0f, 0.0f, 0.0f));
 	pGoal->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	// ポインタを返す
