@@ -81,18 +81,7 @@ void CRanking::Uninit(void)
 //=======================================
 void CRanking::Update(void)
 {
-	//CInputKeyboard情報取得
-	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	//CInputPad情報取得
-	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
-
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
-	{
-		// 画面遷移(フェード)
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
-	}
+	
 }
 
 //=======================================
