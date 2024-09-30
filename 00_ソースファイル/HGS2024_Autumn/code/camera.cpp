@@ -26,11 +26,9 @@ namespace
     const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
     const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
     const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
-<<<<<<< .mine
 	const D3DXVECTOR3 DISTANCE_V_R = D3DXVECTOR3(0.0f, 500.0f, -1000.0f);
-=======
 	const D3DXVECTOR3 DISTANCE_R = D3DXVECTOR3(500.0f, 250.0f, 0.0f);
->>>>>>> .theirs
+    const D3DXVECTOR3 DISTANCE_V = D3DXVECTOR3(0.0f, 250.0f, -1000.0f);
 }
 
 //=======================================
@@ -117,11 +115,7 @@ void CCamera::SetCamera(void)
                         SCREEN_WIDTH,	//画面の幅
                         SCREEN_HEIGHT,	//画面の高さ
                         10.0f,		//Z値の最小値
-<<<<<<< .mine
 						400000.0f);	//Z値の最大値
-=======
-						10000.0f);	//Z値の最大値
->>>>>>> .theirs
 
     //プロジェクションマトリックスの設定
     pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
