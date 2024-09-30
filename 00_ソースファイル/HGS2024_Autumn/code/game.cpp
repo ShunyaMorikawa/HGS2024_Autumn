@@ -12,6 +12,8 @@
 #include "texture.h"
 #include "fade.h"
 
+#include "stageobj.h"
+
 //========================================
 //Ã“Iƒƒ“ƒo•Ï”
 //========================================
@@ -102,6 +104,11 @@ void CGame::Update(void)
 	if (pInputKeyboard->GetTrigger(DIK_F2) == true)
 	{// ƒQ[ƒ€‰æ–Ê‚É‘JˆÚ
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+	}
+
+	if (pInputKeyboard->GetTrigger(DIK_0) == true)
+	{
+		CStageObj::Create(CStageObj::Type::TYPE_BG, MyLib::Vector3(0.0f, 500.0f, 0.0f));
 	}
 #endif
 }

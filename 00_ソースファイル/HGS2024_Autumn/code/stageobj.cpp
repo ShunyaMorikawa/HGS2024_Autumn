@@ -89,6 +89,7 @@ HRESULT CStageObj::Init()
 	// モデル生成
 	m_pModel = CModel::Create(MODEL);
 	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
+	m_pModel->SetPosition(GetPos());
 
 	// 登場
 	SetState(State::STATE_APPEARANCE);
@@ -143,6 +144,7 @@ void CStageObj::Update()
 
 	if (m_pModel != nullptr)
 	{// モデルの更新
+		m_pModel->SetPosition(GetPos());
 		m_pModel->Update();
 	}
 }
