@@ -15,6 +15,7 @@
 //========================================
 class CObject2D;
 class CRankingScore;
+class CResultScore;
 
 //========================================
 // ランキングクラス
@@ -48,7 +49,8 @@ private:
 	float m_fNowScore;		// 今回のスコア
 	float m_fRanking[3];	// ランキング
 	bool m_bNewRecord;		// ニューレコード
-	CRankingScore* m_pScore;	// 今回のスコア
+	CObject2D* m_pRankNum[3];
+	CResultScore* m_pScore[3];
 };
 
 #endif

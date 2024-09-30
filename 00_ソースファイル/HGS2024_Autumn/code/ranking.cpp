@@ -11,10 +11,19 @@
 #include "texture.h"
 #include "sound.h"
 #include "timer.h"
+#include "resultscore.h"
+#include "calculation.h"
 
 namespace
 {
 	const int NUM = 3;
+	const std::string TEXTURE[] = 
+		
+	{
+		"data\\TEXTURE\\1.png",
+		"data\\TEXTURE\\2.png",
+		"data\\TEXTURE\\3.png",
+	};
 }
 
 //=======================================
@@ -64,6 +73,34 @@ HRESULT CRanking::Init(void)
 	Sort();
 	Save();
 
+	for (int i = 0; i < 3; i++)
+	{
+		m_pRankNum[i] = CObject2D::Create();
+
+		// テクスチャ設定
+		int texID = CTexture::GetInstance()->Regist(TEXTURE[i]);
+		m_pRankNum[i]->BindTexture(texID);
+
+		// サイズ設定
+		D3DXVECTOR2 size = CTexture::GetInstance()->GetImageSize(texID);
+
+#if 0	// 横幅を元にサイズ設定
+		size = UtilFunc::Transformation::AdjustSizeByWidth(size, 240.0f);
+
+#else	// 縦幅を元にサイズ設定
+		size = UtilFunc::Transformation::AdjustSizeByWidth(size, 180.0f);
+#endif
+		m_pRankNum[i]->SetSize(size.x, size.y);
+		m_pRankNum[i]->SetSizeOrigin(size);
+
+		// 位置
+		m_pRankNum[i]->SetPos(MyLib::Vector3(200.0f + i * 400.0f, 480.0f, 0.0f));
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		m_pScore[i] = CResultScore::Create(MyLib::Vector3(200.0f + i * 400.0f, 550.0f, 0.0f), m_fRanking[i], 50.0f);
+	}
 
 	//成功を返す
 	return S_OK;

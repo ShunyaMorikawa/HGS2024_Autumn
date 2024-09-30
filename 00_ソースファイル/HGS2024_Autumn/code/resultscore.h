@@ -27,7 +27,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	static CResultScore* Create(const MyLib::Vector3& pos, float time);
+	static CResultScore* Create(const MyLib::Vector3& pos, float time, float size);
 
 private:
 
@@ -36,6 +36,7 @@ private:
 
 	// メンバ変数
 	float m_fTimer; // 現在の時間
-	CNumber* m_pNumber[2]; // 数字
+	float m_fSize;	// サイズ
+	CNumber* m_pNumber[5]; // 数字
 
 };
