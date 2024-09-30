@@ -86,9 +86,10 @@ void CTimer::Uninit()
 //==========================================
 void CTimer::Update()
 {
+#ifndef _DEBUG
 	// タイマーを減少
 	m_fTimer -= CManager::GetInstance()->GetDeltaTime();
-
+#endif
 	// 値を補正
 	if (m_fTimer < 0.0f)
 	{

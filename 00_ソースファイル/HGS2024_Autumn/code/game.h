@@ -14,6 +14,7 @@
 //========================================
 class CPlayer;
 class CFade;
+class CTimer;
 
 //========================================
 //ゲームクラス
@@ -44,6 +45,7 @@ private:
 
 	CFade* m_pFade;				// フェードのポインタ
 	CPlayer* m_pPlayer;			// プレイヤーポインタ
+	CTimer* m_pTimer;			// タイマーのポインタ
 };
 
 #endif
