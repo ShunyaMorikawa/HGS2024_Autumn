@@ -14,10 +14,10 @@ NUM_MODEL = 4
 #------------------------------------------------------------------------------
 # モデルファイル名
 #------------------------------------------------------------------------------
-MODEL_FILENAME = data/model/rabbit/00_body.x		# [0]腰
-MODEL_FILENAME = data/model/rabbit/01_head.x		# [1]頭
-MODEL_FILENAME = data/model/rabbit/02_left_leg.x	# [2]左足
-MODEL_FILENAME = data/model/rabbit/03_right_leg.x	# [3]右足
+MODEL_FILENAME = data/MODEL/rabbit/00_body.x		# [0]腰
+MODEL_FILENAME = data/MODEL/rabbit/01_head.x		# [1]頭
+MODEL_FILENAME = data/MODEL/rabbit/02_left_leg.x	# [2]左足
+MODEL_FILENAME = data/MODEL/rabbit/03_right_leg.x	# [3]右足
 
 #------------------------------------------------------------------------------
 # キャラクター情報
