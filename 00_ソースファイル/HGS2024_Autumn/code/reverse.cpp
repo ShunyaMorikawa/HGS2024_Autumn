@@ -10,6 +10,7 @@
 #include "billboard.h"
 #include "manager.h"
 #include "texture.h"
+#include "reverse_direction.h"
 
 //========================================
 //–¼‘O‹óŠÔ
@@ -143,6 +144,7 @@ bool CReverse::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
 	if (UtilFunc::Collision::CircleRange3D(pos, posTarget, COLLISIONRANGE, rSize.x))
 	{
 		Kill();
+		CReverse_Direction::Create();
 		bHit = true;
 	}
 
