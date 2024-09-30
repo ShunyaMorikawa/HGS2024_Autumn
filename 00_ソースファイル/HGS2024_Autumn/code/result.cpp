@@ -102,7 +102,7 @@ void CResult::Update(void)
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
 	if (pInputKeyboard->GetTrigger(DIK_RETURN) ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
+		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
