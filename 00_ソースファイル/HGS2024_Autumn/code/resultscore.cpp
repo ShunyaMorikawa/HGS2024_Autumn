@@ -5,6 +5,7 @@
 //
 //==========================================
 #include "resultscore.h"
+#include "timer.h"
 #include "number.h"
 #include "manager.h"
 #include "input.h"
@@ -41,14 +42,14 @@ CResultScore::~CResultScore()
 HRESULT CResultScore::Init()
 {
 	// 初期値を設定
-	m_fTimer = /*CTimer::GetTime()*/0.0f;
+	m_fTimer = CTimer::GetTime();
 
 	// 数字を生成
 	for (int i = 0; i < 2; ++i)
 	{
 		m_pNumber[i] = CNumber::Create();
 		m_pNumber[i]->SetSizeOrigin(NUMBER_SIZE);
-		D3DXVECTOR3 pos = NUMBER_POS;
+		D3DXVECTOR3 pos = GetPos();
 		if (i == 0)
 		{
 			pos.x -= 40.0f;
@@ -102,7 +103,7 @@ void CResultScore::Draw()
 //==========================================
 //  生成処理
 //==========================================
-CResultScore* CResultScore::Create()
+CResultScore* CResultScore::Create(const MyLib::Vector3& pos)
 {
 	// ポインタを確保
 	CResultScore* pTime = new CResultScore;
@@ -111,6 +112,7 @@ CResultScore* CResultScore::Create()
 	if (pTime == nullptr) { assert(false); return nullptr; }
 
 	// 初期化処理
+	pTime->SetPos(pos);
 	pTime->Init();
 
 	return pTime;

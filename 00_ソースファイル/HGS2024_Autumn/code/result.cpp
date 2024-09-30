@@ -58,10 +58,10 @@ HRESULT CResult::Init(void)
 	m_pObj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// テクスチャ設定
-	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\tutorial.png"));
+	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\result.png"));
 
 	// 今回のスコア
-	m_pScore = CResultScore::Create();
+	m_pScore = CResultScore::Create(m_pObj2D->GetPos() + MyLib::Vector3(0.0f, -50.0f, 0.0f));
 
 
 	//成功を返す
