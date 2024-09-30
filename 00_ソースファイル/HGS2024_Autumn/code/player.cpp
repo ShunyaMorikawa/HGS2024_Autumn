@@ -380,6 +380,15 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop();
+
+	// サウンド再生
+	pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 }
 
 //==========================================
@@ -398,6 +407,15 @@ void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// 移動量を加算
 		move.y += JUMP_MOVE;
+
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
+		// サウンド停止
+		pSound->Stop();
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 	}
 }
 
@@ -439,6 +457,16 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// 身長を減らす
 		m_fHeight *= HEIGHT_SCALE;
+
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
+		// サウンド停止
+		pSound->Stop();
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
+
 	}
 }
 
