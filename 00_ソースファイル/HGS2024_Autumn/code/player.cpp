@@ -209,6 +209,10 @@ void CPlayer::Update(void)
 	// 状態が変わっていた場合モデルを変更する
 	if (type != m_type)
 	{
+
+		// 変化
+		Myparticle::Create(Myparticle::TYPE::TYPE_CHANGE, GetPos());
+
 		// モーション情報の取得
 		CMotion* pMotion = GetMotion();
 

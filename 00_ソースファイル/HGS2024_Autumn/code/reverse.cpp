@@ -28,7 +28,7 @@ CListManager<CReverse> CReverse::m_List = {};	// リスト
 //========================================
 //コンストラクタ
 //========================================
-CReverse::CReverse() : CStageObj(),
+CReverse::CReverse(int nPriority) : CStageObj(nPriority),
 m_fRotationTime(0.0f),	// 回転時間
 m_pBillboard(nullptr)
 {

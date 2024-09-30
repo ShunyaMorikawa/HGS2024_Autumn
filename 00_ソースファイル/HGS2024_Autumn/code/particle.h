@@ -19,6 +19,7 @@ namespace Mypartcile_Func
 	void DEATH_PARTICLE();
 	void BULLET_PARTICLE();	// ’e
 	void ROLLING_TURTLE();
+	void CHANGE();
 }
 
 //===========================================
@@ -32,6 +33,7 @@ namespace Myparticle
 		TYPE_DEATH,			// €–S‚µ‚½
 		TYPE_BULLET,		// ’e‚Ì
 		TYPE_ROLLINGTURTLE,		// ƒJƒ‚Ì‰ñ“]
+		TYPE_CHANGE,		// ƒJƒ‚Ì‰ñ“]
 		TYPE_MAX
 	};
 
@@ -45,6 +47,7 @@ namespace Myparticle
 		&Mypartcile_Func::DEATH_PARTICLE,	// €–S
 		&Mypartcile_Func::BULLET_PARTICLE,	// ’e
 		&Mypartcile_Func::ROLLING_TURTLE,	// ‹T‰ñ“]
+		&Mypartcile_Func::CHANGE,	// ‹T‰ñ“]
 	};
 
 	// ¶¬

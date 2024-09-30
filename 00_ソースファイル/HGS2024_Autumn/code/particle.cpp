@@ -204,3 +204,50 @@ void Mypartcile_Func::ROLLING_TURTLE()
 
 	pEffect->SetRot(MyLib::Vector3(0.0f, 0.0f, UtilFunc::Transformation::Random(-31, 31) * 0.1f));
 }
+
+
+//==========================================================================
+// 亀回転
+//==========================================================================
+void Mypartcile_Func::CHANGE()
+{
+	int life = 30;		// 寿命
+	float radius;
+	D3DXCOLOR col;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 move;
+	CEffect* pEffect = nullptr;
+
+	for (int i = 0; i < 8; i++)
+	{
+		// 移動量
+		float fMove = UtilFunc::Transformation::Random(50, 80) * 0.1f;		//移動量
+		float fMoveY = UtilFunc::Transformation::Random(60, 80) * 0.1f;		//移動量
+
+		//移動量の設定
+		move.x = sinf((float)(rand() % 629 - 314) / 100.0f) * fMove;
+		move.y = fMoveY;
+		move.z = cosf((float)(rand() % 629 - 314) / 100.0f) * fMove;
+
+		//位置ブレ
+		pos = POS;
+		pos += move * 5.0f;
+
+		// 半径
+		radius = 150.0f + UtilFunc::Transformation::Random(-50, 50) * 0.1f;
+
+		// 色
+		float black = UtilFunc::Transformation::Random(0, 100) * 0.01f;
+		col = D3DXCOLOR(
+			UtilFunc::Transformation::Random(0, 100) * 0.01f,
+			UtilFunc::Transformation::Random(0, 100) * 0.01f,
+			UtilFunc::Transformation::Random(0, 100) * 0.01f,
+			0.8f);
+
+		// エフェクト生成
+		pEffect = CEffect::Create(pos, move, col, radius, life, true, CEffect::TYPE::TYPE_SMOKE);
+		pEffect->SetAddSizeValue(3.0f);
+
+		pEffect->SetRot(MyLib::Vector3(0.0f, 0.0f, UtilFunc::Transformation::Random(-31, 31) * 0.1f));
+	}
+}
