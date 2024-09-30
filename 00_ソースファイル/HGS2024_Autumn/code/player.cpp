@@ -227,24 +227,22 @@ void CPlayer::Motion()
 	}
 
 	// モーションを設定
-	switch (m_State)
+	if (m_bJump) // ジャンプ状態
 	{
-	case STATE_NORMAL: // 通常状態
-
+		// TODO : ジャンプモーションを設定
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_STRONGATTACK);
+		DebugProc::Print(DebugProc::POINT_CENTER, "ジャンプ状態\n");
+	}
+	else if (m_bRoll) // 転がり状態
+	{
+		// TODO : 転がりモーションを設定
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
+		DebugProc::Print(DebugProc::POINT_CENTER, "転がり状態\n");
+	}
+	else // その他の状態
+	{
 		// 歩行モーションを設定
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
-
-		break;
-
-	default: // その他の場合
-		
-		// 警告
-		assert(false);
-
-		// 待機モーションを設定
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
-
-		break;
 	}
 
 	// モーションを更新
