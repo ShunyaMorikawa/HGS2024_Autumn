@@ -33,6 +33,7 @@
     <ClCompile Include="code\idxmeshfield.cpp" />
     <ClCompile Include="code\input.cpp" />
     <ClCompile Include="code\light.cpp" />
+    <ClCompile Include="code\listmanager.cpp" />
     <ClCompile Include="code\lockonMarker.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\manager.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="code\idxmeshfield.h" />
     <ClInclude Include="code\input.h" />
     <ClInclude Include="code\light.h" />
+    <ClInclude Include="code\listmanager.h" />
     <ClInclude Include="code\lockonMarker.h" />
     <ClInclude Include="code\main.h" />
     <ClInclude Include="code\manager.h" />

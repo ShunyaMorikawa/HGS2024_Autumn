@@ -123,6 +123,9 @@
     <ClCompile Include="code\mylib.cpp">
       <Filter>souma</Filter>
     </ClCompile>
+    <ClCompile Include="code\listmanager.cpp">
+      <Filter>souma</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -231,6 +234,9 @@
       <Filter>souma</Filter>
     </ClInclude>
     <ClInclude Include="code\calculation.h">
+      <Filter>souma</Filter>
+    </ClInclude>
+    <ClInclude Include="code\listmanager.h">
       <Filter>souma</Filter>
     </ClInclude>
   </ItemGroup>
