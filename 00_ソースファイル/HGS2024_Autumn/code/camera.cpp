@@ -118,12 +118,12 @@ void CCamera::SetCamera(void)
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxProjection);
 
-	//プロジェクションマトリックスを作成[透視投影]
-	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
-								D3DXToRadian(100.0f),	//視野角
-								(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
-								10.0f,		//Z値の最小値
-								400000.0f);	//Z値の最大値(描画距離)
+	////プロジェクションマトリックスを作成[透視投影]
+	//D3DXMatrixPerspectiveFovLH(&m_mtxProjection,		//プロジェクションマトリックス
+	//							D3DXToRadian(100.0f),	//視野角
+	//							(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,		//アスペクト比
+	//							10.0f,		//Z値の最小値
+	//							400000.0f);	//Z値の最大値(描画距離)
 
 	//プロジェクションマトリックスを設定[平行投影]
 	D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
