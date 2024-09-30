@@ -105,6 +105,7 @@ void CTutorial::Update(void)
 		return;
 	}
 
+	
 	if (m_bEnd && 
 		(pInputKeyboard->GetTrigger(DIK_RETURN) || pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)))
 	{
