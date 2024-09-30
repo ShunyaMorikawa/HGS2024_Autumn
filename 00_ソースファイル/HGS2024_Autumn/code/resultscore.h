@@ -27,7 +27,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	static CResultScore* Create(const MyLib::Vector3& pos);
+	static CResultScore* Create(const MyLib::Vector3& pos, float time);
 
 private:
 

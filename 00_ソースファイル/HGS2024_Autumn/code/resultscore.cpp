@@ -5,7 +5,6 @@
 //
 //==========================================
 #include "resultscore.h"
-#include "timer.h"
 #include "number.h"
 #include "manager.h"
 #include "input.h"
@@ -41,9 +40,7 @@ CResultScore::~CResultScore()
 //==========================================
 HRESULT CResultScore::Init()
 {
-	// 初期値を設定
-	m_fTimer = CTimer::GetTime();
-
+	
 	// 数字を生成
 	for (int i = 0; i < 2; ++i)
 	{
@@ -103,7 +100,7 @@ void CResultScore::Draw()
 //==========================================
 //  生成処理
 //==========================================
-CResultScore* CResultScore::Create(const MyLib::Vector3& pos)
+CResultScore* CResultScore::Create(const MyLib::Vector3& pos, float time)
 {
 	// ポインタを確保
 	CResultScore* pTime = new CResultScore;
@@ -113,6 +110,7 @@ CResultScore* CResultScore::Create(const MyLib::Vector3& pos)
 
 	// 初期化処理
 	pTime->SetPos(pos);
+	pTime->m_fTimer = time;
 	pTime->Init();
 
 	return pTime;
