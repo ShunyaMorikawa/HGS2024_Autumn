@@ -100,8 +100,8 @@ void CTutorial::Update(void)
 		m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\tutorial2.png"));
 	}
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN)||
-		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
+	if (pInputKeyboard->GetTrigger(DIK_RETURN) ||
+		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);

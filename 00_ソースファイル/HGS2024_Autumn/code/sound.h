@@ -32,6 +32,7 @@ public:
 		SOUND_LABEL_SE_ENTER,	// 敵ヒット
 		SOUND_LABEL_SE_JUMP,	// ジャンプ
 		SOUND_LABEL_SE_ROWLING,	// 回転
+		SOUND_LABEL_SE_CHANGE,	// 回転
 		SOUND_LABEL_SE_CLASH,	// 破壊音
 		SOUND_LABEL_MAX,
 	} SOUND_LABEL;
@@ -75,12 +76,13 @@ private:
 		{ "data\\BGM\\win.wav", 0 },		//勝利BGM
 		{ "data\\BGM\\lose.wav", 0 },		//敗北BGM
 		{ "data\\SE\\walk02.wav", 0 },		//歩行時
-		{ "data\\SE\\flame.wav", 0 },		//敵の弾
 		{ "data\\SE\\dmg_01.wav", 0 },		//プレイヤーのヒット
 		{ "data\\SE\\EnemyDamage.wav", 0 },		//敵ヒット
 		{ "data\\SE\\Enter.wav", 0 },		//敵ヒット
 		{ "data\\SE\\se_jump.wav", 0 },		//敵ヒット
 		{ "data\\SE\\se_drift.wav", 0 },		//敵ヒット
+		{ "data\\SE\\se_drift.wav", 0 },		//敵ヒット
+		{ "data\\SE\\change.wav", 0 },		//敵ヒット
 		{ "data\\SE\\clash.wav", 0 },		//敵ヒット
 	};
 };
