@@ -103,7 +103,7 @@ HRESULT CPlayer::Init(std::string pfile)
 
 	// プレイヤー状態の初期化
 	m_State = STATE_NORMAL;
-	m_type = TYPE_TURTLE;
+	m_typeDefault = m_type = TYPE_TURTLE;
 
 	// 位置設定
 	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
@@ -294,14 +294,27 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 #endif
 
 	// 状態の切り替え
-	if (pPad->GetTrigger(CInputPad::BUTTON_LB, 0) ||
-		pKeyboard->GetTrigger(DIK_LSHIFT))
+	SwitchType(pPad, pKeyboard);
+
+	// 状態ごとの処理
+	switch (m_type)
 	{
+	case TYPE_RABBIT:
+		// ジャンプ処理
+		Jump(move, pPad, pKeyboard);
+		DebugProc::Print(DebugProc::POINT_CENTER, "今、兎です！！！\n");
+		break;
 
+	case TYPE_TURTLE:
+		// 転がり処理
+		Roll(move, pPad, pKeyboard, fDeltaTime);
+		DebugProc::Print(DebugProc::POINT_CENTER, "今、亀です！！！\n");
+		break;
+
+	default:
+		assert(false);
+		break;
 	}
-
-	// ジャンプ処理
-	Jump(move, pPad, pKeyboard);
 
 	// TODO : タイマーが出来次第加速処理を追加
 
@@ -359,6 +372,24 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		// 身長を減らす
 		m_fHeight *= HEIGHT_SCALE;
 	}
+}
+
+//==========================================
+//  状態の切り替え
+//==========================================
+void CPlayer::SwitchType(CInputPad* pPad, CInputKeyboard* pKeyboard)
+{
+	// 転がり状態もしくはジャンプ中の場合関数を抜ける
+	if (m_bJump || m_bRoll) { return; }
+
+	// タイプをデフォルトで上書きする
+	m_type = m_typeDefault;
+
+	// ボタンが押されていない場合関数を抜ける
+	if(!pPad->GetPress(CInputPad::BUTTON_LB, 0) && !pKeyboard->GetPress(DIK_LSHIFT)) { return; }
+
+	// デフォルトタイプを見てタイプを変更する
+	m_type = m_typeDefault == TYPE_TURTLE ? TYPE_RABBIT : TYPE_TURTLE;
 }
 
 //==========================================
