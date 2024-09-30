@@ -29,6 +29,7 @@
 #include "stageobj.h"
 #include "obstacle.h"
 #include "reverse.h"
+#include "timer.h"
 
 //========================================
 // 定数定義
@@ -37,6 +38,7 @@ namespace
 {
 	const int LIFE = 3;			// 体力
 	const float SPEED = 500.0f;		// 速度
+	const float SPEED_SCALE = 20.0f; // 加速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float ROLL_TIME = 1.0f;	// 転がり継続時間
@@ -63,6 +65,7 @@ m_State			(STATE_NONE),	// 状態
 m_fRadius		(0.0f),			// 半径
 m_fHeight		(0.0f),			// 身長
 m_fRollTime		(0.0f),			// 転がり時間
+m_fSpeedScale	(0.0f),			// 加速度
 m_bJump			(false),		// ジャンプフラグ
 m_bRoll			(false),		// 転がりフラグ
 m_pEffect		(nullptr),		// エフェクトのポインタ
@@ -306,6 +309,13 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		return;
 	}
 
+	// デバッグ中は右シフトを押さないと動かない
+	if (pKeyboard->GetPress(DIK_LEFT))
+	{
+		// 加速を半分にする
+		m_fSpeedScale *= 0.5f;
+	}
+
 #endif
 
 	// 状態の切り替え
@@ -331,8 +341,8 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		break;
 	}
 
-	// TODO : タイマーが出来次第加速処理を追加
-	
+	// 加速
+	SpeedUp(move);
 
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;
@@ -548,8 +558,25 @@ void CPlayer::Collision()
 		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
 		{ // 当たり判定に当たった場合
 
+			// 加速を半分にする
+			m_fSpeedScale *= 0.5f;
+
 			// ダメージ処理
 			Damage();
 		}
 	}
+}
+
+//==========================================
+//  加速処理
+//==========================================
+void CPlayer::SpeedUp(D3DXVECTOR3& move)
+{
+	// 加速度を加算
+	m_fSpeedScale += CManager::GetInstance()->GetDeltaTime();
+
+	// 移動量を加算
+	move.x = SPEED + m_fSpeedScale * SPEED_SCALE;
+
+	DebugProc::Print(DebugProc::POINT_RIGHT, "加速度 : %f", m_fSpeedScale);
 }
