@@ -7,6 +7,7 @@
 #include "timer.h"
 #include "number.h"
 #include "manager.h"
+#include "input.h"
 
 //==========================================
 //  定数定義
@@ -14,7 +15,7 @@
 namespace
 {
 	const float INIT_TIME = 30.0f; // 初期値
-	const D3DXVECTOR3 NUMBER_SIZE = D3DXVECTOR3(50.0f, 50.0f, 0.0f); // サイズ
+	const D3DXVECTOR2 NUMBER_SIZE = D3DXVECTOR2(50.0f, 50.0f); // サイズ
 	const D3DXVECTOR3 NUMBER_POS = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 50.0f, 0.0f); // 座標
 }
 
@@ -45,7 +46,17 @@ HRESULT CTimer::Init()
 	for (int i = 0; i < 2; ++i)
 	{
 		m_pNumber[i] = CNumber::Create();
-		m_pNumber[i]->SetPos(NUMBER_POS);
+		m_pNumber[i]->SetSizeOrigin(NUMBER_SIZE);
+		D3DXVECTOR3 pos = NUMBER_POS;
+		if (i == 0)
+		{
+			pos.x -= 40.0f;
+		}
+		else
+		{
+			pos.x += 40.0f;
+		}
+		m_pNumber[i]->SetPos(pos);
 		m_pNumber[i]->SetPosVertex();
 	}
 
@@ -76,8 +87,25 @@ void CTimer::Uninit()
 //==========================================
 void CTimer::Update()
 {
+#ifndef _DEBUG
+
 	// タイマーを減少
 	m_fTimer -= CManager::GetInstance()->GetDeltaTime();
+
+#else
+
+	if (CManager::GetInstance()->GetInputKeyboard()->GetPress(DIK_RSHIFT))
+	{
+		// タイマーを減少
+		m_fTimer -= CManager::GetInstance()->GetDeltaTime();
+	}
+
+#endif
+	// 値を補正
+	if (m_fTimer < 0.0f)
+	{
+		m_fTimer = 0.0f;
+	}
 
 	// 計算
 	CalcNum();
@@ -88,6 +116,14 @@ void CTimer::Update()
 //==========================================
 void CTimer::Draw()
 {
+}
+
+//==========================================
+//  タイムアップしてる判定
+//==========================================
+bool CTimer::GetTimeZero()
+{
+	return m_fTimer <= 0.0f;
 }
 
 //==========================================

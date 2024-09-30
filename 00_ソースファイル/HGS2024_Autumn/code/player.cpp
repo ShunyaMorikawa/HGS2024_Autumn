@@ -143,13 +143,15 @@ HRESULT CPlayer::Init(std::string pfile)
 //========================================
 void CPlayer::Uninit(void)
 {
+	if (m_pGauge != nullptr)
+	{
+		m_pGauge->Uninit();
+		m_pGauge = nullptr;
+	}
+
 	// I—¹
 	CCharacter::Uninit();
-
 	m_pPlayer = nullptr;
-
-	m_pGauge->Uninit();
-	m_pGauge = nullptr;
 }
 
 //========================================

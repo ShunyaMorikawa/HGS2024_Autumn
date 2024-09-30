@@ -36,7 +36,8 @@ const char* PLAYER_PASS = "data\\FILE\\turtle.txt"; // プレイヤーのパス
 //========================================
 CGame::CGame() : 
 	m_bPause(false),
-	m_pFade(nullptr)
+	m_pFade(nullptr),
+	m_pTimer(nullptr)
 {
 	m_pGame = nullptr;
 }
@@ -80,7 +81,10 @@ HRESULT CGame::Init(void)
 	}
 
 	// タイマー
-	CTimer::Create();
+	if (m_pTimer == nullptr)
+	{
+		m_pTimer = CTimer::Create();
+	}
 
 	return S_OK;
 }
@@ -96,6 +100,12 @@ void CGame::Uninit(void)
 		m_pPlayer = nullptr;
 	}
 
+	if (m_pTimer != nullptr)
+	{
+		m_pTimer->Uninit();
+		m_pTimer = nullptr;
+	}
+
 	m_pGame = nullptr;
 }
 
@@ -104,10 +114,17 @@ void CGame::Uninit(void)
 //========================================
 void CGame::Update(void)
 {
+	// タイマーが0を下回った場合終了
+	if (m_pTimer->GetTimeZero())
+	{
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+	}
+
+#ifdef _DEBUG
+
 	// CInputKeyboard型のポインタ
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-#ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_F2) == true)
 	{// ゲーム画面に遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
