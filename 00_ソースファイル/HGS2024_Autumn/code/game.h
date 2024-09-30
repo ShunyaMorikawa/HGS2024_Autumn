@@ -14,6 +14,7 @@
 //========================================
 class CPlayer;
 class CFade;
+class CStageManager;
 
 //========================================
 //ゲームクラス
@@ -42,8 +43,9 @@ private:
 
 	bool m_bPause;				// ポーズ状態のON/OFF
 
-	CFade* m_pFade;				// フェードのポインタ
-	CPlayer* m_pPlayer;			// プレイヤーポインタ
+	CFade* m_pFade;					// フェードのポインタ
+	CPlayer* m_pPlayer;				// プレイヤーポインタ
+	CStageManager* m_pStageManager;	// ステージマネージャー
 };
 
 #endif

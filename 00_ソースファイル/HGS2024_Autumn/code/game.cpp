@@ -14,6 +14,7 @@
 
 #include "field.h"
 #include "stageobj.h"
+#include "stagemanager.h"
 
 //========================================
 //静的メンバ変数
@@ -35,7 +36,8 @@ const char* PLAYER_PASS = "data\\FILE\\turtle.txt"; // プレイヤーのパス
 //========================================
 CGame::CGame() : 
 	m_bPause(false),
-	m_pFade(nullptr)
+	m_pFade(nullptr),
+	m_pStageManager(nullptr)
 {
 	m_pGame = nullptr;
 }
@@ -78,6 +80,12 @@ HRESULT CGame::Init(void)
 		m_pPlayer = CPlayer::Create(PLAYER_PASS);
 	}
 
+	// ステージマネージャーの生成
+	if (m_pStageManager == nullptr)
+	{
+		m_pStageManager = CStageManager::Create();
+	}
+
 	return S_OK;
 }
 
@@ -90,6 +98,12 @@ void CGame::Uninit(void)
 	{
 		m_pPlayer->Uninit();
 		m_pPlayer = nullptr;
+	}
+
+	if (m_pStageManager != nullptr)
+	{
+		m_pStageManager->Uninit();
+		m_pStageManager = nullptr;
 	}
 
 	m_pGame = nullptr;
@@ -107,11 +121,6 @@ void CGame::Update(void)
 	if (pInputKeyboard->GetTrigger(DIK_F2) == true)
 	{// ゲーム画面に遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_0) == true)
-	{
-		CStageObj::Create(CStageObj::Type::TYPE_REVERSE, MyLib::Vector3(1000.0f, 500.0f, 0.0f));
 	}
 #endif
 }
