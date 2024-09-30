@@ -52,6 +52,7 @@
     </ClCompile>
     <ClCompile Include="code\renderer.cpp" />
     <ClCompile Include="code\sound.cpp" />
+    <ClCompile Include="code\stageobj.cpp" />
     <ClCompile Include="code\texture.cpp" />
     <ClCompile Include="code\title.cpp" />
     <ClCompile Include="code\tutorial.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="code\precompile.h" />
     <ClInclude Include="code\renderer.h" />
     <ClInclude Include="code\sound.h" />
+    <ClInclude Include="code\stageobj.h" />
     <ClInclude Include="code\texture.h" />
     <ClInclude Include="code\title.h" />
     <ClInclude Include="code\tutorial.h" />
