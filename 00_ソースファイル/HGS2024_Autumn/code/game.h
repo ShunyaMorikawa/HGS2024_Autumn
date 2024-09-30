@@ -12,26 +12,8 @@
 //========================================
 //前方宣言
 //========================================
-class CObjectX;
-class CObject2D;
-class CObject3D;
-class CLight;
 class CPlayer;
-class CIdxMeshField;
-class CField;
-class CEnemy;
 class CFade;
-class CGauge;
-class CWall;
-class CMapObject;
-
-//========================================
-// 定数定義
-//========================================
-namespace
-{
-const int ITEM_MAX = 256;	// アイテムの最大数
-}
 
 //========================================
 //ゲームクラス
@@ -60,10 +42,7 @@ private:
 
 	bool m_bPause;				// ポーズ状態のON/OFF
 
-	CObjectX *m_pObjectX;		// Xファイルオブジェクトのポインタ
-	CIdxMeshField *m_pIdxMesh;	// メッシュフィールドのポインタ
 	CFade* m_pFade;				// フェードのポインタ
-	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
 	CPlayer* m_pPlayer;			// プレイヤーポインタ
 };
 
