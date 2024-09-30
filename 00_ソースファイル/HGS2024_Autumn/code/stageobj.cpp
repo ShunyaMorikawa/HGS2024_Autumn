@@ -263,7 +263,7 @@ void CStageObj::CollisionRange(const MyLib::Vector3& rPos)
 //==========================================================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //==========================================================================
-bool CStageObj::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
+bool CStageObj::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize, const CPlayer::PLAYERSTATE state)
 {
 	return false;
 }

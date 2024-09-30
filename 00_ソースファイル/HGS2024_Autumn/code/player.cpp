@@ -427,6 +427,7 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		m_fRollTime = 0.0f;
 		m_bRoll = false;
 		m_fHeight = HEIGHT;
+		m_State = STATE_NORMAL;
 
 		return;
 	}
@@ -439,6 +440,9 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// g’·‚ðŒ¸‚ç‚·
 		m_fHeight *= HEIGHT_SCALE;
+
+		// ‰ñ“]ó‘Ô‚É‚·‚é
+		m_State = STATE_ROLL;
 	}
 }
 
@@ -544,7 +548,7 @@ void CPlayer::CollisionReverseObj()
 	while (list.ListLoop(itr))
 	{
 		CReverse* pObj = *itr;
-		if (pObj->Collision(mtx, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
+		if (pObj->Collision(mtx, MyLib::Vector3(RADIUS, HEIGHT, RADIUS),(PLAYERSTATE)(m_State)))
 		{
 			// ”½“]
 			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
@@ -595,7 +599,7 @@ void CPlayer::Collision()
 	{
 		CObstacle* pObj = *itr;
 
-		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
+		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS), (PLAYERSTATE)(m_State)))
 		{ // “–‚½‚è”»’è‚É“–‚½‚Á‚½ê‡
 
 			// ‰Á‘¬‚ð”¼•ª‚É‚·‚é
