@@ -15,8 +15,26 @@
 //==========================================================================
 namespace
 {
-	const std::string TEXTURE_SAMPLE = "data\\TEXTURE\\reverse.png";	// テクスチャのファイル
+	const std::string TEXTURE = "data\\TEXTURE\\reverse.png";	// テクスチャのファイル
 }
+
+namespace StateTime
+{
+	const float APPEARANCE = 0.7f;	// 登場
+	const float WAIT = 0.7f;		// 待機
+	const float FADEOUT = 0.7f;		// フェードアウト
+}
+
+//==========================================================================
+// 関数ポインタ
+//==========================================================================
+CReverse_Direction::STATE_FUNC CReverse_Direction::m_StateFuncList[] =
+{
+	&CReverse_Direction::StateNone,			// なし
+	&CReverse_Direction::StateAppearance,	// 登場
+	&CReverse_Direction::StateWait,			// 待機
+	&CReverse_Direction::StateFadeout,		// フェードアウト
+};
 
 //==========================================================================
 // コンストラクタ
@@ -61,7 +79,7 @@ HRESULT CReverse_Direction::Init()
 	CObject2D::Init();
 
 	// テクスチャ設定
-	int texID = CTexture::GetInstance()->Regist(TEXTURE_SAMPLE);
+	int texID = CTexture::GetInstance()->Regist(TEXTURE);
 	BindTexture(texID);
 
 	// サイズ設定
@@ -77,8 +95,9 @@ HRESULT CReverse_Direction::Init()
 	SetSizeOrigin(size);
 
 
-	// 位置、向き設定は必要があれば追加
-
+	// 位置
+	SetPos(MyLib::Vector3(640.0f, 360.0f, 0.0f));
+	SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 
 	return S_OK;
 }
@@ -102,10 +121,84 @@ void CReverse_Direction::Update()
 }
 
 //==========================================================================
+// 状態更新
+//==========================================================================
+void CReverse_Direction::UpdateState()
+{
+	// 状態タイマー加算
+	m_fStateTime += CManager::GetInstance()->GetDeltaTime();
+
+	// 実行
+	(this->*(m_StateFuncList[m_state]))();
+}
+
+//==========================================================================
+// なし
+//==========================================================================
+void CReverse_Direction::StateNone()
+{
+
+}
+
+//==========================================================================
+// 登場
+//==========================================================================
+void CReverse_Direction::StateAppearance()
+{
+	// 透明度と割合同期
+	float ratio = UtilFunc::Correction::EaseInExpo(0.0f, 1.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, ratio));
+
+	MyLib::Vector3 rot = GetRot();
+	rot.z = UtilFunc::Correction::EaseInExpo(0.0f, (D3DX_PI * 2.0f) * 3.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	SetRot(rot);
+
+	if (m_fStateTime >= StateTime::APPEARANCE)
+	{
+		SetState(State::STATE_WAIT);
+	}
+}
+
+//==========================================================================
+// 待機
+//==========================================================================
+void CReverse_Direction::StateWait()
+{
+	if (m_fStateTime >= StateTime::WAIT)
+	{
+		SetState(State::STATE_FADEOUT);
+	}
+}
+
+//==========================================================================
+// フェードアウト
+//==========================================================================
+void CReverse_Direction::StateFadeout()
+{
+	// 透明度と割合同期
+	float ratio = UtilFunc::Correction::EaseInExpo(1.0f, 0.0f, 0.0f, StateTime::FADEOUT, m_fStateTime);
+	SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, ratio));
+
+	if (m_fStateTime >= StateTime::FADEOUT)
+	{
+		Uninit();
+	}
+}
+
+//==========================================================================
 // 描画処理
 //==========================================================================
 void CReverse_Direction::Draw()
 {
 	// 描画処理
 	CObject2D::Draw();
+}
+
+//==========================================================================
+// 状態設定
+//==========================================================================
+void CReverse_Direction::SetState(const State& state)
+{
+	m_fStateTime = 0.0f;
+	m_state = state;
 }
