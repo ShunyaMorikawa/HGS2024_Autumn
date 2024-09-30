@@ -29,6 +29,9 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 namespace
 {
 const int TRANSITIONTIME = 180;		// 遷移するまでの時間
+
+const char* PLAYER_PASS = "data\\FILE\\player.txt";
+
 }
 
 //========================================
@@ -74,6 +77,12 @@ HRESULT CGame::Init(void)
 {
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	// プレイヤーの生成
+	if (m_pPlayer == nullptr)
+	{
+		m_pPlayer = CPlayer::Create(PLAYER_PASS);
+	}
 
 	// インスタンス生成
 	m_pObj2D = CObject2D::Create();
