@@ -162,6 +162,9 @@
     <ClCompile Include="code\reverse_direction.cpp">
       <Filter>direction</Filter>
     </ClCompile>
+    <ClCompile Include="code\stagemanager.cpp">
+      <Filter>stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -298,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="code\reverse_direction.h">
       <Filter>direction</Filter>
+    </ClInclude>
+    <ClInclude Include="code\stagemanager.h">
+      <Filter>stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
