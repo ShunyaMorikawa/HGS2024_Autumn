@@ -90,12 +90,16 @@ public:
 	CFade* GetFade() { return m_pFade; }
 	CSound* GetSound() { return m_pSound; }
 
+	float GetDeltaTime() { return m_fDeltaTime; }	// 経過時間取得
+
 	bool bResult();
 
 private:
 	static CManager *m_pManager;
 
+	//=============================
 	//メンバ変数
+	//=============================
 	int m_nCnt;		//自動遷移カウンター
 	int m_state;	//状態変更
 	int m_NowScene;	//現在のシーン
@@ -112,6 +116,11 @@ private:
 	CLight* m_pLight;			// ライトのポインタ
 	CFade* m_pFade;				// フェードのポインタ
 	CSound* m_pSound;			// サウンドのポインタ
+
+	// デルタタイム用
+	DWORD m_CurrentTime;			// 現在時間
+	DWORD m_OldTime;				// 過去の時間
+	float m_fDeltaTime;				// 経過時間
 };
 
 #endif

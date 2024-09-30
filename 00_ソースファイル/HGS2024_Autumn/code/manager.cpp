@@ -38,7 +38,10 @@ CManager::CManager(void) :
 	m_pCamera(nullptr),
 	m_pLight(nullptr),
 	m_pFade(nullptr),
-	m_pSound(nullptr)
+	m_pSound(nullptr),
+	m_CurrentTime(0),
+	m_OldTime(0),
+	m_fDeltaTime(0.0f)
 {//値クリア
 }
 
@@ -222,6 +225,13 @@ void CManager::Uninit(void)
 //========================================
 void CManager::Update(void)
 {
+	// 過去の時間保存
+	m_OldTime = m_CurrentTime;
+
+	// 経過時間
+	m_CurrentTime = timeGetTime();
+	m_fDeltaTime = static_cast<float>(m_CurrentTime - m_OldTime) / 1000;
+
 	if (m_pRenderer != nullptr)
 	{//g_pRendererがnullptrの時
 		m_pRenderer->Update();
