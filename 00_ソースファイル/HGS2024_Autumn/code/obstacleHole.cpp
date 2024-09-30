@@ -69,11 +69,3 @@ void CObstacleHole::Draw(void)
 	// ï`âÊ
 	CObstacle::Draw();
 }
-
-//========================================
-// ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
-//========================================
-bool CObstacleHole::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
-{
-	return false;
-}

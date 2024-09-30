@@ -6,6 +6,7 @@
 //========================================
 #include "obstacle.h"
 #include "model.h"
+#include "calculation.h"
 
 #include "obstacleTree.h"
 #include "obstacleRiver.h"
@@ -25,6 +26,24 @@ namespace
 		"data\\MODEL\\obstacle\\wood00.x",		// 石
 		"data\\MODEL\\obstacle\\wood00.x",		// 穴
 		"data\\MODEL\\obstacle\\wood00.x",		// 柔らかい岩
+	};
+
+	const D3DXVECTOR3 SIZEMAX[] =	// サイズの最大値
+	{
+		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 木
+		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 川
+		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 石
+		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 穴
+		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 柔らかい岩
+	};
+
+	const D3DXVECTOR3 SIZEMIN[] =	// サイズの最小値
+	{
+		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 木
+		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 川
+		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 石
+		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 穴
+		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 柔らかい岩
 	};
 }
 
@@ -82,9 +101,16 @@ void CObstacle::Update(void)
 //========================================
 // プレイヤーとの当たり判定
 //========================================
-bool CObstacle::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacle::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
 {
-	return true;
+	D3DXVECTOR3 max = rSize;
+	D3DXVECTOR3 min = D3DXVECTOR3(-rSize.x, 0.0f, -rSize.z);
+
+	// モデルが NULL じゃない場合
+	if (m_pModel == nullptr) { assert(false); return false; }
+
+	// 当たり判定を返す
+	return UtilFunc::Collision::IsAABBCollidingWithBox(MyLib::AABB(min, max), MyLib::Matrix(rMtx), MyLib::AABB(SIZEMIN[m_type], SIZEMAX[m_type]), m_pModel->GetMtxWorld());
 }
 
 //========================================
