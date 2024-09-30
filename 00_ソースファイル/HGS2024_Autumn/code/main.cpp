@@ -16,7 +16,7 @@
 namespace
 {
 const char* CLASS_NAME = "WindowClass";	// ライトの最大数
-const char* WINDOW_NAME = "BladeKnight";	// ライトの最大数
+const char* WINDOW_NAME = "うさぎとかめと森と川";	// ライトの最大数
 }
 
 //========================================
