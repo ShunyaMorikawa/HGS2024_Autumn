@@ -69,6 +69,11 @@ public:
 	static CStageObj *Create(const Type& type, const MyLib::Vector3& pos);
 	static CListManager<CStageObj> GetList() { return m_List; }	// リスト取得
 
+protected:
+
+	// メンバ変数
+	CModel* m_pModel;		// モデルポインタ
+
 private:
 
 	//=============================
@@ -91,7 +96,6 @@ private:
 	//=============================
 	float m_fStateTime;		// 状態カウンター
 	State m_state;			// 状態
-	CModel* m_pModel;		// モデルポインタ
 	static CListManager<CStageObj> m_List;	// リスト
 
 };

@@ -57,7 +57,7 @@ private:
 
 	// メンバ関数
 	void Motion();
-	void Move(D3DXVECTOR3& pos, const float fDeltaTime);
+	void Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime);
 
 	// メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数

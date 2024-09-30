@@ -7,12 +7,12 @@
 #ifndef _OBSTACLE_H_
 #define _OBSTACLE_H_
 
-#include "model.h"
+#include "stageobj.h"
 
 //========================================
 // è·äQï®ÉNÉâÉX
 //========================================
-class CObstacle : public CModel
+class CObstacle : public CStageObj
 {
 public:
 
