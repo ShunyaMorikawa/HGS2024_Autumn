@@ -27,7 +27,7 @@ namespace
 {
 const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 
-const char* PLAYER_PASS = "data\\FILE\\player.txt"; // プレイヤーのパス
+const char* PLAYER_PASS = "data\\FILE\\turtle.txt"; // プレイヤーのパス
 }
 
 //========================================
@@ -111,7 +111,7 @@ void CGame::Update(void)
 
 	if (pInputKeyboard->GetTrigger(DIK_0) == true)
 	{
-		CStageObj::Create(CStageObj::Type::TYPE_OBSTACLE, MyLib::Vector3(1000.0f, 500.0f, 0.0f));
+		CStageObj::Create(CStageObj::Type::TYPE_REVERSE, MyLib::Vector3(1000.0f, 500.0f, 0.0f));
 	}
 #endif
 }

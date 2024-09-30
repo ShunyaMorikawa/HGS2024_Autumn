@@ -12,6 +12,7 @@
 
 // 派生クラス
 #include "obstacle.h"
+#include "reverse.h"
 
 //==========================================================================
 // 定数定義
@@ -81,6 +82,10 @@ CStageObj *CStageObj::Create(const Type& type, const MyLib::Vector3& pos)
 		pObj = CObstacle::Create(CObstacle::TYPE_TREE, pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		break;
 
+	case Type::TYPE_REVERSE:
+		pObj = new CReverse;
+		break;
+
 	default:
 		break;
 	}
@@ -88,6 +93,7 @@ CStageObj *CStageObj::Create(const Type& type, const MyLib::Vector3& pos)
 	if (pObj != nullptr)
 	{
 		// 引数設定
+		pObj->m_type = type;	// 種類
 		pObj->SetPos(pos);
 		pObj->SetOriginPosition(pos);
 
@@ -107,13 +113,18 @@ HRESULT CStageObj::Init()
 	m_List.Regist(this);
 
 	// モデル生成
-	if (m_pModel == nullptr)
+	if (m_pModel == nullptr &&
+		m_type != Type::TYPE_REVERSE)
 	{
 		m_pModel = CModel::Create(MODEL);
 	}
-	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
-	m_pModel->SetPosition(GetPos());
-	m_pModel->SetScale(0.0f);
+
+	if (m_pModel != nullptr)
+	{
+		m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
+		m_pModel->SetPosition(GetPos());
+		m_pModel->SetScale(0.0f);
+	}
 
 	// 登場
 	SetState(State::STATE_APPEARANCE);
@@ -254,7 +265,11 @@ void CStageObj::StateAppearance()
 
 	// 線形補間で拡縮
 	float scale = UtilFunc::Correction::EaseOutBack(0.0f, 1.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
-	m_pModel->SetScale(scale);
+	
+	if (m_pModel != nullptr)
+	{
+		m_pModel->SetScale(scale);
+	}
 }
 
 //==========================================================================
@@ -273,7 +288,11 @@ void CStageObj::StateLeave()
 
 	// 線形補間で拡縮
 	float scale = UtilFunc::Correction::EaseInBack(1.0f, 0.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
-	m_pModel->SetScale(scale);
+	
+	if (m_pModel != nullptr)
+	{
+		m_pModel->SetScale(scale);
+	}
 
 	if (m_fStateTime >= StateTime::APPEARANCE)
 	{// 時間経過

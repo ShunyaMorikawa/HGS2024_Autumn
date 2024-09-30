@@ -46,7 +46,7 @@ public:
 	void SetVertexColor(D3DXCOLOR col);
 
 	void SetCol(D3DXCOLOR col) { m_col = col; }	// 色設定
-	D3DXCOLOR GetCol() { return m_col; }			// 色取得
+	D3DXCOLOR GetCol() { return m_col; }		// 色取得
 
 	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_pVtxBuff; }		// 頂点情報の取得
 
