@@ -19,8 +19,12 @@
 //==========================================================================
 namespace
 {
-	const char* MODEL = "data\\MODEL\\box.x";
-	const float ENABLERANGE = 1000.0f;	// —LŒø”ÍˆÍ
+	const char* MODEL[] = 
+	{
+		"data\\MODEL\\obstacle\\wood00.x",
+		"data\\MODEL\\obstacle\\wood01.x",
+	};
+	const float ENABLERANGE = 2000.0f;	// —LŒø”ÍˆÍ
 }
 
 namespace StateTime
@@ -142,14 +146,15 @@ HRESULT CStageObj::Init()
 	if (m_pModel == nullptr &&
 		m_type != Type::TYPE_REVERSE)
 	{
-		m_pModel = CModel::Create(MODEL);
+		int randNum = (rand() % 2);
+		m_pModel = CModel::Create(MODEL[randNum]);
 	}
 
 	if (m_pModel != nullptr)
 	{
 		m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 		m_pModel->SetPosition(GetPos());
-		m_pModel->SetScale(1.0f);
+		m_pModel->SetScale(0.0f);
 	}
 
 	// “oê
@@ -243,7 +248,7 @@ void CStageObj::CollisionRange(const MyLib::Vector3& rPos)
 
 	if (m_bWorking &&
 		m_state != State::STATE_LEAVE &&
-		rPos.x >= pos.x + ENABLERANGE)
+		rPos.x >= pos.x + ENABLERANGE * 0.5f)
 	{// ‘Şê”ÍˆÍ
 		SetState(State::STATE_LEAVE);
 		m_bWorking = false;

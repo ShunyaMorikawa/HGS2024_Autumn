@@ -6,6 +6,7 @@
 //=============================================================================
 #include "stagemanager.h"
 #include "stageobj.h"
+#include "calculation.h"
 
 //==========================================================================
 // 定数定義
@@ -55,6 +56,12 @@ HRESULT CStageManager::Init()
 {
 	// ステージロード処理
 	StageLoad();
+
+	for (int i = 0 ; i < 200; i++)
+	{
+		float distance = UtilFunc::Transformation::Random(-50, 50) * 10.0f;
+		CStageObj::CreateBg(MyLib::Vector3(MyLib::Vector3(-500.0f + i * 200.0f, 0.0f, 1200.0f + distance)));
+	}
 
 	return S_OK;
 }

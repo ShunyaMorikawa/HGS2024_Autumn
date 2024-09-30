@@ -63,6 +63,15 @@ HRESULT CTutorial::Init(void)
 	// テクスチャ設定
 	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\tutorial.png"));
 
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop();
+
+	// サウンド再生
+	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TITLE);
+
 	//成功を返す
 	return S_OK;
 }

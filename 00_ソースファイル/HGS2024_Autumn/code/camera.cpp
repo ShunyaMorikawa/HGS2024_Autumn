@@ -26,9 +26,9 @@ namespace
     const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
     const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
     const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
-	const D3DXVECTOR3 DISTANCE_V_R = D3DXVECTOR3(0.0f, 500.0f, -1000.0f);
+	const D3DXVECTOR3 DISTANCE_V_R = D3DXVECTOR3(0.0f, 500.0f, -15000.0f);
 	const D3DXVECTOR3 DISTANCE_R = D3DXVECTOR3(500.0f, 250.0f, 0.0f);
-    const D3DXVECTOR3 DISTANCE_V = D3DXVECTOR3(0.0f, 250.0f, -1000.0f);
+    const D3DXVECTOR3 DISTANCE_V = D3DXVECTOR3(0.0f, 250.0f, -2000.0f);
 }
 
 //=======================================
@@ -119,6 +119,22 @@ void CCamera::SetCamera(void)
 
     //プロジェクションマトリックスの設定
     pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
+
+
+
+    // プロジェクションマトリックスの初期化
+    D3DXMatrixIdentity(&m_mtxProjection);
+
+    // プロジェクションマトリックスの作成
+    D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
+        D3DXToRadian(45.0f),	// 視野角
+        (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,	// アスペクト比
+        10.0f,		// 手前の制限
+        150000.0f);	// 奥行きの制限
+
+// プロジェクションマトリックスの設定
+    pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
+
 
     //ビューマトリックスの初期化
     D3DXMatrixIdentity(&m_mtxView);
