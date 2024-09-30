@@ -55,6 +55,11 @@ HRESULT CObstacle::Init(void)
 		return E_FAIL;
 	}
 
+	// モデル生成
+	m_pModel = CModel::Create(MODEL[m_type]);
+	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
+	m_pModel->SetPosition(GetPos());
+
 	return S_OK;
 }
 
@@ -137,9 +142,8 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 		break;
 	}
 
-	// モデル生成
-	pObstacle->m_pModel = CModel::Create(MODEL[type]);
-	pObstacle->m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
+	// 位置・向き・種類設定
+	pObstacle->m_type = type;
 	pObstacle->SetPos(rPos);
 	pObstacle->SetRot(rRot);
 
