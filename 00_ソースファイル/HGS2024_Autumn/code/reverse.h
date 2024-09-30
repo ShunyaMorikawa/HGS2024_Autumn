@@ -17,7 +17,7 @@ class CReverse : public CStageObj
 {
 public:
 
-	CReverse();		//コンストラクタ
+	CReverse(int nPriority = 6);		//コンストラクタ
 	~CReverse();	//デストラクタ
 
 	// メンバ関数
