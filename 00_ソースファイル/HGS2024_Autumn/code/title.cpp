@@ -79,9 +79,6 @@ HRESULT CTitle::Init(void)
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
-	// サウンド停止
-	pSound->Stop();
-
 	// サウンド再生
 	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_TITLE);
 

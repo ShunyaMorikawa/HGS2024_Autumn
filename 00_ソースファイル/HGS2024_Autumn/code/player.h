@@ -92,6 +92,7 @@ private:
 	float m_fHeight;		// 身長
 	float m_fRollTime;		// 転がり時間
 	float m_fSpeedScale;	// 加速度
+	float m_fWalkSound;		// 歩行音
 	bool m_bJump;			// ジャンプフラグ
 	bool m_bRoll;			// 転がりフラグ
 	CEffect* m_pEffect;				// エフェクトのポインタ

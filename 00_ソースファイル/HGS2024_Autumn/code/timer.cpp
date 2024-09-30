@@ -14,7 +14,7 @@
 //==========================================
 namespace
 {
-	const float INIT_TIME = 30.0f; // ‰Šú’l
+	const float INIT_TIME = 60.0f; // ‰Šú’l
 	const D3DXVECTOR3 NUMBER_POS = D3DXVECTOR3(SCREEN_WIDTH * 0.72f, 50.0f, 0.0f); // À•W
 }
 
