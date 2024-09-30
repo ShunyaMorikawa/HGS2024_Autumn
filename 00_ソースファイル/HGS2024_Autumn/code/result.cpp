@@ -12,6 +12,7 @@
 #include "texture.h"
 #include "sound.h"
 #include "timer.h"
+#include "ranking.h"
 
 //=======================================
 //コンストラクタ
@@ -64,6 +65,10 @@ HRESULT CResult::Init(void)
 
 	// 今回のスコア
 	m_pScore = CResultScore::Create(m_pObj2D->GetPos() + MyLib::Vector3(0.0f, -50.0f, 0.0f), CTimer::GetTime());
+
+
+	// ランキング
+	CRanking::Create(CTimer::GetTime());
 
 
 	//成功を返す
