@@ -186,6 +186,9 @@
     <ClCompile Include="code\Xload.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="code\sky.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -339,6 +342,9 @@
       <Filter>mode\ranking</Filter>
     </ClInclude>
     <ClInclude Include="code\Xload.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="code\sky.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
