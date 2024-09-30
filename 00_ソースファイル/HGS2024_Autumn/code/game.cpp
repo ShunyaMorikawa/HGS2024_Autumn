@@ -12,6 +12,7 @@
 #include "texture.h"
 #include "fade.h"
 
+#include "field.h"
 #include "stageobj.h"
 
 //========================================
@@ -68,6 +69,8 @@ HRESULT CGame::Init(void)
 {
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	CField::Create();
 
 	// プレイヤーの生成
 	if (m_pPlayer == nullptr)
