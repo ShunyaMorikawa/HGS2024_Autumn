@@ -68,12 +68,14 @@ public:
 private:
 
 	// メンバ関数
+	void DamageCounter();
 	void Motion();
 	void Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime);
 	void Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard);
 	void Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard, const float fDeltaTime);
 	void SwitchType(CInputPad* pPad, CInputKeyboard* pKeyboard);
 	void Land(D3DXVECTOR3& pos, D3DXVECTOR3& move);
+	void Damage();				// ダメージ関数
 	void CheckStageObjRange();	// ステージオブジェの範囲チェック
 	void CollisionReverseObj();	// 反転オブジェの当たり判定
 	void Collision();	// 当たり判定
@@ -84,6 +86,7 @@ private:
 	int m_nOldMotion;		// 前回のモーション
 	int m_WalkCounter;		// 歩行時のカウンター
 	int m_State;			// 状態
+	int m_nDamageCount;		// ダメージカウント
 	float m_fRadius;		// 半径
 	float m_fHeight;		// 身長
 	float m_fRollTime;		// 転がり時間
