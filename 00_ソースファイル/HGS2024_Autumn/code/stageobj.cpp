@@ -149,11 +149,11 @@ HRESULT CStageObj::Init()
 	{
 		m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 		m_pModel->SetPosition(GetPos());
-		m_pModel->SetScale(0.0f);
+		m_pModel->SetScale(1.0f);
 	}
 
 	// “oê
-	SetState(State::STATE_APPEARANCE);
+	SetState(State::STATE_NONE);
 	return S_OK;
 }
 
@@ -174,6 +174,19 @@ void CStageObj::Uninit()
 
 	// I—¹
 	Release();
+}
+
+//==========================================================================
+// ˆÊ’u
+//==========================================================================
+void CStageObj::SetPos(D3DXVECTOR3 pos)
+{
+	CObject::SetPos(pos);
+
+	if (m_pModel != nullptr)
+	{
+		m_pModel->SetPosition(pos);
+	}
 }
 
 //==========================================================================

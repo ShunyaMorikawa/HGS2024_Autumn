@@ -16,6 +16,7 @@ class CPlayer;
 class CFade;
 class CTimer;
 class CStageManager;
+class CStageEdittor;
 
 //========================================
 //ゲームクラス
@@ -48,6 +49,12 @@ private:
 	CPlayer* m_pPlayer;				// プレイヤーポインタ
 	CTimer* m_pTimer;				// タイマーのポインタ
 	CStageManager* m_pStageManager;	// ステージマネージャー
+
+#ifdef _DEBUG
+
+	CStageEdittor* m_pEdittor;		// エディター
+
+#endif // _DEBUG
 };
 
 #endif
