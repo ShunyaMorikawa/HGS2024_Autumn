@@ -90,6 +90,8 @@ HRESULT CStageObj::Init()
 	m_pModel = CModel::Create(MODEL);
 	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 
+	// ìoèÍ
+	SetState(State::STATE_APPEARANCE);
 	return S_OK;
 }
 
