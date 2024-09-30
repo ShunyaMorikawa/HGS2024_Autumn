@@ -26,6 +26,7 @@ class CResult;
 class CTutorial;
 class CFade;
 class CSound;
+class CXLoad;
 
 //========================================
 //シーンクラス
@@ -113,6 +114,7 @@ private:
 	CInputMouse *m_pInputMouse; // マウスのポインタ
 	CScene *m_pScene;			// シーンのポインタ
 	CTexture *m_pTexture;		// テクスチャへのポインタ
+	CXLoad* m_pXLoad;			// Xファイル
 	CCamera *m_pCamera;			// カメラのポインタ
 	CLight* m_pLight;			// ライトのポインタ
 	CFade* m_pFade;				// フェードのポインタ

@@ -16,6 +16,7 @@
 #include "game.h"
 #include "result.h"
 #include "fade.h"
+#include "XLoad.h"
 #include "sound.h"
 
 //========================================
@@ -144,6 +145,15 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 			return -1;
 		}
 
+	}
+
+	//**********************************
+	// Xファイル
+	//**********************************
+	m_pXLoad = CXLoad::Create();
+	if (m_pXLoad == nullptr)
+	{
+		return E_FAIL;
 	}
 
 	//テクスチャ生成
