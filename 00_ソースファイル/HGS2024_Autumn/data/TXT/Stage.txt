@@ -1,0 +1,21 @@
+#=========================================
+#
+# ステージの設定処理
+# Author：小原立暉
+#
+#=========================================
+
+SET_BG
+	POS = 300.0 500.0 200.0
+END_SET_BG
+
+SET_OBSTACLE
+	TYPE = 0
+	POS = 300.0 500.0 200.0
+END_SET_OBSTACLE
+
+SET_REVERSE
+	POS = 300.0 500.0 200.0
+END_SET_REVERSE
+
+END_TXT

@@ -69,7 +69,9 @@ public:
 	@param	type	[in]	Ží—Þ
 	@param	pos		[in]	ˆÊ’u
 	*/
-	static CStageObj *Create(const Type& type, const MyLib::Vector3& pos);
+	static CStageObj* CreateBg(const MyLib::Vector3& pos);
+	static CStageObj* CreateObstacle(const MyLib::Vector3& pos, const int type);
+	static CStageObj* CreateReverse(const MyLib::Vector3& pos);
 	static CListManager<CStageObj> GetList() { return m_List; }	// ƒŠƒXƒgŽæ“¾
 
 protected:

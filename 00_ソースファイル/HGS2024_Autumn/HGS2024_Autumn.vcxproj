@@ -59,6 +59,7 @@
     <ClCompile Include="code\reverse.cpp" />
     <ClCompile Include="code\reverse_direction.cpp" />
     <ClCompile Include="code\sound.cpp" />
+    <ClCompile Include="code\stageEdittor.cpp" />
     <ClCompile Include="code\stagemanager.cpp" />
     <ClCompile Include="code\stageobj.cpp" />
     <ClCompile Include="code\texture.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="code\reverse.h" />
     <ClInclude Include="code\reverse_direction.h" />
     <ClInclude Include="code\sound.h" />
+    <ClInclude Include="code\stageEdittor.h" />
     <ClInclude Include="code\stagemanager.h" />
     <ClInclude Include="code\stageobj.h" />
     <ClInclude Include="code\texture.h" />

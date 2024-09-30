@@ -24,6 +24,7 @@
 #include "sound.h"
 #include "fade.h"
 #include "texture.h"
+#include "calculation.h"
 
 #include "stageobj.h"
 #include "obstacle.h"
@@ -162,7 +163,6 @@ void CPlayer::Update(void)
 	// 自身の情報を取得
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
-	D3DXVECTOR3 rot = GetRot();
 
 	// デルタタイムの取得
 	const float fDeltaTime = CManager::GetInstance()->GetDeltaTime();
@@ -195,7 +195,6 @@ void CPlayer::Update(void)
 	// 情報を設定
 	SetPos(pos);
 	SetMove(move);
-	SetRot(rot);
 
 	// 当たり判定処理
 	Collision();
@@ -210,6 +209,8 @@ void CPlayer::Update(void)
 	}
 
 #endif
+
+	D3DXVECTOR3 rot = GetRot();
 
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
@@ -366,6 +367,14 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 	{
 		// 加算
 		m_fRollTime += fDeltaTime;
+
+		// 回転
+		MyLib::Vector3 rot = GetRot();
+		rot.y = UtilFunc::Correction::EasingLinear(0.0f, (D3DX_PI * 2.0f) * 10.0f, 0.0f, ROLL_TIME, m_fRollTime);
+		rot.y += -D3DX_PI * 0.5f;
+		SetRot(rot);
+
+		Myparticle::Create(Myparticle::TYPE::TYPE_ROLLINGTURTLE, GetPos());
 
 		// 一定時間経過していない場合関数を抜ける
 		if (m_fRollTime < ROLL_TIME) { return; }

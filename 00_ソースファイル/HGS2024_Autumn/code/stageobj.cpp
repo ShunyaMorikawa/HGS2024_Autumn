@@ -65,35 +65,61 @@ CStageObj::~CStageObj()
 }
 
 //==========================================================================
-// ¶¬ˆ—
+// ”wŒi‚Ì¶¬ˆ—
 //==========================================================================
-CStageObj *CStageObj::Create(const Type& type, const MyLib::Vector3& pos)
+CStageObj* CStageObj::CreateBg(const MyLib::Vector3& pos)
 {
 	// ƒƒ‚ƒŠ‚ÌŠm•Û
-	CStageObj* pObj = nullptr;
-
-	switch (type)
-	{
-	case Type::TYPE_BG:
-		pObj = new CStageObj;
-		break;
-
-	case Type::TYPE_OBSTACLE:
-		pObj = CObstacle::Create(CObstacle::TYPE_TREE, pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-		break;
-
-	case Type::TYPE_REVERSE:
-		pObj = new CReverse;
-		break;
-
-	default:
-		break;
-	}
+	CStageObj* pObj = new CStageObj;
 
 	if (pObj != nullptr)
 	{
 		// ˆø”Ý’è
-		pObj->m_type = type;	// Ží—Þ
+		pObj->m_type = TYPE_BG;
+		pObj->SetPos(pos);
+		pObj->SetOriginPosition(pos);
+
+		// ‰Šú‰»ˆ—
+		pObj->Init();
+	}
+
+	return pObj;
+}
+
+//==========================================================================
+// áŠQ•¨‚Ì¶¬ˆ—
+//==========================================================================
+CStageObj* CStageObj::CreateObstacle(const MyLib::Vector3& pos, const int type)
+{
+	// ƒƒ‚ƒŠ‚ÌŠm•Û
+	CStageObj* pObj = CObstacle::Create((CObstacle::EType)(type), pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+	if (pObj != nullptr)
+	{
+		// ˆø”Ý’è
+		pObj->m_type = TYPE_OBSTACLE;
+		pObj->SetPos(pos);
+		pObj->SetOriginPosition(pos);
+
+		// ‰Šú‰»ˆ—
+		pObj->Init();
+	}
+
+	return pObj;
+}
+
+//==========================================================================
+// ”½“]ƒ|ƒCƒ“ƒg‚Ì¶¬ˆ—
+//==========================================================================
+CStageObj* CStageObj::CreateReverse(const MyLib::Vector3& pos)
+{
+	// ƒƒ‚ƒŠ‚ÌŠm•Û
+	CStageObj* pObj = new CReverse;
+
+	if (pObj != nullptr)
+	{
+		// ˆø”Ý’è
+		pObj->m_type = TYPE_REVERSE;
 		pObj->SetPos(pos);
 		pObj->SetOriginPosition(pos);
 

@@ -19,8 +19,7 @@ public:
 	// éÌóﬁ
 	enum EType
 	{
-		TYPE_TREE = 0,	// ñÿ
-		TYPE_RIVER,		// êÏ
+		TYPE_RIVER = 0,	// êÏ
 		TYPE_STONE,		// êŒ
 		TYPE_HOLE,		// åä
 		TYPE_SOFTROCK,	// è_ÇÁÇ©Ç¢ä‚
