@@ -157,7 +157,7 @@ void CPlayer::Update(void)
 	pCamera->Following(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	// 移動処理
-	Move(pos, fDeltaTime);
+	Move(pos, move, fDeltaTime);
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
@@ -259,15 +259,26 @@ void CPlayer::Motion()
 //==========================================
 //  移動処理
 //==========================================
-void CPlayer::Move(D3DXVECTOR3& pos, const float fDeltaTime)
+void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 {
 	// インプット情報の取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
 	CInputPad* pPad = CManager::GetInstance()->GetInputPad();
 
-	// 自身の情報を取得
-	D3DXVECTOR3 move = GetMove();
+#ifdef _DEBUG
+	// 0キーで初期位置に戻る
+	if (pKeyboard->GetTrigger(DIK_0))
+	{
+		pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		return;
+	}
 
+	// デバッグ中は右シフトを押さないと動かない
+	if (!pKeyboard->GetPress(DIK_RSHIFT))
+	{
+		return;
+	}
+#endif
 	// TODO : タイマーが出来次第加速処理を追加
 
 	// 座標に移動量を加算

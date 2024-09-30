@@ -55,6 +55,10 @@ public:
 	void SetRotate(D3DXVECTOR3 rot);
 	D3DXVECTOR3 GetRotate(void);
 
+	// スケール
+	void SetScale(const MyLib::Vector3& scale) { m_scale = scale; }
+	MyLib::Vector3 GetScale() { return m_scale; }
+
 	// 階層
 	void SetType(HIERARCHY type) { m_nType = type; }
 
@@ -69,6 +73,7 @@ private:
 	DWORD m_dwNumMat;				//マテリアルの数
 	D3DXVECTOR3 m_pos;				//位置
 	D3DXVECTOR3 m_rot;				//向き
+	MyLib::Vector3 m_scale;			// スケール
 	CModel *m_pParent;				//親モデルへのポインタ
 
 	D3DXVECTOR3 m_setPos;
