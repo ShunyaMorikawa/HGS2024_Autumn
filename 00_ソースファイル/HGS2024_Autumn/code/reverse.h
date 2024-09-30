@@ -32,6 +32,7 @@ public:
 
 private:
 
+	float m_fRotationTime;	// 回転時間
 	CBillboard* m_pBillboard;		// ビルボードオブジェクト
 	static CListManager<CReverse> m_List;	// リスト
 };

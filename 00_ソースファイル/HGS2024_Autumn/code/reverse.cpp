@@ -17,7 +17,9 @@
 namespace
 {
 	const char* TEXTURE = "data\\TEXTURE\\reverse.png";	// モデルのパス
+	const float ITEMSIZE = 150.0f;	// サイズ
 	const float COLLISIONRANGE = 200.0f;	// 有効範囲
+	const float ROTATION_RANGE = D3DX_PI * 0.2f;
 }
 CListManager<CReverse> CReverse::m_List = {};	// リスト
 
@@ -25,6 +27,7 @@ CListManager<CReverse> CReverse::m_List = {};	// リスト
 //コンストラクタ
 //========================================
 CReverse::CReverse() : CStageObj(),
+m_fRotationTime(0.0f),	// 回転時間
 m_pBillboard(nullptr)
 {
 
@@ -47,7 +50,8 @@ HRESULT CReverse::Init(void)
 	m_List.Regist(this);
 
 	// ビルボード生成
-	m_pBillboard = CBillboard::Create(GetPos(), 200.0f, 200.0f);
+	m_pBillboard = CBillboard::Create(GetPos(), ITEMSIZE, ITEMSIZE);
+	m_pBillboard->SetEnableFront(false);
 
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
@@ -99,7 +103,14 @@ void CReverse::Update(void)
 
 	if (m_pBillboard != nullptr)
 	{
-		m_pBillboard->SetPos(GetPos());
+		m_pBillboard->SetPos(GetPos() + MyLib::Vector3(0.0f, ITEMSIZE, 0.0f));
+
+		// くるくる
+		MyLib::Vector3 rot = m_pBillboard->GetRot();
+		m_fRotationTime += CManager::GetInstance()->GetDeltaTime();
+		rot.y = cosf(m_fRotationTime / 1.0f) * ROTATION_RANGE;
+		m_pBillboard->SetRot(rot);
+
 		m_pBillboard->Update();
 	}
 }

@@ -39,6 +39,9 @@ public:
 	void SetSize(float fWidht, float fHeight);
 	float GetSize();
 
+	void SetEnableFront(bool bFront) { m_bFront = bFront; }		// ³–ÊŒü‚¯‚é
+
+
 	void SetCol(D3DXCOLOR col);
 	D3DXCOLOR GetCol();
 
@@ -51,6 +54,7 @@ private:
 	float m_fHeight;	//‚‚³
 	float m_fLength;	//‘ÎŠpü‚Ì’·‚³
 	float m_fAngle;		//‘ÎŠpü‚ÌŠp“x
+	bool m_bFront;		// ³–ÊŒü‚¯‚é
 };
 
 #endif
