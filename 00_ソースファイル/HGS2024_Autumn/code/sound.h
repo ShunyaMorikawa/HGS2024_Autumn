@@ -81,7 +81,6 @@ private:
 		{ "data\\SE\\Enter.wav", 0 },		//“Gƒqƒbƒg
 		{ "data\\SE\\se_jump.wav", 0 },		//“Gƒqƒbƒg
 		{ "data\\SE\\se_drift.wav", 0 },		//“Gƒqƒbƒg
-		{ "data\\SE\\se_drift.wav", 0 },		//“Gƒqƒbƒg
 		{ "data\\SE\\change.wav", 0 },		//“Gƒqƒbƒg
 		{ "data\\SE\\clash.wav", 0 },		//“Gƒqƒbƒg
 	};
