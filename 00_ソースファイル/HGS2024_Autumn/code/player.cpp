@@ -143,13 +143,15 @@ HRESULT CPlayer::Init(std::string pfile)
 //========================================
 void CPlayer::Uninit(void)
 {
+	if (m_pGauge != nullptr)
+	{
+		m_pGauge->Uninit();
+		m_pGauge = nullptr;
+	}
+
 	// 終了
 	CCharacter::Uninit();
-
 	m_pPlayer = nullptr;
-
-	m_pGauge->Uninit();
-	m_pGauge = nullptr;
 }
 
 //========================================
@@ -197,6 +199,17 @@ void CPlayer::Update(void)
 
 	// 当たり判定処理
 	Collision();
+
+#ifdef _DEBUG
+
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	if (pKeyboard->GetTrigger(DIK_DOWN))
+	{
+		--m_nLife;
+	}
+
+#endif
 
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
@@ -514,6 +527,8 @@ void CPlayer::Collision()
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
 	D3DXMatrixMultiply(&mtx, &mtx, &mtxTrans);
+
+	SetmtxWorld(mtx);
 
 	// 終端までループ
 	while (list.ListLoop(itr))

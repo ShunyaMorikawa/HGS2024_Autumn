@@ -33,6 +33,10 @@ public:
 	void Draw(void);		//描画
 	static CObject2D *Create();		//オブジェクトの生成
 	void SetSize(float fWidht, float fHeight);	//大きさ
+	D3DXVECTOR2 GetSize() { return m_size; }
+	void SetSizeOrigin(const D3DXVECTOR2& size) { m_sizeOrigin = size; }
+	D3DXVECTOR2 GetsizeOrigin() { return m_sizeOrigin; }	// 元のサイズ
+
 	virtual void SetVertex(void);			//頂点情報
 
 	void BindTexture(int pTexture);				//テクスチャ割り当て
@@ -54,9 +58,11 @@ private:
 	//メンバ変数
 	int m_nIdxTexture;		//テクスチャの番号
 	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff;		//頂点情報を格納
-	D3DXCOLOR m_col;		//色
-	float m_fLength;		//対角線の長さ
-	float m_fAngle;			//対角線の角度
+	D3DXCOLOR m_col;			// 色
+	float m_fLength;			// 対角線の長さ
+	float m_fAngle;				// 対角線の角度
+	D3DXVECTOR2 m_size;			// サイズ
+	D3DXVECTOR2 m_sizeOrigin;	// 元のサイズ
 	int m_nCounterAnim;     //アニメーションカウンター
 	int m_nPatternAnim;     //アニメーションパターンNo,
 	float m_aTexV;			//テクスチャ座標の開始位置

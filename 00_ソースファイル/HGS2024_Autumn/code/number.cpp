@@ -12,7 +12,8 @@
 //========================================
 //コンストラクタ
 //========================================
-CNumber::CNumber()
+CNumber::CNumber() : 
+	m_nNumber(0)
 {
 
 }
@@ -48,8 +49,8 @@ void CNumber::Uninit(void)
 //==========================================
 void CNumber::Update(void)
 {
-	// 親クラスの更新処理
-	CObject2D::Update();
+	// テクスチャ座標の設定
+	SetVertexAnim(10, m_nNumber);
 }
 
 //==========================================
@@ -69,9 +70,6 @@ CNumber *CNumber::Create(void)
 	// ポインタ宣言
 	CNumber *pNumber = nullptr;
 
-	//テクスチャのポインタ
-	CTexture *pTexture = CManager::GetInstance()->GetTexture();
-
 	if (pNumber == nullptr)
 	{
 		//生成
@@ -80,9 +78,18 @@ CNumber *CNumber::Create(void)
 		//初期化
 		pNumber->Init();
 
+		//テクスチャのポインタ
+		CTexture* pTexture = CManager::GetInstance()->GetTexture();
 		pNumber->BindTexture(pTexture->Regist("data\\TEXTURE\\number.png"));
 	}
 
 	//ポインタを返す
 	return pNumber;
+}
+
+//==========================================
+//  テクスチャ座標の計算処理
+//==========================================
+void CNumber::CalcUV()
+{
 }

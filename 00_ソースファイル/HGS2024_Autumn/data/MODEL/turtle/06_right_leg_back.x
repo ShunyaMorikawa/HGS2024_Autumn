@@ -227,7 +227,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\HGS2024_Autumn\\01_ƒ‚ƒfƒ‹\\data\\TEXTURE\\shell.png";
+    "data\\TEXTURE\\shell.png";
    }
   }
   Material {
@@ -236,7 +236,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\HGS2024_Autumn\\01_ƒ‚ƒfƒ‹\\data\\TEXTURE\\head.png";
+    "data\\TEXTURE\\head.png";
    }
   }
   Material {

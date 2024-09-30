@@ -75,6 +75,8 @@ public:
 	void SetdwNumMat(DWORD dwNumMat) {m_dwNumMat = dwNumMat;}
 	DWORD GetdwNumMat() { return m_dwNumMat; }
 
+	bool IsDeath() { return m_bRelease; }
+
 protected:
 	void Release(void);
 
