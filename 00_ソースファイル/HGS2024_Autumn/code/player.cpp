@@ -179,6 +179,9 @@ void CPlayer::Update(void)
 	// デルタタイムの取得
 	const float fDeltaTime = CManager::GetInstance()->GetDeltaTime();
 
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// カメラの追従設定
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 #ifndef _DEBUG
@@ -212,6 +215,9 @@ void CPlayer::Update(void)
 
 		// 変化
 		Myparticle::Create(Myparticle::TYPE::TYPE_CHANGE, GetPos());
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_CHANGE);
 
 		// モーション情報の取得
 		CMotion* pMotion = GetMotion();
