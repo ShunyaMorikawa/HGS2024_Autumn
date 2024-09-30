@@ -24,7 +24,6 @@
 #include "sound.h"
 #include "fade.h"
 #include "texture.h"
-#include "lockonMarker.h"
 
 #include "stageobj.h"
 #include "reverse.h"
@@ -446,6 +445,8 @@ void CPlayer::CollisionReverseObj()
 			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
 			return;
 		}
+	}
+}
 
 //==========================================
 // “–‚½‚è”»’è
