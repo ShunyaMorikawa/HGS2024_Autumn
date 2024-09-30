@@ -8,6 +8,7 @@
 #include "manager.h"
 #include "calculation.h"
 #include "model.h"
+#include "input.h"
 
 //==========================================================================
 // 定数定義
@@ -89,6 +90,7 @@ HRESULT CStageObj::Init()
 	// モデル生成
 	m_pModel = CModel::Create(MODEL);
 	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
+	m_pModel->SetPosition(GetPos());
 
 	// 登場
 	SetState(State::STATE_APPEARANCE);
@@ -143,6 +145,7 @@ void CStageObj::Update()
 
 	if (m_pModel != nullptr)
 	{// モデルの更新
+		m_pModel->SetPosition(GetPos());
 		m_pModel->Update();
 	}
 }
@@ -195,7 +198,7 @@ void CStageObj::StateLeave()
 
 	// 線形補間
 	MyLib::Vector3 pos = posOrigin;
-	pos.y = UtilFunc::Correction::EaseOutBack(0.0f, posOrigin.y, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	pos.y = UtilFunc::Correction::EaseInBack(0.0f, posOrigin.y, 0.0f, StateTime::APPEARANCE, m_fStateTime);
 
 	// 位置設定
 	SetPos(pos);

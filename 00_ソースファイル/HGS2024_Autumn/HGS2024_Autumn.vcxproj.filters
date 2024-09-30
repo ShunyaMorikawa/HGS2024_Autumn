@@ -22,6 +22,9 @@
     <Filter Include="obstacle">
       <UniqueIdentifier>{6ddc957f-421a-4714-9345-5f4744d5c1e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mode">
+      <UniqueIdentifier>{6febe928-b976-4e16-8940-f5c5d71c069f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\billboard.cpp">
@@ -43,9 +46,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="code\field.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="code\game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="code\gauge.cpp">
@@ -108,12 +108,6 @@
     <ClCompile Include="code\texture.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="code\title.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="code\tutorial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="code\useful.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -144,6 +138,15 @@
     <ClCompile Include="code\obstacleTree.cpp">
       <Filter>obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="code\game.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="code\title.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="code\tutorial.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
     <ClCompile Include="code\obstacleSoftRock.cpp">
       <Filter>obstacle</Filter>
     </ClCompile>
@@ -168,9 +171,6 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="code\field.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="code\game.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="code\gauge.h">
@@ -233,12 +233,6 @@
     <ClInclude Include="code\texture.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="code\title.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="code\tutorial.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="code\useful.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
@@ -271,6 +265,15 @@
     </ClInclude>
     <ClInclude Include="code\obstacleTree.h">
       <Filter>obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="code\game.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="code\title.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="code\tutorial.h">
+      <Filter>mode</Filter>
     </ClInclude>
     <ClInclude Include="code\obstacleSoftRock.h">
       <Filter>obstacle</Filter>
