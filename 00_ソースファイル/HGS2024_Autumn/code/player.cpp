@@ -380,6 +380,15 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;
+
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop();
+
+	// サウンド再生
+	pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 }
 
 //==========================================
@@ -398,6 +407,15 @@ void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// 移動量を加算
 		move.y += JUMP_MOVE;
+
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
+		// サウンド停止
+		pSound->Stop();
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 	}
 }
 
@@ -427,6 +445,7 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		m_fRollTime = 0.0f;
 		m_bRoll = false;
 		m_fHeight = HEIGHT;
+		m_State = STATE_NORMAL;
 
 		return;
 	}
@@ -439,6 +458,17 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// 身長を減らす
 		m_fHeight *= HEIGHT_SCALE;
+
+		// 回転状態にする
+		m_State = STATE_ROLL;
+		// サウンド情報取得
+		CSound* pSound = CManager::GetInstance()->GetSound();
+
+		// サウンド停止
+		pSound->Stop();
+
+		// サウンド再生
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
 	}
 }
 
@@ -544,7 +574,7 @@ void CPlayer::CollisionReverseObj()
 	while (list.ListLoop(itr))
 	{
 		CReverse* pObj = *itr;
-		if (pObj->Collision(mtx, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
+		if (pObj->Collision(mtx, MyLib::Vector3(RADIUS, HEIGHT, RADIUS),(PLAYERSTATE)(m_State)))
 		{
 			// 反転
 			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
@@ -595,7 +625,7 @@ void CPlayer::Collision()
 	{
 		CObstacle* pObj = *itr;
 
-		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
+		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS), (PLAYERSTATE)(m_State)))
 		{ // 当たり判定に当たった場合
 
 			// 加速を半分にする

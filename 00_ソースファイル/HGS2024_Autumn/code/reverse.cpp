@@ -11,6 +11,7 @@
 #include "manager.h"
 #include "texture.h"
 #include "reverse_direction.h"
+#include "player.h"
 
 //========================================
 //名前空間
@@ -146,7 +147,7 @@ void CReverse::Draw(void)
 //========================================
 // プレイヤーとの当たり判定
 //========================================
-bool CReverse::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
+bool CReverse::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize, const CPlayer::PLAYERSTATE /*state*/)
 {
 	bool bHit = false;
 

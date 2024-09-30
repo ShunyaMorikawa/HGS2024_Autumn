@@ -122,7 +122,7 @@ void CObstacle::Update(void)
 //========================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //========================================
-bool CObstacle::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
+bool CObstacle::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize, const CPlayer::PLAYERSTATE /*state*/)
 {
 	D3DXVECTOR3 max = rSize;
 	D3DXVECTOR3 min = D3DXVECTOR3(-rSize.x, 0.0f, -rSize.z);

@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/00_ソースファイル/HGS2024_Autumn/data/FILE/ranking.bin

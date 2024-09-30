@@ -5,10 +5,9 @@
 #
 #=========================================
 
-SET_BG
-	POS = 300.0 0.0 0.0
-END_SET_BG
-
+#=========================================
+# 障害物
+#=========================================
 SET_OBSTACLE
 	TYPE = 1
 	POS = 300.0 0.0 0.0
@@ -39,8 +38,9 @@ SET_OBSTACLE
 	POS = 2895.0 0.0 0.0
 END_SET_OBSTACLE
 
-SET_REVERSE
-	POS = 300.0 0.0 0.0
-END_SET_REVERSE
+SET_OBSTACLE
+	TYPE = 2
+	POS = 3400.0 0.0 0.0
+END_SET_OBSTACLE
 
 END_TXT

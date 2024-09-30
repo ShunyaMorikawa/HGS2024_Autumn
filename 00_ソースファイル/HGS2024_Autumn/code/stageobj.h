@@ -10,6 +10,7 @@
 
 #include "object.h"
 #include "listmanager.h"
+#include "player.h"
 
 // 前方宣言
 class CModel;
@@ -60,7 +61,7 @@ public:
 	virtual void Kill();		// 削除
 	void SetState(const State& state);	// 状態設定
 	void CollisionRange(const MyLib::Vector3& rPos);	// 範囲判定
-	virtual bool Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize);	// プレイヤーとの当たり判定
+	virtual bool Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize, const CPlayer::PLAYERSTATE state);	// プレイヤーとの当たり判定
 
 	//=============================
 	// 静的関数
