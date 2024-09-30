@@ -56,6 +56,11 @@ HRESULT CStageManager::Init()
 	// ステージロード処理
 	StageLoad();
 
+	for (int i = 0 ; i < 200; i++)
+	{
+		CStageObj::CreateBg(MyLib::Vector3(MyLib::Vector3(-500.0f + i * 200.0f, 0.0f, 2000.0f)));
+	}
+
 	return S_OK;
 }
 
