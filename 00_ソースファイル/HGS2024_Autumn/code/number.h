@@ -18,6 +18,11 @@ public:
 	CNumber();		//コンストラクタ
 	~CNumber();		//デストラクタ
 
+	HRESULT Init(void);		//初期化
+	void Uninit(void);		//終了
+	void Update(void);		//更新
+	void Draw(void);		//描画
+
 	//メンバ関数
 	static CNumber *Create(void);	//プレイヤー生成
 };
