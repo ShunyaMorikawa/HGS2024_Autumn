@@ -106,12 +106,23 @@ HRESULT CStageObj::Init()
 	// ƒŠƒXƒg‚É’Ç‰Á
 	m_List.Regist(this);
 
+<<<<<<< .mine
 	// ƒ‚ƒfƒ‹¶¬
 	m_pModel = CModel::Create(MODEL);
 	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 	m_pModel->SetPosition(GetPos());
-	m_pModel->SetScale(0.0f);
+=======
 
+
+
+
+>>>>>>> .theirs
+	m_pModel->SetScale(0.0f);
+<<<<<<< .mine
+
+=======
+
+>>>>>>> .theirs
 	// “oê
 	SetState(State::STATE_NONE);
 	return S_OK;
