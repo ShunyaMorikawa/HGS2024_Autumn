@@ -528,6 +528,8 @@ void CPlayer::Collision()
 	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
 	D3DXMatrixMultiply(&mtx, &mtx, &mtxTrans);
 
+	SetmtxWorld(mtx);
+
 	// 終端までループ
 	while (list.ListLoop(itr))
 	{
