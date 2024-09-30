@@ -5,6 +5,7 @@
 //
 //========================================
 #include "obstacle.h"
+#include "model.h"
 
 #include "obstacleTree.h"
 #include "obstacleRiver.h"
@@ -23,7 +24,7 @@ namespace
 //========================================
 //コンストラクタ
 //========================================
-CObstacle::CObstacle() : CModel(),
+CObstacle::CObstacle() : CStageObj(),
 m_type(TYPE_TREE)
 {//値をクリア
 }
@@ -40,12 +41,12 @@ CObstacle::~CObstacle()
 //========================================
 HRESULT CObstacle::Init(const EType type)
 {
-	//if (FAILED(CModel::Init()))
-	//{ // 初期化に失敗した場合
+	if (FAILED(CStageObj::Init()))
+	{ // 初期化に失敗した場合
 
-	//	// 失敗を返す
-	//	return E_FAIL;
-	//}
+		// 失敗を返す
+		return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -56,7 +57,7 @@ HRESULT CObstacle::Init(const EType type)
 void CObstacle::Uninit(void)
 {
 	// 終了
-	CModel::Uninit();
+	CStageObj::Uninit();
 }
 
 //========================================
@@ -65,7 +66,7 @@ void CObstacle::Uninit(void)
 void CObstacle::Update(void)
 {
 	// 更新
-	CModel::Update();
+	CStageObj::Update();
 }
 
 //========================================
@@ -74,7 +75,7 @@ void CObstacle::Update(void)
 void CObstacle::Draw(void)
 {
 	// 描画
-	CModel::Draw();
+	CStageObj::Draw();
 }
 
 //========================================
@@ -125,8 +126,8 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 	if (FAILED(pObstacle->Init(type))) { assert(false); return nullptr; }
 
 	// 値の設定
-	pObstacle->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -500.0f));	// 位置
-	pObstacle->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));			// 向き
+	pObstacle->m_pModel->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -500.0f));	// 位置
+	pObstacle->m_pModel->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));			// 向き
 
 	// ポインタを返す
 	return pObstacle;
