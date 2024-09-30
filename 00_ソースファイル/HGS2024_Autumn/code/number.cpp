@@ -50,7 +50,7 @@ void CNumber::Uninit(void)
 void CNumber::Update(void)
 {
 	// テクスチャ座標の設定
-	SetVertexAnim(10, 0);
+	SetVertexAnim(10, m_nNumber);
 }
 
 //==========================================

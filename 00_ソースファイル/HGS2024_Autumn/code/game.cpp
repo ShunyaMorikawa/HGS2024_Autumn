@@ -104,10 +104,11 @@ void CGame::Uninit(void)
 //========================================
 void CGame::Update(void)
 {
+#ifdef _DEBUG
+
 	// CInputKeyboardŒ^‚Ìƒ|ƒCƒ“ƒ^
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
-#ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_F2) == true)
 	{// ƒQ[ƒ€‰æ–Ê‚É‘JˆÚ
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);

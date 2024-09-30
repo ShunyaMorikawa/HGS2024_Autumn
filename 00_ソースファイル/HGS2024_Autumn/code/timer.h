@@ -27,6 +27,8 @@ public:
 	void Update();
 	void Draw();
 
+	bool GetTimeZero(); // タイムアップしてる判定
+
 	static CTimer* Create();
 
 private:
