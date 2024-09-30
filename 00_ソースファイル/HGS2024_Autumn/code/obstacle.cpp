@@ -23,7 +23,7 @@ namespace
 	{
 		"data\\MODEL\\obstacle\\wood00.x",		// êÏ
 		"data\\MODEL\\obstacle\\stone.x",		// êŒ
-		"data\\MODEL\\obstacle\\wood00.x",		// åä
+		"data\\MODEL\\obstacle\\hole.x",		// åä
 		"data\\MODEL\\obstacle\\wood00.x",		// è_ÇÁÇ©Ç¢ä‚
 	};
 
