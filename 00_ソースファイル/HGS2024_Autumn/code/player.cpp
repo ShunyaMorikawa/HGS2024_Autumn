@@ -24,7 +24,6 @@
 #include "sound.h"
 #include "fade.h"
 #include "texture.h"
-#include "lockonMarker.h"
 
 #include "stageobj.h"
 #include "reverse.h"
