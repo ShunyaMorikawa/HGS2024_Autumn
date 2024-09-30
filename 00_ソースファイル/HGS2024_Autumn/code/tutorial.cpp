@@ -90,6 +90,16 @@ void CTutorial::Update(void)
 	//CInputPad情報取得
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
 
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
+	if (pInputKeyboard->GetTrigger(DIK_D) ||
+		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
+	{
+		// テクスチャ設定
+		m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\tutorial2.png"));
+	}
+
 	if (pInputKeyboard->GetTrigger(DIK_RETURN)||
 		pInputPad->GetTrigger(CInputPad::BUTTON_START, 0))
 	{
