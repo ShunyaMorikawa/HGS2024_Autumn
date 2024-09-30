@@ -31,7 +31,7 @@ namespace
 	{
 		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// êÏ
 		D3DXVECTOR3(30.0f, 300.0f, 30.0f),		// êŒ
-		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// åä
+		D3DXVECTOR3(50.0f, 0.0f, 50.0f),		// åä
 		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// è_ÇÁÇ©Ç¢ä‚
 	};
 
@@ -39,7 +39,7 @@ namespace
 	{
 		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// êÏ
 		D3DXVECTOR3(-30.0f, 0.0f, -30.0f),		// êŒ
-		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// åä
+		D3DXVECTOR3(-50.0f, 0.0f, -50.0f),		// åä
 		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// è_ÇÁÇ©Ç¢ä‚
 	};
 }
