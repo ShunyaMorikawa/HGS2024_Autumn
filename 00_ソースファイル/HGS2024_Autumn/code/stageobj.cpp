@@ -24,8 +24,8 @@ namespace
 
 namespace StateTime
 {
-	const float APPEARANCE = 1.0f;	// ìoèÍ
-	const float LEAVE = 1.0f;		// ëﬁèÍ
+	const float APPEARANCE = 0.7f;	// ìoèÍ
+	const float LEAVE = 0.7f;		// ëﬁèÍ
 }
 
 //==========================================================================

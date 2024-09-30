@@ -150,6 +150,9 @@
     <ClCompile Include="code\obstacleSoftRock.cpp">
       <Filter>obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="code\reverse.cpp">
+      <Filter>stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="code\obstacleSoftRock.h">
       <Filter>obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="code\reverse.h">
+      <Filter>stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
