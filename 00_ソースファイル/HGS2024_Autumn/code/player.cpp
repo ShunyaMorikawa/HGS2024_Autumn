@@ -181,7 +181,7 @@ void CPlayer::Update(void)
 #ifndef _DEBUG
 	pCamera->Following(pos, D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 #endif // !_DEBUG
-#if 0
+#if 1
 	pCamera->Following(pos, D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 #endif // 0
 
@@ -247,17 +247,6 @@ void CPlayer::Update(void)
 
 	// 当たり判定処理
 	Collision();
-
-#ifdef _DEBUG
-
-	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	if (pKeyboard->GetTrigger(DIK_DOWN))
-	{
-		--m_nLife;
-	}
-
-#endif
 
 	D3DXVECTOR3 rot = GetRot();
 	// デバッグ表示
@@ -539,7 +528,7 @@ void CPlayer::CheckStageObjRange()
 //==========================================
 void CPlayer::CollisionReverseObj()
 {
-#ifndef _DEBUG
+//#ifndef _DEBUG
 
 	// 反転オブジェのリスト取得
 	CListManager<CReverse> list = CReverse::GetList();
@@ -563,7 +552,7 @@ void CPlayer::CollisionReverseObj()
 		}
 	}
 
-#endif // !_DEBUG
+//#endif // !_DEBUG
 }
 
 //==========================================
@@ -571,7 +560,7 @@ void CPlayer::CollisionReverseObj()
 //==========================================
 void CPlayer::Collision()
 {
-#ifndef _DEBUG
+//#ifndef _DEBUG
 
 	// ダメージを受けない状態の場合、この関数を抜ける
 	if (m_nDamageCount > 0) { return; }
@@ -617,7 +606,7 @@ void CPlayer::Collision()
 		}
 	}
 
-#endif // !_DEBUG
+//#endif // !_DEBUG
 }
 
 //==========================================

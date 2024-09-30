@@ -138,7 +138,6 @@ void CGame::Uninit(void)
 
 #endif // _DEBUG
 
-
 	m_pGame = nullptr;
 }
 

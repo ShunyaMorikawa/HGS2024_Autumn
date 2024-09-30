@@ -21,16 +21,14 @@ namespace
 {
 	const char* MODEL[] =		// モデルのパス
 	{
-		"data\\MODEL\\obstacle\\wood00.x",		// 木
 		"data\\MODEL\\obstacle\\wood00.x",		// 川
-		"data\\MODEL\\obstacle\\wood00.x",		// 石
+		"data\\MODEL\\obstacle\\stone.x",		// 石
 		"data\\MODEL\\obstacle\\wood00.x",		// 穴
 		"data\\MODEL\\obstacle\\wood00.x",		// 柔らかい岩
 	};
 
 	const D3DXVECTOR3 SIZEMAX[] =	// サイズの最大値
 	{
-		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 木
 		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 川
 		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 石
 		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 穴
