@@ -73,7 +73,7 @@ void CObstacleSoftRock::Draw(void)
 //========================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //========================================
-bool CObstacleSoftRock::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacleSoftRock::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return false;
 }

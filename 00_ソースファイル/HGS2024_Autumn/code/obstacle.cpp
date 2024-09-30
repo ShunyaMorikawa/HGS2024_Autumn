@@ -72,7 +72,7 @@ void CObstacle::Update(void)
 //========================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //========================================
-bool CObstacle::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacle::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return true;
 }

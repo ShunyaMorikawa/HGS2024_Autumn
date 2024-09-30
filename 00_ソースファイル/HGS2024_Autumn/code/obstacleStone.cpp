@@ -73,7 +73,7 @@ void CObstacleStone::Draw(void)
 //========================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //========================================
-bool CObstacleStone::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacleStone::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return false;
 }
