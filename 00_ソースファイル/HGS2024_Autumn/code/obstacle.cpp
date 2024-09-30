@@ -1,10 +1,15 @@
 //========================================
 //
 // 障害物の処理[obstacle.cpp]
-// Author：森川駿弥
+// Author：小原立暉
 //
 //========================================
 #include "obstacle.h"
+
+#include "obstacleTree.h"
+#include "obstacleRiver.h"
+#include "obstacleStone.h"
+#include "obstacleHole.h"
 
 //========================================
 //名前空間
@@ -17,7 +22,8 @@ namespace
 //========================================
 //コンストラクタ
 //========================================
-CObstacle::CObstacle() : CModel()
+CObstacle::CObstacle() : CModel(),
+m_type(TYPE_TREE)
 {//値をクリア
 }
 
@@ -75,28 +81,46 @@ void CObstacle::Draw(void)
 }
 
 //========================================
-// プレイヤーとの当たり判定
-//========================================
-bool CObstacle::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
-{
-	return false;
-}
-
-//========================================
 // 生成処理
 //========================================
 CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRot)
 {
-	//CObstacle* pObstacle = new ;
+	CObstacle* pObstacle = nullptr;
 
-	//if (m_pEnemy == nullptr)
-	//{//	インスタンス生成
-	//	m_pEnemy = new CEnemy;
+	switch (type)
+	{
+	case CObstacle::TYPE_TREE:
 
-	//	m_pEnemy->Init(pfile);
-	//}
+		pObstacle = new CObstacleTree;
 
-	//return m_pEnemy;
+		break;
 
-	return nullptr;
+	case CObstacle::TYPE_RIVER:
+
+		pObstacle = new CObstacleRiver;
+
+		break;
+
+	case CObstacle::TYPE_STONE:
+
+		pObstacle = new CObstacleStone;
+
+		break;
+
+	case CObstacle::TYPE_HOLE:
+
+		pObstacle = new CObstacleHole;
+
+		break;
+
+	default:
+		assert(false);
+		break;
+	}
+
+	// 初期化処理に失敗したら、停止
+	if (FAILED(pObstacle->Init(type))) { assert(false); return nullptr; }
+
+	// ポインタを返す
+	return pObstacle;
 }

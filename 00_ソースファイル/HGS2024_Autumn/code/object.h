@@ -41,6 +41,10 @@ public:
 	// 位置の設定と取得
 	void SetPos(D3DXVECTOR3 pos);
 	D3DXVECTOR3 GetPos(void);
+	void SetOriginPosition(const MyLib::Vector3& pos) { m_posOrigin = pos; }	// 初期位置
+	MyLib::Vector3 GetOriginPosition() { return m_posOrigin; }					// 初期位置
+	void SetOldPosition(const MyLib::Vector3& pos) { m_posOld = pos; }			// 過去位置
+	MyLib::Vector3 GetOldPosition() { return m_posOld; }						// 過去位置
 
 	// 移動量の設定と取得
 	void SetMove(D3DXVECTOR3 move);
@@ -93,9 +97,11 @@ private:
 	DWORD m_dwNumMat;				//マテリアルの数
 
 	D3DXVECTOR3 m_vtxMin, m_vtxMax;	//モデルの最大、最小値
-	D3DXVECTOR3 m_pos;		// 位置
-	D3DXVECTOR3 m_rot;		// 向き
-	D3DXVECTOR3 m_move;		// 移動量
+	D3DXVECTOR3 m_pos;			// 位置
+	MyLib::Vector3 m_posOrigin;	// 初期位置
+	MyLib::Vector3 m_posOld;	// 過去位置
+	D3DXVECTOR3 m_rot;			// 向き
+	D3DXVECTOR3 m_move;			// 移動量
 
 	CObject *m_pNext;		//次
 	CObject *m_pPrev;		//前回

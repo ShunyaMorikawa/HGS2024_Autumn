@@ -1,10 +1,10 @@
 //========================================
 //
-// 障害物(川)の処理[obstacleRiver.cpp]
+// 障害物(穴)の処理[obstacleHole.cpp]
 // Author：小原立暉
 //
 //========================================
-#include "obstacleRiver.h"
+#include "obstacleHole.h"
 
 //========================================
 //名前空間
@@ -17,21 +17,21 @@ namespace
 //========================================
 //コンストラクタ
 //========================================
-CObstacleRiver::CObstacleRiver() : CObstacle()
+CObstacleHole::CObstacleHole() : CObstacle()
 {//値をクリア
 }
 
 //========================================
 //デストラクタ
 //========================================
-CObstacleRiver::~CObstacleRiver()
+CObstacleHole::~CObstacleHole()
 {
 }
 
 //========================================
 // 初期化
 //========================================
-HRESULT CObstacleRiver::Init(const EType type)
+HRESULT CObstacleHole::Init(const EType type)
 {
 	if (FAILED(CObstacle::Init()))
 	{ // 初期化処理に失敗した場合
@@ -46,7 +46,7 @@ HRESULT CObstacleRiver::Init(const EType type)
 //========================================
 // 終了
 //========================================
-void CObstacleRiver::Uninit(void)
+void CObstacleHole::Uninit(void)
 {
 	// 終了
 	CObstacle::Uninit();
@@ -55,7 +55,7 @@ void CObstacleRiver::Uninit(void)
 //========================================
 // 更新
 //========================================
-void CObstacleRiver::Update(void)
+void CObstacleHole::Update(void)
 {
 	// 更新
 	CObstacle::Update();
@@ -64,7 +64,7 @@ void CObstacleRiver::Update(void)
 //========================================
 // 描画
 //========================================
-void CObstacleRiver::Draw(void)
+void CObstacleHole::Draw(void)
 {
 	// 描画
 	CObstacle::Draw();
@@ -73,7 +73,7 @@ void CObstacleRiver::Draw(void)
 //========================================
 // プレイヤーとの当たり判定
 //========================================
-bool CObstacleRiver::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacleHole::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return false;
 }

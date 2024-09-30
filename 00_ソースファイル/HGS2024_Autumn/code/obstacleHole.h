@@ -1,23 +1,23 @@
 //========================================
 //
-// 障害物(川)の処理[obstacleRiver.h]
+// 障害物(穴)の処理[obstacleHole.h]
 // Author：小原立暉
 //
 //========================================
-#ifndef _OBSTACLE_RIVER_H_
-#define _OBSTACLE_RIVER_H_
+#ifndef _OBSTACLE_HOLE_H_
+#define _OBSTACLE_HOLE_H_
 
 #include "obstacle.h"
 
 //========================================
-// 障害物(川)クラス
+// 障害物(穴)クラス
 //========================================
-class CObstacleRiver : public CObstacle
+class CObstacleHole : public CObstacle
 {
 public:
 
-	CObstacleRiver();		// コンストラクタ
-	~CObstacleRiver();		// デストラクタ
+	CObstacleHole();		// コンストラクタ
+	~CObstacleHole();		// デストラクタ
 
 	// メンバ関数
 	HRESULT Init(const EType type);

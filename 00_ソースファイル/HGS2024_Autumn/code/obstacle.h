@@ -1,7 +1,7 @@
 //========================================
 //
 // áŠQ•¨‚Ìˆ—[obstacle.h]
-// AuthorFXìx–í
+// AuthorF¬Œ´—§ô
 //
 //========================================
 #ifndef _OBSTACLE_H_
@@ -22,6 +22,7 @@ public:
 		TYPE_TREE = 0,	// –Ø
 		TYPE_RIVER,		// ì
 		TYPE_STONE,		// Î
+		TYPE_HOLE,		// ŒŠ
 		TYPE_MAX		// —ñ‹“Œ^‚Ì‘”
 	};
 
@@ -42,7 +43,8 @@ public:
 
 private:
 
-
+	// ƒƒ“ƒo•Ï”
+	EType m_type;		// í—Ş
 };
 
 #endif
