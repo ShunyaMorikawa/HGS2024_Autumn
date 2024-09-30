@@ -108,7 +108,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	m_typeDefault = m_type = TYPE_TURTLE;
 
 	// 位置設定
-	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
+	SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	// 向き設定
 	SetRot(D3DXVECTOR3(0.0f, -D3DX_PI * 0.5f, 0.0f));
@@ -178,36 +178,6 @@ void CPlayer::Update(void)
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
-
-	if (m_nLife <= 0)
-	{
-		//テクスチャの情報取得
-		CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-		// サウンド情報取得
-		CSound* pSound = CManager::GetInstance()->GetSound();
-
-		// 生成
-		CObject2D* pObje2D = CObject2D::Create();
-
-		// 位置設定
-		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
-
-		// サイズ設定
-		pObje2D->SetSize(SCREEN_WIDTH, 200.0f);
-
-		// 敗北テクスチャ
-		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
-
-		// サウンド停止
-		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
-
-		// サウンド再生
-		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_LOSE);
-
-		// 終了
-		Uninit();
-	}
 
 	// モーション
 	Motion();
@@ -284,7 +254,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	CInputPad* pPad = CManager::GetInstance()->GetInputPad();
 
 #ifdef _DEBUG
-	// 0キーで初期位置に戻る
+	// 2キーで初期位置に戻る
 	if (pKeyboard->GetTrigger(DIK_2))
 	{
 		pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

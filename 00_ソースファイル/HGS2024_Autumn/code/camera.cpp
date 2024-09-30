@@ -16,16 +16,17 @@
 //=======================================
 namespace
 {
-const float CAMERA_POS_Y = 375.0f;		// カメラのY座標の初期位置
-const float CAMERA_POS_Z = -1000.0f;	// カメラのZ座標の初期位置
-const float CAMERA_DISTANCE = 400.0f;	// カメラとの距離
-const float CAMERA_SPEED = 1.5f;		// カメラの移動速度
-const float CMAERA_INERTIA = 0.2f;		// カメラの慣性
-const float CAMERA_R_DISTANCE = 25.0f;	// 注視点の距離
-const float CAMERA_V_MOVE = 0.03f;		// 視点の移動速度
-const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
-const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
-const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
+	const float CAMERA_POS_Y = 375.0f;		// カメラのY座標の初期位置
+	const float CAMERA_POS_Z = -500.0f;	// カメラのZ座標の初期位置
+	const float CAMERA_DISTANCE = 400.0f;	// カメラとの距離
+	const float CAMERA_SPEED = 1.5f;		// カメラの移動速度
+	const float CMAERA_INERTIA = 0.2f;		// カメラの慣性
+	const float CAMERA_R_DISTANCE = 25.0f;	// 注視点の距離
+	const float CAMERA_V_MOVE = 0.03f;		// 視点の移動速度
+	const float CAMERA_R_INERTIA = 0.2f;	// 注視点の慣性
+	const float CAMERA_V_INERTIA = 0.2f;	// 視点の慣性
+	const float CAMERA_DISTANCE_TITLE = 300.0f;		// カメラ
+	const D3DXVECTOR3 DISTANCE_V_R = D3DXVECTOR3(0.0f, 0.0f, -1000.0f);
 }
 
 //=======================================
@@ -56,28 +57,17 @@ CCamera::~CCamera()
 //=======================================
 HRESULT CCamera::Init(void)
 {
-	//視点
-	m_posV = D3DXVECTOR3(0.0f, CAMERA_POS_Y, CAMERA_POS_Z);
-
 	//注視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	//視点
+	m_posV = m_posR + DISTANCE_V_R;
 
 	//上方向ベクトル
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	//向き
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	// 目的の視点・注視点
-	m_VDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_RDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	//プレイヤーとカメラの距離
-	m_fDistance = CAMERA_DISTANCE;
-
-	// 視点・注視点
-	m_posV.x = m_posR.x + sinf(m_rot.y) * m_fDistance;
-	m_posV.z = m_posR.z + cosf(m_rot.y) * m_fDistance;
 
 	//成功を返す
 	return S_OK;
@@ -215,39 +205,8 @@ float CCamera::RotNor(float RotN)
 //=======================================
 void CCamera::Following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	//注視点
-	D3DXVECTOR3 Diff;
-
-	//視点
-	D3DXVECTOR3 VDiff;
-
-	m_rot.y = rot.y;
-
-	//注視点
-	m_RDest = D3DXVECTOR3(
-		pos.x + -sinf(rot.y) 
-		* CAMERA_R_DISTANCE,
-		pos.y, 
-		pos.z + -cosf(rot.y) * 25.0f);
-
-	m_VDest.x = m_RDest.x + sinf(m_rot.y) * m_fDistance;
-	m_VDest.z = m_RDest.z + cosf(m_rot.y) * m_fDistance;
-
-	//注視点
-	Diff = D3DXVECTOR3(m_RDest.x - m_posR.x, 
-		0.0f, 
-		m_RDest.z - m_posR.z);
-
-	//注視点の慣性
-	m_posR += Diff * CAMERA_R_INERTIA;
-
-	//視点
-	VDiff = D3DXVECTOR3(m_VDest.x - m_posV.x, 
-		0.0f,
-		m_VDest.z - m_posV.z);
-
-	//視点の慣性
-	m_posV += VDiff * CAMERA_V_INERTIA;
+	m_posR = pos;
+	m_posV = m_posR + DISTANCE_V_R;
 }
 
 //=======================================
