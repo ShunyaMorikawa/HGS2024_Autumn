@@ -17,6 +17,7 @@
 #include "sky.h"
 #include "stageobj.h"
 #include "stagemanager.h"
+#include "goal.h"
 #ifdef _DEBUG
 #include "stageEdittor.h"
 #endif // _DEBUG
@@ -103,6 +104,9 @@ HRESULT CGame::Init(void)
 	{
 		m_pStageManager = CStageManager::Create();
 	}
+
+	// ゴールの設置
+	CGoal::Create();
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
