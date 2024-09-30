@@ -28,6 +28,7 @@ CObject3D::CObject3D(int nPriority) :
 	m_pTexture = nullptr;		// テクスチャへのポインタ
 	m_pVtxBuff = nullptr;		// 頂点情報へのポインタ
 	m_mtxWorld;					// ワールドマトリックス
+	m_nIdxTexture = 0;
 }
 
 //========================================

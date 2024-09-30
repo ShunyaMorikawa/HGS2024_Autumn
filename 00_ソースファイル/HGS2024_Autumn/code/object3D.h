@@ -38,6 +38,7 @@ public:
 	float GetField();
 
 	LPDIRECT3DVERTEXBUFFER9 GetVtxBuff() { return m_pVtxBuff; }		// 頂点情報の取得
+	int GetIdxTexture() { return m_nIdxTexture; }		// テクスチャの番号
 
 private:
 	//メンバ変数
