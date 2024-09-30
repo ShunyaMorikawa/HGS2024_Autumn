@@ -165,11 +165,8 @@ void CRenderer::Draw(void)
 		// フェード描画
 		pFade->Draw();
 
-		//ポインタ
-		CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
-
 		//デバッグ表示
-		pDebugProc->Draw();
+		DebugProc::Draw();
 
 		//描画終了
 		m_pD3DDevice->EndScene();

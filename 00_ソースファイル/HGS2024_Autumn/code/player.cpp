@@ -249,14 +249,11 @@ void CPlayer::Update(void)
 	// ロックオン
 	LockOn();
 
-	// デバッグ表示の情報取得
-	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
-
 	// デバッグ表示
-	pDebugProc->Print("\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
-	pDebugProc->Print("プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
-	pDebugProc->Print("プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
-	pDebugProc->Print("プレイヤーの体力：%d\n", m_nLife);
+	DebugProc::Print(DebugProc::POINT_LEFT, "\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの体力：%d\n", m_nLife);
 }
 
 //========================================

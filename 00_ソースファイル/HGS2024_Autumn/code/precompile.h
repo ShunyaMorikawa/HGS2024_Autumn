@@ -24,5 +24,6 @@
 #include <string.h>
 #include <time.h>
 #include <vector>
+#include "debugproc.h"
 
 #endif // _PRECOMPILE_H_

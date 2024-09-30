@@ -2,9 +2,9 @@
 //
 // デバッグ表示処理 [debugproc.cpp]
 // Author : Ibuki Okusada
+// Aded by Tomoya Kanazaki
 //
 //==========================================================
-#include "main.h"
 #include "debugproc.h"
 #include <string.h>
 #include <stdio.h>
@@ -12,48 +12,38 @@
 #include "manager.h"
 #include "renderer.h"
 
-// 静的メンバ変数宣言
-LPD3DXFONT CDebugProc::m_pFont = nullptr;	// デバッグフォントへのポインタ
-
-//========================================
-// 定数定義
-//========================================
+//==========================================
+//  静的変数宣言
+//==========================================
 namespace
 {
-const int MAX_FLOATNUM = 2;	// 小数点以下の表示桁数
-}
+	// 定数定義
+	const int MAX_FLOATNUM = 4; // 小数点以下の表示桁数
+	const int MAX_DEBUGSTRING = 2048; // デバッグ表示の最大文字数
+	const char* FONT_PASS = "Terminal"; // 使用するフォント
+	const D3DXCOLOR FONT_COL = D3DCOLOR_RGBA(250, 250, 250, 255);	// フォント色
 
-//==========================================================
-// コンストラクタ
-//==========================================================
-CDebugProc::CDebugProc()
-{
-	//デバッグ表示情報のクリア
-	m_bDisp = false;
-	m_pFont = nullptr;
-	memset(&m_aStr[0], NULL, sizeof(m_aStr));
-}
-
-//==========================================================
-// デストラクタ
-//==========================================================
-CDebugProc::~CDebugProc()
-{
-	
+	// 静的変数
+	LPD3DXFONT m_pFont = nullptr; // デバッグフォントへのポインタ
+	char m_aStr[DebugProc::POINT_MAX][MAX_DEBUGSTRING] = {}; // デバッグ表示用の文字列
+	bool m_bDisp = true; // 表示フラグ
 }
 
 //==========================================================
 //デバッグ表示の初期化処理
 //==========================================================
-void CDebugProc::Init(void)
+void DebugProc::Init()
 {
-	LPDIRECT3DDEVICE9 pDevice;		//デバイスへのポインタ
+	// デバッグ表示情報の初期化
+	m_bDisp = false;
+	m_pFont = nullptr;
+	memset(&m_aStr[0][0], 0, sizeof(m_aStr));
 
 	//デバイスの取得
-	pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//デバッグ表示用フォントの生成
-	D3DXCreateFont(pDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pFont);
+	D3DXCreateFont(pDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, FONT_PASS, &m_pFont);
 
 	//初期表示設定
 #if _DEBUG
@@ -66,7 +56,7 @@ void CDebugProc::Init(void)
 //==========================================================
 //デバッグ表示の終了処理
 //==========================================================
-void CDebugProc::Uninit(void)
+void DebugProc::Uninit(void)
 {
 	//デバッグ表示用フォントの廃棄
 	if (m_pFont != nullptr)
@@ -79,43 +69,50 @@ void CDebugProc::Uninit(void)
 //==========================================================
 //デバッグ表示の更新処理
 //==========================================================
-void CDebugProc::Update(void)
+void DebugProc::Update(void)
 {
-	CInputKeyboard *pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();	// キーボードのポインタ
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();	// キーボードのポインタ
 
-	if(pInputKeyboard->GetTrigger(DIK_F1) == true)
+#ifdef _DEBUG
+
+
+	if(pKeyboard->GetTrigger(DIK_F1) == true)
 	{//F1キーが押されたとき
 		m_bDisp = m_bDisp ? false : true;
 	}
+
+#endif // _DEBUG
 }
 
 //==========================================================
 //デバッグ表示の描画処理
 //==========================================================
-void CDebugProc::Draw(void)
+void DebugProc::Draw(void)
 {
 	RECT rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	if (m_bDisp == true)
 	{//デバックモードがオンの時
 	 //テキストの描画
-		m_pFont->DrawText(nullptr, &m_aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
+		m_pFont->DrawText(nullptr, &m_aStr[POINT_CENTER][0], -1, &rect, DT_CENTER, FONT_COL);
+		m_pFont->DrawText(nullptr, &m_aStr[POINT_LEFT][0], -1, &rect, DT_LEFT, FONT_COL);
+		m_pFont->DrawText(nullptr, &m_aStr[POINT_RIGHT][0], -1, &rect, DT_RIGHT, FONT_COL);
 	}
 
 	//デバッグ表示情報のクリア
-	memset(&m_aStr[0], NULL, sizeof(m_aStr));
+	memset(&m_aStr[0][0], 0, sizeof(m_aStr));
 }
 
 //==========================================================
 //デバッグ表示の設定処理
 //==========================================================
-void CDebugProc::Print(const char *fmt, ...)
+void DebugProc::Print(const EPoint point, const char *fmt, ...)
 {
 	va_list args;
-	char aString[MAX_DEBUGSTRING];		// 指定文字格納用
-	char aSaveString[MAX_DEBUGSTRING];	// 可変引数中身格納用
+	char aString[MAX_DEBUGSTRING] = {};		// 指定文字格納用
+	char aSaveString[MAX_DEBUGSTRING] = {};	// 可変引数中身格納用
 	int nLength = 0;	// 可変引数内の文字の長さ
-	int nStopLength;	// 可変引数挿入場所より
+	int nStopLength = 0;	// 可変引数挿入場所より
 
 	//文字列の代入
 	strcpy(&aString[0], fmt);
@@ -198,5 +195,5 @@ void CDebugProc::Print(const char *fmt, ...)
 	va_end(args);
 
 	//文字列を連結する
-	strcat(&m_aStr[0], &aString[0]);
+	strcat(&m_aStr[point][0], &aString[0]);
 }

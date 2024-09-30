@@ -34,7 +34,6 @@ CManager::CManager(void) :
 	m_pInputPad(nullptr),
 	m_pInputMouse(nullptr),
 	m_pScene(nullptr),
-	m_pDebugProc(nullptr),
 	m_pTexture(nullptr),
 	m_pCamera(nullptr),
 	m_pLight(nullptr),
@@ -119,13 +118,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	}
 
 	//debugprocの生成
-	if (m_pDebugProc == nullptr)
-	{//m_pDebugProcがnullptrの時
-		m_pDebugProc = new CDebugProc;
-
-		//初期化
-		m_pDebugProc->Init();
-	}
+	DebugProc::Init();
 
 	if (m_pLight == nullptr)
 	{// m_pLightがnullptrの時
@@ -200,12 +193,8 @@ void CManager::Uninit(void)
 		m_pInputPad = nullptr;
 	}
 
-	if (m_pDebugProc != nullptr)
-	{//debugprocの破棄
-		m_pDebugProc->Uninit();
-		delete m_pDebugProc;
-		m_pDebugProc = nullptr;
-	}
+	//debugprocの破棄
+	DebugProc::Uninit();
 
 	if (m_pTexture != nullptr)
 	{//テクスチャ破棄
@@ -249,10 +238,8 @@ void CManager::Update(void)
 		m_pInputPad->Update();
 	}
 	
-	if (m_pDebugProc != nullptr)
-	{//DebugProの更新
-		m_pDebugProc->Update();
-	}
+	//DebugProの更新
+	DebugProc::Update();
 	
 	if (m_pScene != nullptr)
 	{//シーンの更新

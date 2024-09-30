@@ -16,7 +16,6 @@ class CObject;
 class CInputKeyboard;
 class CRenderer;
 class CScene;
-class CDebugProc;
 class CTexture;
 class CCamera;
 class CInputPad;
@@ -85,7 +84,6 @@ public:
 	CInputPad *GetInputPad(void) { return m_pInputPad; }
 	CInputMouse *GetInputMouse(void) { return m_pInputMouse; }
 	CTexture *GetTexture(void) { return m_pTexture; }
-	CDebugProc *GetDebugProc(void) { return m_pDebugProc; }
 	void SetMode(CScene::MODE mode);
 	CScene::MODE GetMode(void) { return m_pScene->GetMode(); }	//モード取得
 	CCamera *GetCamera(void) { return m_pCamera; }
@@ -109,7 +107,6 @@ private:
 	CInputPad *m_pInputPad;		// コントローラーのポインタ
 	CInputMouse *m_pInputMouse; // マウスのポインタ
 	CScene *m_pScene;			// シーンのポインタ
-	CDebugProc *m_pDebugProc;	// デバッグ表示のポインタ
 	CTexture *m_pTexture;		// テクスチャへのポインタ
 	CCamera *m_pCamera;			// カメラのポインタ
 	CLight* m_pLight;			// ライトのポインタ
