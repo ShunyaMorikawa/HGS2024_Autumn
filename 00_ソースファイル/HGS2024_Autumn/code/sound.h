@@ -26,7 +26,6 @@ public:
 		SOUND_LABEL_BGM_WIN,		// 勝利BGM
 		SOUND_LABEL_BGM_LOSE,		// 敗北BGM
 		SOUND_LABEL_SE_WALK,		// プレイヤーの歩行時SE
-		SOUND_LABEL_SE_BULLET,		// 敵の弾
 		SOUND_LABEL_SE_HIT,			// プレイヤーヒット
 		SOUND_LABEL_SE_ENEMYHIT,	// 敵ヒット
 		SOUND_LABEL_SE_ENTER,	// 敵ヒット
