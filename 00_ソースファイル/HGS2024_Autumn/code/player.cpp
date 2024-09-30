@@ -337,13 +337,6 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		return;
 	}
 
-	// デバッグ中は右シフトを押さないと動かない
-	if (pKeyboard->GetPress(DIK_LEFT))
-	{
-		// 加速を半分にする
-		m_fSpeedScale *= 0.5f;
-	}
-
 #endif
 
 	// 状態の切り替え
@@ -623,7 +616,7 @@ void CPlayer::Collision()
 		{ // 当たり判定に当たった場合
 
 			// 加速を半分にする
-			m_fSpeedScale *= 0.5f;
+			m_fSpeedScale *= -0.5f;
 
 			// ダメージ処理
 			Damage();
