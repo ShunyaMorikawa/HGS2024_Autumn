@@ -30,11 +30,11 @@ namespace
 
 	const D3DXVECTOR3 SIZEMAX[] =	// サイズの最大値
 	{
-		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 木
-		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 川
-		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 石
-		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 穴
-		D3DXVECTOR3(60.0f, 100.0f, 60.0f),		// 柔らかい岩
+		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 木
+		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 川
+		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 石
+		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 穴
+		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 柔らかい岩
 	};
 
 	const D3DXVECTOR3 SIZEMIN[] =	// サイズの最小値
@@ -46,6 +46,11 @@ namespace
 		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 柔らかい岩
 	};
 }
+
+//========================================
+// 静的メンバ変数宣言
+//========================================
+CListManager<CObstacle> CObstacle::m_List = {};	// リスト
 
 //========================================
 //コンストラクタ
@@ -67,6 +72,9 @@ CObstacle::~CObstacle()
 //========================================
 HRESULT CObstacle::Init(void)
 {
+	// リストに追加
+	m_List.Regist(this);
+
 	// モデル生成
 	m_pModel = CModel::Create(MODEL[m_type]);
 
@@ -85,6 +93,9 @@ HRESULT CObstacle::Init(void)
 //========================================
 void CObstacle::Uninit(void)
 {
+	// リストから削除
+	m_List.Delete(this);
+
 	// 終了
 	CStageObj::Uninit();
 }

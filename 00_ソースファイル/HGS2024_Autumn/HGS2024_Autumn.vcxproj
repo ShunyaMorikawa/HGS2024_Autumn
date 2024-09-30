@@ -56,7 +56,9 @@
     </ClCompile>
     <ClCompile Include="code\renderer.cpp" />
     <ClCompile Include="code\reverse.cpp" />
+    <ClCompile Include="code\reverse_direction.cpp" />
     <ClCompile Include="code\sound.cpp" />
+    <ClCompile Include="code\stagemanager.cpp" />
     <ClCompile Include="code\stageobj.cpp" />
     <ClCompile Include="code\texture.cpp" />
     <ClCompile Include="code\timer.cpp" />
@@ -102,7 +104,9 @@
     <ClInclude Include="code\precompile.h" />
     <ClInclude Include="code\renderer.h" />
     <ClInclude Include="code\reverse.h" />
+    <ClInclude Include="code\reverse_direction.h" />
     <ClInclude Include="code\sound.h" />
+    <ClInclude Include="code\stagemanager.h" />
     <ClInclude Include="code\stageobj.h" />
     <ClInclude Include="code\texture.h" />
     <ClInclude Include="code\timer.h" />

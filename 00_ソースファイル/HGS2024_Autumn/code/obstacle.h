@@ -40,11 +40,13 @@ public:
 
 	// 静的メンバ関数
 	static CObstacle* Create(const EType type, const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRot);
+	static CListManager<CObstacle> GetList() { return m_List; }	// リスト取得
 
 private:
 
 	// メンバ変数
 	EType m_type;		// 種類
+	static CListManager<CObstacle> m_List;	// リスト
 };
 
 #endif

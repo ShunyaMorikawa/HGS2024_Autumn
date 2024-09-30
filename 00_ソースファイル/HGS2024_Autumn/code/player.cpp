@@ -26,6 +26,7 @@
 #include "texture.h"
 
 #include "stageobj.h"
+#include "obstacle.h"
 #include "reverse.h"
 
 //========================================
@@ -41,6 +42,7 @@ namespace
 	const float RADIUS = 90.0f;		// 半径
 	const float HEIGHT = 200.0f;	// 身長
 	const float HEIGHT_SCALE = 0.5f;	// 転がり中の身長倍率
+	const int DAMAGE_COUNT = 80;		// ダメージカウント
 }
 
 //========================================
@@ -173,6 +175,9 @@ void CPlayer::Update(void)
 	// 着地判定
 	Land(pos, move);
 
+	// ダメージカウンター
+	DamageCounter();
+
 	// ステージオブジェとの範囲チェック
 	CheckStageObjRange();
 
@@ -208,6 +213,22 @@ void CPlayer::Draw(void)
 {
 	// 描画
 	CCharacter::Draw();
+}
+
+//========================================
+// ダメージカウンター
+//========================================
+void CPlayer::DamageCounter()
+{
+	// ダメージカウントを0にする
+	m_nDamageCount--;
+
+	if (m_nDamageCount <= 0)
+	{ // カウントが一定値以下の場合
+
+		// カウントを補正する
+		m_nDamageCount = 0;
+	}
 }
 
 //========================================
@@ -398,6 +419,21 @@ void CPlayer::Land(D3DXVECTOR3& pos, D3DXVECTOR3& move)
 }
 
 //==========================================
+// ダメージ関数
+//==========================================
+void CPlayer::Damage()
+{
+	// ダメージカウントを設定する
+	m_nDamageCount = DAMAGE_COUNT;
+
+	// 寿命を減算する
+	m_nLife--;
+
+	// パーティクルを出す
+	Myparticle::Create(Myparticle::TYPE_DEATH, GetPos());
+}
+
+//==========================================
 // ステージオブジェの範囲チェック
 //==========================================
 void CPlayer::CheckStageObjRange()
@@ -453,12 +489,15 @@ void CPlayer::CollisionReverseObj()
 //==========================================
 void CPlayer::Collision()
 {
+	// ダメージを受けない状態の場合、この関数を抜ける
+	if (m_nDamageCount > 0) { return; }
+
 	// 障害物のリスト取得
-	CListManager<CStageObj> list = CStageObj::GetList();
+	CListManager<CObstacle> list = CObstacle::GetList();
 
 	// 終端を保存
-	std::list<CStageObj*>::iterator itr = list.GetEnd();
-	CStageObj* pObj = nullptr;
+	std::list<CObstacle*>::iterator itr = list.GetEnd();
+	CObstacle* pObj = nullptr;
 
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 rot = GetRot();
@@ -479,13 +518,13 @@ void CPlayer::Collision()
 	// 終端までループ
 	while (list.ListLoop(itr))
 	{
-		CStageObj* pObj = *itr;
+		CObstacle* pObj = *itr;
 
 		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
 		{ // 当たり判定に当たった場合
 
-			int n = 0;
-			// 体力減る？
+			// ダメージ処理
+			Damage();
 		}
 	}
 }

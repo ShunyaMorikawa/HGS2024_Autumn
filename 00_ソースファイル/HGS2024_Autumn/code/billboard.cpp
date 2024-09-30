@@ -29,7 +29,8 @@ CBillboard::CBillboard(int nPriority) :
 	m_pVtxBuff(nullptr),	//頂点情報
 	m_col(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)),	//色
 	m_fLength(0.0f),	//対角線の長さ
-	m_fAngle(0.0f)		//対角線の長さ
+	m_fAngle(0.0f),		//対角線の長さ
+	m_bFront(true)		// 正面向ける
 {
 }
 
@@ -120,7 +121,7 @@ void CBillboard::Update(void)
 //=======================================
 void CBillboard::Draw(void)
 {
-	D3DXMATRIX mtxTrans;	//計算用マトリックス
+	D3DXMATRIX mtxRot, mtxTrans;
 	D3DXMATRIX mtxView;		//ビューマトリクス取得用
 
 	//CRenderer型のポインタ
@@ -134,6 +135,7 @@ void CBillboard::Draw(void)
 
 	// 位置
 	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 Rot = GetRot();
 
 
 	//ワールドマトリックスの初期化
@@ -147,6 +149,10 @@ void CBillboard::Draw(void)
 	m_mtxWorld._41 = 0.0f;
 	m_mtxWorld._42 = 0.0f;
 	m_mtxWorld._43 = 0.0f;
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, Rot.y, Rot.x, Rot.z);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
 	//位置を反映
 	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);

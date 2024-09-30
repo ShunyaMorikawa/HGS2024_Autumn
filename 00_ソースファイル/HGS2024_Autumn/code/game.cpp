@@ -28,7 +28,7 @@ namespace
 {
 const int TRANSITIONTIME = 180;		// 遷移するまでの時間
 
-const char* PLAYER_PASS = "data\\FILE\\player.txt"; // プレイヤーのパス
+const char* PLAYER_PASS = "data\\FILE\\turtle.txt"; // プレイヤーのパス
 }
 
 //========================================
