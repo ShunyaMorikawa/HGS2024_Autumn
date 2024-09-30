@@ -131,12 +131,12 @@ void CCamera::SetCamera(void)
 								10.0f,		//Z値の最小値
 								400000.0f);	//Z値の最大値(描画距離)
 
-	////プロジェクションマトリックスを設定[平行投影]
-	//D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
-	//					SCREEN_WIDTH,	//画面の幅
-	//					SCREEN_HEIGHT,	//画面の高さ
-	//					10.0f,		//Z値の最小値
-	//					1000.0f);	//Z値の最大値
+	//プロジェクションマトリックスを設定[平行投影]
+	D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
+						SCREEN_WIDTH,	//画面の幅
+						SCREEN_HEIGHT,	//画面の高さ
+						10.0f,		//Z値の最小値
+						1000.0f);	//Z値の最大値
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
