@@ -416,7 +416,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\HGS2024_Autumn\\01_ƒ‚ƒfƒ‹\\TEXTURE\\wood.png";
+    "data\\TEXTURE\\obstacle\\wood.png";
    }
   }
   Material {
@@ -425,7 +425,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\HGS2024_Autumn\\01_ƒ‚ƒfƒ‹\\TEXTURE\\leaf.png";
+    "data\\TEXTURE\\obstacle\\leaf.png";
    }
   }
  }

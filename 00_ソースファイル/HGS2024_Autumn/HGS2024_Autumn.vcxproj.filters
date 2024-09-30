@@ -144,6 +144,9 @@
     <ClCompile Include="code\obstacleTree.cpp">
       <Filter>obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="code\obstacleSoftRock.cpp">
+      <Filter>obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -267,6 +270,9 @@
       <Filter>obstacle</Filter>
     </ClInclude>
     <ClInclude Include="code\obstacleTree.h">
+      <Filter>obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="code\obstacleSoftRock.h">
       <Filter>obstacle</Filter>
     </ClInclude>
   </ItemGroup>
