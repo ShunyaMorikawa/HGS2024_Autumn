@@ -106,13 +106,25 @@ HRESULT CStageObj::Init()
 	// ÉäÉXÉgÇ…í«â¡
 	m_List.Regist(this);
 
+<<<<<<< .mine
 	// ÉÇÉfÉãê∂ê¨
 	m_pModel = CModel::Create(MODEL);
 	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
 	m_pModel->SetPosition(GetPos());
+=======
 
+
+
+
+>>>>>>> .theirs
+	m_pModel->SetScale(0.0f);
+<<<<<<< .mine
+
+=======
+
+>>>>>>> .theirs
 	// ìoèÍ
-	SetState(State::STATE_APPEARANCE);
+	SetState(State::STATE_NONE);
 	return S_OK;
 }
 
@@ -183,7 +195,7 @@ void CStageObj::Update()
 //==========================================================================
 // îÕàÕîªíË
 //==========================================================================
-void CStageObj::CollisionRange(const D3DXVECTOR3& rPos)
+void CStageObj::CollisionRange(const MyLib::Vector3& rPos)
 {
 	MyLib::Vector3 pos = GetPos();
 
