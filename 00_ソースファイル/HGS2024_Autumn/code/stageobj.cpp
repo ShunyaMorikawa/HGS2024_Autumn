@@ -148,6 +148,17 @@ void CStageObj::Update()
 		m_pModel->SetPosition(GetPos());
 		m_pModel->Update();
 	}
+
+	// CInputKeyboard型のポインタ
+	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+#ifdef _DEBUG
+	
+	if (pInputKeyboard->GetTrigger(DIK_1) == true)
+	{
+		SetState(State::STATE_LEAVE);
+	}
+#endif
 }
 
 //==========================================================================
@@ -179,12 +190,14 @@ void CStageObj::StateAppearance()
 	MyLib::Vector3 posDest = GetOriginPosition();	// 目標位置
 	posDest.y = 0.0f;
 
-	// 線形補間
+	// 線形補間で移動
 	MyLib::Vector3 pos = posOrigin;
 	pos.y = UtilFunc::Correction::EaseOutBack(posOrigin.y, posDest.y, 0.0f, StateTime::APPEARANCE, m_fStateTime);
-
-	// 位置設定
 	SetPos(pos);
+
+	// 線形補間で拡縮
+	float scale = UtilFunc::Correction::EaseOutBack(0.0f, 1.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	m_pModel->SetScale(scale);
 }
 
 //==========================================================================
@@ -196,12 +209,14 @@ void CStageObj::StateLeave()
 	MyLib::Vector3 posDest = GetOriginPosition();	// 目標位置
 	posDest.y = 0.0f;
 
-	// 線形補間
+	// 線形補間で移動
 	MyLib::Vector3 pos = posOrigin;
 	pos.y = UtilFunc::Correction::EaseInBack(0.0f, posOrigin.y, 0.0f, StateTime::APPEARANCE, m_fStateTime);
-
-	// 位置設定
 	SetPos(pos);
+
+	// 線形補間で拡縮
+	float scale = UtilFunc::Correction::EaseInBack(1.0f, 0.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	m_pModel->SetScale(scale);
 
 	if (m_fStateTime >= StateTime::APPEARANCE)
 	{// 時間経過
