@@ -1,8 +1,8 @@
 #pragma once
 //==========================================
 //
-//  タイマークラス(timer.h)
-//  Author : Tomoya Kanazaki
+//  タイマークラス(resultscore.h)
+//  Author : 相馬靜雅
 //
 //==========================================
 #include "object.h"
@@ -15,24 +15,19 @@ class CNumber;
 //==========================================
 //  クラス定義
 //==========================================
-class CTimer : public CObject
+class CResultScore : public CObject
 {
 public:
 
-	CTimer();
-	~CTimer();
+	CResultScore();
+	~CResultScore();
 
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
+	HRESULT Init() override;
+	void Uninit()override;
+	void Update()override;
+	void Draw()override;
 
-	bool GetTimeZero(); // タイムアップしてる判定
-
-	// 静的メンバ関数
-	static CTimer* Create(); // 生成処理
-	static float GetTime() { return m_fTimer; } // 時間の取得
-	static float GetInitTime(); // 制限時間の取得
+	static CResultScore* Create(const MyLib::Vector3& pos, float time);
 
 private:
 
@@ -40,7 +35,7 @@ private:
 	void CalcNum(); // 計算
 
 	// メンバ変数
-	static float m_fTimer; // 現在の時間
+	float m_fTimer; // 現在の時間
 	CNumber* m_pNumber[2]; // 数字
 
 };

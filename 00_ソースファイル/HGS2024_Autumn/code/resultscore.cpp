@@ -1,13 +1,14 @@
 //==========================================
 //
-//  タイマークラス(timer.cpp)
-//  Author : Tomoya Kanazaki
+//  リザルトすこあクラス(resultscore.cpp)
+//  Author : 相馬靜雅
 //
 //==========================================
-#include "timer.h"
+#include "resultscore.h"
 #include "number.h"
 #include "manager.h"
 #include "input.h"
+#include "time.h"
 
 //==========================================
 //  定数定義
@@ -20,38 +21,32 @@ namespace
 }
 
 //==========================================
-//  静的メンバ変数宣言
-//==========================================
-float CTimer::m_fTimer = 0.0f;
-
-//==========================================
 //  コンストラクタ
 //==========================================
-CTimer::CTimer()
+CResultScore::CResultScore() :
+	m_fTimer(0.0f)
 {
 }
 
 //==========================================
 //  デストラクタ
 //==========================================
-CTimer::~CTimer()
+CResultScore::~CResultScore()
 {
 }
 
 //==========================================
 //  初期化処理
 //==========================================
-HRESULT CTimer::Init()
+HRESULT CResultScore::Init()
 {
-	// 初期値を設定
-	m_fTimer = INIT_TIME;
-
+	
 	// 数字を生成
 	for (int i = 0; i < 2; ++i)
 	{
 		m_pNumber[i] = CNumber::Create();
 		m_pNumber[i]->SetSizeOrigin(NUMBER_SIZE);
-		D3DXVECTOR3 pos = NUMBER_POS;
+		D3DXVECTOR3 pos = GetPos();
 		if (i == 0)
 		{
 			pos.x -= 40.0f;
@@ -73,7 +68,7 @@ HRESULT CTimer::Init()
 //==========================================
 //  終了処理
 //==========================================
-void CTimer::Uninit()
+void CResultScore::Uninit()
 {
 	// 数字の終了
 	for (int i = 0; i < 2; ++i)
@@ -89,28 +84,8 @@ void CTimer::Uninit()
 //==========================================
 //  更新処理
 //==========================================
-void CTimer::Update()
+void CResultScore::Update()
 {
-#ifndef _DEBUG
-
-	// タイマーを減少
-	m_fTimer -= CManager::GetInstance()->GetDeltaTime();
-
-#else
-
-	if (CManager::GetInstance()->GetInputKeyboard()->GetPress(DIK_RSHIFT))
-	{
-		// タイマーを減少
-		m_fTimer -= CManager::GetInstance()->GetDeltaTime();
-	}
-
-#endif
-	// 値を補正
-	if (m_fTimer < 0.0f)
-	{
-		m_fTimer = 0.0f;
-	}
-
 	// 計算
 	CalcNum();
 }
@@ -118,47 +93,33 @@ void CTimer::Update()
 //==========================================
 //  描画処理
 //==========================================
-void CTimer::Draw()
+void CResultScore::Draw()
 {
-}
-
-//==========================================
-//  タイムアップしてる判定
-//==========================================
-bool CTimer::GetTimeZero()
-{
-	return m_fTimer <= 0.0f;
 }
 
 //==========================================
 //  生成処理
 //==========================================
-CTimer* CTimer::Create()
+CResultScore* CResultScore::Create(const MyLib::Vector3& pos, float time)
 {
 	// ポインタを確保
-	CTimer* pTime = new CTimer;
+	CResultScore* pTime = new CResultScore;
 
 	// nullチェック
 	if (pTime == nullptr) { assert(false); return nullptr; }
 
 	// 初期化処理
+	pTime->SetPos(pos);
+	pTime->m_fTimer = time;
 	pTime->Init();
 
 	return pTime;
 }
 
 //==========================================
-//  制限時間の取得
-//==========================================
-float CTimer::GetInitTime()
-{
-	return INIT_TIME;
-}
-
-//==========================================
 //  計算
 //==========================================
-void CTimer::CalcNum()
+void CResultScore::CalcNum()
 {
 	// タイマーを整数値に変換
 	int nTime = (float)m_fTimer;

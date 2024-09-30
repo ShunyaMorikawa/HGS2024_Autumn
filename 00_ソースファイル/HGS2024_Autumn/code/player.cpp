@@ -24,18 +24,21 @@
 #include "sound.h"
 #include "fade.h"
 #include "texture.h"
+#include "calculation.h"
 
 #include "stageobj.h"
 #include "obstacle.h"
 #include "reverse.h"
+#include "timer.h"
 
 //========================================
 // 定数定義
 //========================================
 namespace
 {
-	const int LIFE = 10;			// 体力
+	const int LIFE = 3;			// 体力
 	const float SPEED = 500.0f;		// 速度
+	const float SPEED_SCALE = 20.0f; // 加速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float ROLL_TIME = 1.0f;	// 転がり継続時間
@@ -62,6 +65,7 @@ m_State			(STATE_NONE),	// 状態
 m_fRadius		(0.0f),			// 半径
 m_fHeight		(0.0f),			// 身長
 m_fRollTime		(0.0f),			// 転がり時間
+m_fSpeedScale	(0.0f),			// 加速度
 m_bJump			(false),		// ジャンプフラグ
 m_bRoll			(false),		// 転がりフラグ
 m_pEffect		(nullptr),		// エフェクトのポインタ
@@ -130,7 +134,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	m_pGauge = CGauge::Create(m_nLife);
 
 	// 位置設定
-	m_pGauge->SetPos(D3DXVECTOR3(50.0f, 600.0f, 0.0f));
+	m_pGauge->SetPos(D3DXVECTOR3(50.0f, 650.0f, 0.0f));
 
 	// サイズ設定
 	m_pGauge->SetSize(50.0f, 50.0f);
@@ -162,7 +166,6 @@ void CPlayer::Update(void)
 	// 自身の情報を取得
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
-	D3DXVECTOR3 rot = GetRot();
 
 	// デルタタイムの取得
 	const float fDeltaTime = CManager::GetInstance()->GetDeltaTime();
@@ -201,11 +204,22 @@ void CPlayer::Update(void)
 	// 情報を設定
 	SetPos(pos);
 	SetMove(move);
-	SetRot(rot);
 
 	// 当たり判定処理
 	Collision();
 
+#ifdef _DEBUG
+
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	if (pKeyboard->GetTrigger(DIK_DOWN))
+	{
+		--m_nLife;
+	}
+
+#endif
+
+	D3DXVECTOR3 rot = GetRot();
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
@@ -300,6 +314,13 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		return;
 	}
 
+	// デバッグ中は右シフトを押さないと動かない
+	if (pKeyboard->GetPress(DIK_LEFT))
+	{
+		// 加速を半分にする
+		m_fSpeedScale *= 0.5f;
+	}
+
 #endif
 
 	// 状態の切り替え
@@ -325,7 +346,8 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		break;
 	}
 
-	// TODO : タイマーが出来次第加速処理を追加
+	// 加速
+	SpeedUp(move);
 
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;
@@ -360,6 +382,14 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 	{
 		// 加算
 		m_fRollTime += fDeltaTime;
+
+		// 回転
+		MyLib::Vector3 rot = GetRot();
+		rot.y = UtilFunc::Correction::EasingLinear(0.0f, (D3DX_PI * 2.0f) * 10.0f, 0.0f, ROLL_TIME, m_fRollTime);
+		rot.y += -D3DX_PI * 0.5f;
+		SetRot(rot);
+
+		Myparticle::Create(Myparticle::TYPE::TYPE_ROLLINGTURTLE, GetPos());
 
 		// 一定時間経過していない場合関数を抜ける
 		if (m_fRollTime < ROLL_TIME) { return; }
@@ -539,10 +569,27 @@ void CPlayer::Collision()
 		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
 		{ // 当たり判定に当たった場合
 
+			// 加速を半分にする
+			m_fSpeedScale *= 0.5f;
+
 			// ダメージ処理
 			Damage();
 		}
 	}
 
 #endif // !_DEBUG
+}
+
+//==========================================
+//  加速処理
+//==========================================
+void CPlayer::SpeedUp(D3DXVECTOR3& move)
+{
+	// 加速度を加算
+	m_fSpeedScale += CManager::GetInstance()->GetDeltaTime();
+
+	// 移動量を加算
+	move.x = SPEED + m_fSpeedScale * SPEED_SCALE;
+
+	DebugProc::Print(DebugProc::POINT_RIGHT, "加速度 : %f", m_fSpeedScale);
 }

@@ -150,7 +150,7 @@ void CGame::Update(void)
 	// タイマーが0を下回った場合終了
 	if (m_pTimer->GetTimeZero() || CPlayer::GetInstance()->GetLife() <= 0.0f)
 	{
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_TITLE);
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
 	}
 
 #ifdef _DEBUG

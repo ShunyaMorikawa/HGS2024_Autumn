@@ -79,6 +79,7 @@ private:
 	void CheckStageObjRange();	// ステージオブジェの範囲チェック
 	void CollisionReverseObj();	// 反転オブジェの当たり判定
 	void Collision();	// 当たり判定
+	void SpeedUp(D3DXVECTOR3& move);		// 加速処理
 
 	// メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
@@ -90,6 +91,7 @@ private:
 	float m_fRadius;		// 半径
 	float m_fHeight;		// 身長
 	float m_fRollTime;		// 転がり時間
+	float m_fSpeedScale;	// 加速度
 	bool m_bJump;			// ジャンプフラグ
 	bool m_bRoll;			// 転がりフラグ
 	CEffect* m_pEffect;				// エフェクトのポインタ
