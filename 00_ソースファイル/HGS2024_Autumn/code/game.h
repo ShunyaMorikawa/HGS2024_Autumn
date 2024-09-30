@@ -42,6 +42,8 @@ private:
 	static CGame *m_pGame;		// ゲームマネージャーのポインタ
 
 	int m_nTransition;			// カウンター
+	bool m_bOver; // フェード設定フラグ
+	bool m_bClear; // フェード設定フラグ
 
 	bool m_bPause;				// ポーズ状態のON/OFF
 

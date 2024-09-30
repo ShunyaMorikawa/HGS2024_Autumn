@@ -17,6 +17,7 @@
 #include "sky.h"
 #include "stageobj.h"
 #include "stagemanager.h"
+#include "goal.h"
 #ifdef _DEBUG
 #include "stageEdittor.h"
 #endif // _DEBUG
@@ -32,7 +33,7 @@ CGame *CGame::m_pGame = nullptr;			// ゲームのポインタ
 //========================================
 namespace
 {
-const int TRANSITIONTIME = 180;		// 遷移するまでの時間
+const int TRANSITIONTIME = 120;		// 遷移するまでの時間
 
 const char* PLAYER_PASS = "data\\FILE\\turtle.txt"; // プレイヤーのパス
 }
@@ -44,6 +45,8 @@ CGame::CGame() :
 	m_bPause(false),
 	m_pFade(nullptr),
 	m_pTimer(nullptr),
+	m_bOver(false),
+	m_bClear(false),
 	m_pStageManager(nullptr)
 #ifdef _DEBUG
 	,m_pEdittor(nullptr)		// エディター
@@ -103,6 +106,9 @@ HRESULT CGame::Init(void)
 	{
 		m_pStageManager = CStageManager::Create();
 	}
+
+	// ゴールの設置
+	CGoal::Create();
 
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
@@ -164,10 +170,10 @@ void CGame::Update(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	// タイマーか体力が0を下回った場合終了
-	if (m_pTimer->GetTimeZero() || CPlayer::GetInstance()->GetLife() <= 0.0f)
+	if ((m_pTimer->GetTimeZero() || CPlayer::GetInstance()->GetLife() <= 0.0f) && !m_bClear)
 	{
 		// タイトルに遷移
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
+		m_bOver = true;
 
 		// インスタンス生成
 		CObject2D* Obj2D = CObject2D::Create();
@@ -183,10 +189,10 @@ void CGame::Update(void)
 	}
 
 	// ゴール
-	if (CPlayer::GetInstance()->GetPos().x >= 50000.0f)
+	if (CPlayer::GetInstance()->GetPos().x >= 50000.0f && !m_bOver)
 	{
 		// リザルトに遷移
-		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
+		m_bClear = true;
 
 		// インスタンス生成
 		CObject2D* Obj2D = CObject2D::Create();
@@ -199,6 +205,23 @@ void CGame::Update(void)
 
 		// テクスチャ設定
 		Obj2D->BindTexture(pTexture->Regist("data\\texture\\clear.png"));
+	}
+
+	if (m_bOver || m_bClear)
+	{
+		++m_nTransition;
+
+		if (m_nTransition >= TRANSITIONTIME)
+		{
+			if (m_bOver)
+			{
+				CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
+			}
+			if (m_bClear)
+			{
+				CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
+			}
+		}
 	}
 
 #ifdef _DEBUG
