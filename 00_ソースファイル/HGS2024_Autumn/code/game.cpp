@@ -12,6 +12,7 @@
 #include "texture.h"
 #include "fade.h"
 
+#include "timer.h"
 #include "field.h"
 #include "stageobj.h"
 
@@ -77,6 +78,9 @@ HRESULT CGame::Init(void)
 	{
 		m_pPlayer = CPlayer::Create(PLAYER_PASS);
 	}
+
+	// タイマー
+	CTimer::Create();
 
 	return S_OK;
 }
