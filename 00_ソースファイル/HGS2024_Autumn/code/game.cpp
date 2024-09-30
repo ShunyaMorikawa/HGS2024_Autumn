@@ -146,7 +146,7 @@ void CGame::Update(void)
 	
 	if (pInputKeyboard->GetTrigger(DIK_0) == true)
 	{
-		CStageObj::Create(CStageObj::Type::TYPE_REVERSE, MyLib::Vector3(500.0f, 500.0f, 0.0f));
+		CStageObj::CreateReverse(MyLib::Vector3(500.0f, 500.0f, 0.0f));
 	}
 #endif
 }
