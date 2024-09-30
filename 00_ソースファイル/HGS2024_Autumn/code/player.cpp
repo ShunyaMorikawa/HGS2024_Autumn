@@ -212,16 +212,19 @@ void CPlayer::Update(void)
 			pMotion = nullptr;
 		}
 
+		// モーション生成
+		pMotion = CMotion::Create();
+
 		switch (m_type)
 		{
 		case TYPE_RABBIT:
 			// モーション読み込み
-			GetMotion()->Load(RABBIT_PASS);
+			pMotion->Load(RABBIT_PASS);
 			break;
 
 		case TYPE_TURTLE:
 			// モーション読み込み
-			GetMotion()->Load(TURTLE_PASS);
+			pMotion->Load(TURTLE_PASS);
 			break;
 
 		default:
@@ -303,14 +306,14 @@ void CPlayer::Motion()
 	// モーションを設定
 	if (m_bJump) // ジャンプ状態
 	{
-		// TODO : ジャンプモーションを設定
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_STRONGATTACK);
+		// ジャンプモーションを設定
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_JUMP);
 		DebugProc::Print(DebugProc::POINT_CENTER, "ジャンプ状態\n");
 	}
 	else if (m_bRoll) // 転がり状態
 	{
-		// TODO : 転がりモーションを設定
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
+		// 転がりモーションを設定
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_ROLL);
 		DebugProc::Print(DebugProc::POINT_CENTER, "転がり状態\n");
 	}
 	else // その他の状態
