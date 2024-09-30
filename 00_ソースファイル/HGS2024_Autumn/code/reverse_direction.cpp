@@ -20,9 +20,9 @@ namespace
 
 namespace StateTime
 {
-	const float APPEARANCE = 0.7f;	// 登場
-	const float WAIT = 0.7f;		// 待機
-	const float FADEOUT = 0.7f;		// フェードアウト
+	const float APPEARANCE = 1.0f;	// 登場
+	const float WAIT = 0.5f;		// 待機
+	const float FADEOUT = 0.3f;		// フェードアウト
 }
 
 //==========================================================================
@@ -89,7 +89,7 @@ HRESULT CReverse_Direction::Init()
 	size = UtilFunc::Transformation::AdjustSizeByWidth(size, 240.0f);
 
 #else	// 縦幅を元にサイズ設定
-	size = UtilFunc::Transformation::AdjustSizeByWidth(size, 240.0f);
+	size = UtilFunc::Transformation::AdjustSizeByWidth(size, 180.0f);
 #endif
 	SetSize(size.x, size.y);
 	SetSizeOrigin(size);
@@ -98,6 +98,9 @@ HRESULT CReverse_Direction::Init()
 	// 位置
 	SetPos(MyLib::Vector3(640.0f, 360.0f, 0.0f));
 	SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
+
+	// 状態遷移
+	SetState(State::STATE_APPEARANCE);
 
 	return S_OK;
 }
@@ -116,6 +119,11 @@ void CReverse_Direction::Uninit()
 //==========================================================================
 void CReverse_Direction::Update()
 {
+	// 状態更新
+	UpdateState();
+
+	if (IsDeath()) return;
+
 	// 更新処理
 	CObject2D::Update();
 }
@@ -146,12 +154,19 @@ void CReverse_Direction::StateNone()
 void CReverse_Direction::StateAppearance()
 {
 	// 透明度と割合同期
-	float ratio = UtilFunc::Correction::EaseInExpo(0.0f, 1.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	float ratio = UtilFunc::Correction::EaseInExpo(0.3f, 1.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
 	SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, ratio));
 
+	// 回転
 	MyLib::Vector3 rot = GetRot();
-	rot.z = UtilFunc::Correction::EaseInExpo(0.0f, (D3DX_PI * 2.0f) * 3.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	rot.z = UtilFunc::Correction::EaseInExpo(0.0f, -(D3DX_PI * 2.0f) * 1.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
 	SetRot(rot);
+
+	// サイズ
+	D3DXVECTOR2 size;
+	size.x = UtilFunc::Correction::EaseInBack(GetsizeOrigin().x, GetsizeOrigin().x * 3.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	size.y = UtilFunc::Correction::EaseInBack(GetsizeOrigin().y, GetsizeOrigin().y * 3.0f, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	SetSize(size.x, size.y);
 
 	if (m_fStateTime >= StateTime::APPEARANCE)
 	{
