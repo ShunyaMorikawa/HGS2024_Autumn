@@ -41,7 +41,7 @@ namespace
 	const float SPEED_SCALE = 75.0f; // ‰Á‘¬“x
 	const float JUMP_MOVE = 1500.0f;	// ƒWƒƒƒ“ƒv—Ê
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ƒWƒƒƒ“ƒvŒ¸Š
-	const float ROLL_TIME = 1.0f;	// “]‚ª‚èŒp‘±ŽžŠÔ
+	const float ROLL_TIME = 0.3f;	// “]‚ª‚èŒp‘±ŽžŠÔ
 	const float RADIUS = 90.0f;		// ”¼Œa
 	const float HEIGHT = 200.0f;	// g’·
 	const float HEIGHT_SCALE = 0.5f;	// “]‚ª‚è’†‚Ìg’·”{—¦
@@ -334,12 +334,6 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	if (pKeyboard->GetTrigger(DIK_2))
 	{
 		pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		return;
-	}
-
-	// ƒfƒoƒbƒO’†‚Í‰EƒVƒtƒg‚ð‰Ÿ‚³‚È‚¢‚Æ“®‚©‚È‚¢
-	if (!pKeyboard->GetPress(DIK_RSHIFT))
-	{
 		return;
 	}
 

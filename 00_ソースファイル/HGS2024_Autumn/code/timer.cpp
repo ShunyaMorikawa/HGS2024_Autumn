@@ -93,22 +93,9 @@ void CTimer::Uninit()
 //==========================================
 void CTimer::Update()
 {
-#ifndef _DEBUG
-
 	// タイマーを減少
 	m_fTimer -= CManager::GetInstance()->GetDeltaTime();
 
-#else
-
-	if (CManager::GetInstance()->GetInputKeyboard()->GetPress(DIK_RSHIFT))
-	{
-		// タイマーを減少
-		m_fTimer -= CManager::GetInstance()->GetDeltaTime();
-
-		DebugProc::Print(DebugProc::POINT_RIGHT, "デルタタイム : %f\n", CManager::GetInstance()->GetDeltaTime());
-	}
-
-#endif
 	// 値を補正
 	if (m_fTimer < 0.0f)
 	{
