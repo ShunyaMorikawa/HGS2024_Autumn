@@ -57,7 +57,7 @@ public:
 	//=============================
 	void Kill();		// íœ
 	void SetState(const State& state);	// ó‘Ôİ’è
-	void CollisionRange(const D3DXVECTOR3& rPos);	// ”ÍˆÍ”»’è
+	void CollisionRange(const MyLib::Vector3& rPos);	// ”ÍˆÍ”»’è
 	virtual bool Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize);	// ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
 
 	//=============================

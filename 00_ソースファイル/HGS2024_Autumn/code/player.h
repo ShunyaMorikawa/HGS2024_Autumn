@@ -70,6 +70,7 @@ private:
 	void Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard);
 	void Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard, const float fDeltaTime);
 	void Land(D3DXVECTOR3& pos, D3DXVECTOR3& move);
+	void CheckStageObjRange();	// ステージオブジェの範囲チェック
 
 	// メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数

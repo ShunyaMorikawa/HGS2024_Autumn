@@ -26,6 +26,8 @@
 #include "texture.h"
 #include "lockonMarker.h"
 
+#include "stageobj.h"
+
 //========================================
 // 定数定義
 //========================================
@@ -170,6 +172,9 @@ void CPlayer::Update(void)
 
 	// 着地判定
 	Land(pos, move);
+
+	// ステージオブジェとの範囲チェック
+	CheckStageObjRange();
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
@@ -383,5 +388,28 @@ void CPlayer::Land(D3DXVECTOR3& pos, D3DXVECTOR3& move)
 	if (m_bJump)
 	{
 		move.y -= JUMP_SAB;
+	}
+}
+
+//==========================================
+// ステージオブジェの範囲チェック
+//==========================================
+void CPlayer::CheckStageObjRange()
+{
+	// 障害物のリスト取得
+	CListManager<CStageObj> list = CStageObj::GetList();
+
+	// 終端を保存
+	std::list<CStageObj*>::iterator itr = list.GetEnd();
+	CStageObj* pObj = nullptr;
+
+	// 位置取得
+	MyLib::Vector3 pos = GetPos();
+
+	// 終端までループ
+	while (list.ListLoop(itr))
+	{
+		CStageObj* pObj = *itr;
+		pObj->CollisionRange(pos);
 	}
 }
