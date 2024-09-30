@@ -30,8 +30,8 @@ public:
 	{// プレイヤーの状態
 		STATE_NONE = 0,
 		STATE_NORMAL,		// 通常
-		STATE_DAMAGE,		// ダメージ
-		STATE_DETAH,		// 死亡
+		STATE_JUMP,			// ジャンプ
+		STATE_ROLL,			// 転がり
 		STATE_MAX
 	};
 
