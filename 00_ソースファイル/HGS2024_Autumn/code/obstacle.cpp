@@ -106,6 +106,12 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 
 		break;
 
+	case CObstacle::TYPE_HOLE:
+
+
+
+		break;
+
 	default:
 		assert(false);
 		break;

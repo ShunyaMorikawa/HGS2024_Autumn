@@ -22,6 +22,7 @@ public:
 		TYPE_TREE = 0,	// –Ø
 		TYPE_RIVER,		// ì
 		TYPE_STONE,		// Î
+		TYPE_HOLE,		// ŒŠ
 		TYPE_MAX		// —ñ‹“Œ^‚Ì‘”
 	};
 
