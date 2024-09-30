@@ -71,6 +71,7 @@
     <ClCompile Include="code\tutorial.cpp" />
     <ClCompile Include="code\useful.cpp" />
     <ClCompile Include="code\wall.cpp" />
+    <ClCompile Include="code\Xload.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="code\tutorial.h" />
     <ClInclude Include="code\useful.h" />
     <ClInclude Include="code\wall.h" />
+    <ClInclude Include="code\Xload.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
