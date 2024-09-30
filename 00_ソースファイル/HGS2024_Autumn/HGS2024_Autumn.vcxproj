@@ -46,6 +46,7 @@
     <ClCompile Include="code\obstacle.cpp" />
     <ClCompile Include="code\obstacleHole.cpp" />
     <ClCompile Include="code\obstacleRiver.cpp" />
+    <ClCompile Include="code\obstacleSoftRock.cpp" />
     <ClCompile Include="code\obstacleStone.cpp" />
     <ClCompile Include="code\obstacleTree.cpp" />
     <ClCompile Include="code\particle.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="code\obstacle.h" />
     <ClInclude Include="code\obstacleHole.h" />
     <ClInclude Include="code\obstacleRiver.h" />
+    <ClInclude Include="code\obstacleSoftRock.h" />
     <ClInclude Include="code\obstacleStone.h" />
     <ClInclude Include="code\obstacleTree.h" />
     <ClInclude Include="code\particle.h" />
