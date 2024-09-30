@@ -86,7 +86,7 @@ void CFade::Update()
 		switch (m_State)
 		{
 		case FADE_OUT:
-			col.a += 0.05f;
+			col.a += 0.03f;
 			if (col.a >= 1.0f)
 			{
 				col.a = 1.0f;
@@ -100,7 +100,7 @@ void CFade::Update()
 			break;
 
 		case FADE_IN:
-			col.a -= 0.05f;
+			col.a -= 0.03f;
 			if (col.a <= 0.0f)
 			{
 				col.a = 0.0f;

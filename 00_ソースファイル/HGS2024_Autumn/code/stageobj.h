@@ -43,7 +43,7 @@ public:
 		TYPE_MAX
 	};
 
-	CStageObj(int nPriority = 6);
+	CStageObj(int nPriority = 3);
 	~CStageObj();
 
 	//=============================

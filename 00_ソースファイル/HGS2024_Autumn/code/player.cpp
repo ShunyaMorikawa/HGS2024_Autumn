@@ -49,6 +49,8 @@ namespace
 
 	const char* RABBIT_PASS = "data\\FILE\\rabbit.txt"; // 兎パス
 	const char* TURTLE_PASS = "data\\FILE\\turtle.txt"; // 亀パス
+
+	const float WALK_COUNT = 0.3f; // 歩行音のインターバル
 }
 
 //========================================
@@ -207,6 +209,10 @@ void CPlayer::Update(void)
 	// 状態が変わっていた場合モデルを変更する
 	if (type != m_type)
 	{
+
+		// 変化
+		Myparticle::Create(Myparticle::TYPE::TYPE_CHANGE, GetPos());
+
 		// モーション情報の取得
 		CMotion* pMotion = GetMotion();
 
@@ -372,7 +378,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	m_fWalkSound += fDeltaTime;
 
 	// サウンド再生
-	if (m_fWalkSound >= 0.5f)
+	if (m_fWalkSound >= WALK_COUNT)
 	{
 		CSound* pSound = CManager::GetInstance()->GetSound();
 		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
@@ -619,7 +625,7 @@ void CPlayer::Collision()
 		{ // 当たり判定に当たった場合
 
 			// 加速を半分にする
-			m_fSpeedScale *= -0.5f;
+			m_fSpeedScale *= 0.5f;
 
 			// ダメージ処理
 			Damage();
