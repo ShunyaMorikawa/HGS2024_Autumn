@@ -8,6 +8,7 @@
 #include "manager.h"
 #include "calculation.h"
 #include "model.h"
+#include "input.h"
 
 //==========================================================================
 // íËêîíËã`
@@ -197,7 +198,7 @@ void CStageObj::StateLeave()
 
 	// ê¸å`ï‚ä‘
 	MyLib::Vector3 pos = posOrigin;
-	pos.y = UtilFunc::Correction::EaseOutBack(0.0f, posOrigin.y, 0.0f, StateTime::APPEARANCE, m_fStateTime);
+	pos.y = UtilFunc::Correction::EaseInBack(0.0f, posOrigin.y, 0.0f, StateTime::APPEARANCE, m_fStateTime);
 
 	// à íuê›íË
 	SetPos(pos);
