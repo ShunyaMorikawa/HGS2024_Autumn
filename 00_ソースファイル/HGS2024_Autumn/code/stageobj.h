@@ -38,6 +38,7 @@ public:
 	{
 		TYPE_BG = 0,	// îwåi
 		TYPE_OBSTACLE,	// è·äQï®
+		TYPE_REVERSE,	// îΩì]
 		TYPE_MAX
 	};
 
