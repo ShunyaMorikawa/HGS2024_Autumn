@@ -621,7 +621,7 @@ void CPlayer::Collision()
 		{ // “–‚½‚è”»’è‚É“–‚½‚Á‚½ê‡
 
 			// ‰Á‘¬‚ğ”¼•ª‚É‚·‚é
-			m_fSpeedScale *= -0.5f;
+			m_fSpeedScale *= 0.5f;
 
 			// ƒ_ƒ[ƒWˆ—
 			Damage();

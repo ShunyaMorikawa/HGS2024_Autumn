@@ -122,7 +122,7 @@ void CGame::Uninit(void)
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
 	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
+	pSound->Stop();
 
 	if(m_pPlayer != nullptr)
 	{
@@ -162,6 +162,12 @@ void CGame::Update(void)
 {
 	// タイマーか体力が0を下回った場合終了
 	if (m_pTimer->GetTimeZero() || CPlayer::GetInstance()->GetLife() <= 0.0f)
+	{
+		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
+	}
+
+	// ゴール
+	if (CPlayer::GetInstance()->GetPos().x >= 50000.0f)
 	{
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
 	}
