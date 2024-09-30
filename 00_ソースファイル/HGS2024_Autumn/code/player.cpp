@@ -34,7 +34,7 @@
 //========================================
 namespace
 {
-	const int LIFE = 10;			// 体力
+	const int LIFE = 3;			// 体力
 	const float SPEED = 500.0f;		// 速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
@@ -130,7 +130,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	m_pGauge = CGauge::Create(m_nLife);
 
 	// 位置設定
-	m_pGauge->SetPos(D3DXVECTOR3(50.0f, 600.0f, 0.0f));
+	m_pGauge->SetPos(D3DXVECTOR3(50.0f, 650.0f, 0.0f));
 
 	// サイズ設定
 	m_pGauge->SetSize(50.0f, 50.0f);
@@ -331,6 +331,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	}
 
 	// TODO : タイマーが出来次第加速処理を追加
+	
 
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;

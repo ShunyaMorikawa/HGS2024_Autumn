@@ -29,7 +29,9 @@ public:
 
 	bool GetTimeZero(); // タイムアップしてる判定
 
-	static CTimer* Create();
+	// 静的メンバ関数
+	static CTimer* Create(); // 生成処理
+	static float GetTime() { return m_fTimer; } // 時間の取得
 
 private:
 
@@ -37,7 +39,7 @@ private:
 	void CalcNum(); // 計算
 
 	// メンバ変数
-	float m_fTimer; // 現在の時間
+	static float m_fTimer; // 現在の時間
 	CNumber* m_pNumber[2]; // 数字
 
 };
