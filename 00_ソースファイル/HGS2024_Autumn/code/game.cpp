@@ -107,9 +107,6 @@ HRESULT CGame::Init(void)
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
-	// サウンド停止
-	pSound->Stop(CSound::SOUND_LABEL_BGM_TUTORIAL);
-
 	// サウンド再生
 	pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_GAME);
 
@@ -121,6 +118,12 @@ HRESULT CGame::Init(void)
 //========================================
 void CGame::Uninit(void)
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
+	// サウンド停止
+	pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
+
 	if(m_pPlayer != nullptr)
 	{
 		m_pPlayer->Uninit();

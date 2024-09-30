@@ -41,7 +41,7 @@ namespace
 	const float SPEED_SCALE = 75.0f; // 加速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
-	const float ROLL_TIME = 1.0f;	// 転がり継続時間
+	const float ROLL_TIME = 0.3f;	// 転がり継続時間
 	const float RADIUS = 90.0f;		// 半径
 	const float HEIGHT = 200.0f;	// 身長
 	const float HEIGHT_SCALE = 0.5f;	// 転がり中の身長倍率
@@ -49,6 +49,8 @@ namespace
 
 	const char* RABBIT_PASS = "data\\FILE\\rabbit.txt"; // 兎パス
 	const char* TURTLE_PASS = "data\\FILE\\turtle.txt"; // 亀パス
+
+	const float WALK_COUNT = 0.3f; // 歩行音のインターバル
 }
 
 //========================================
@@ -69,6 +71,7 @@ m_fRadius		(0.0f),			// 半径
 m_fHeight		(0.0f),			// 身長
 m_fRollTime		(0.0f),			// 転がり時間
 m_fSpeedScale	(0.0f),			// 加速度
+m_fWalkSound	(0.0f),			// 歩行音
 m_bJump			(false),		// ジャンプフラグ
 m_bRoll			(false),		// 転がりフラグ
 m_pEffect		(nullptr),		// エフェクトのポインタ
@@ -184,7 +187,6 @@ void CPlayer::Update(void)
 #if 1
 	pCamera->Following(pos, D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 #endif // 0
-
 
 	// 移動処理
 	Move(pos, move, fDeltaTime);
@@ -337,19 +339,6 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		return;
 	}
 
-	// デバッグ中は右シフトを押さないと動かない
-	if (!pKeyboard->GetPress(DIK_RSHIFT))
-	{
-		return;
-	}
-
-	// デバッグ中は右シフトを押さないと動かない
-	if (pKeyboard->GetPress(DIK_LEFT))
-	{
-		// 加速を半分にする
-		m_fSpeedScale *= 0.5f;
-	}
-
 #endif
 
 	// 状態の切り替え
@@ -381,14 +370,16 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;
 
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// サウンド停止
-	pSound->Stop();
+	// サウンド加算
+	m_fWalkSound += fDeltaTime;
 
 	// サウンド再生
-	//pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
+	if (m_fWalkSound >= WALK_COUNT)
+	{
+		CSound* pSound = CManager::GetInstance()->GetSound();
+		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
+		m_fWalkSound = 0.0f;
+	}
 }
 
 //==========================================
@@ -412,7 +403,7 @@ void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		CSound* pSound = CManager::GetInstance()->GetSound();
 
 		// サウンド停止
-		pSound->Stop();
+		pSound->Stop(CSound::SOUND_LABEL_SE_JUMP);
 
 		// サウンド再生
 		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_JUMP);
@@ -424,6 +415,9 @@ void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 //==========================================
 void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard, const float fDeltaTime)
 {
+	// サウンド情報取得
+	CSound* pSound = CManager::GetInstance()->GetSound();
+
 	// 転がり中の場合時間を加算
 	if (m_bRoll)
 	{
@@ -447,6 +441,9 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 		m_fHeight = HEIGHT;
 		m_State = STATE_NORMAL;
 
+		// サウンド停止
+		pSound->Stop(CSound::SOUND_LABEL_SE_ROWLING);
+
 		return;
 	}
 
@@ -461,11 +458,6 @@ void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// 回転状態にする
 		m_State = STATE_ROLL;
-		// サウンド情報取得
-		CSound* pSound = CManager::GetInstance()->GetSound();
-
-		// サウンド停止
-		pSound->Stop();
 
 		// サウンド再生
 		pSound->PlaySoundA(CSound::SOUND_LABEL_SE_ROWLING);
@@ -629,7 +621,7 @@ void CPlayer::Collision()
 		{ // 当たり判定に当たった場合
 
 			// 加速を半分にする
-			m_fSpeedScale *= 0.5f;
+			m_fSpeedScale *= -0.5f;
 
 			// ダメージ処理
 			Damage();
