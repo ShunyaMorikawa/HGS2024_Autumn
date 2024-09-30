@@ -37,7 +37,7 @@ public:
 private:
 
 	// ’è”’è‹`
-#define DIGIT (6) // Œ…”
+#define DIGIT (5) // Œ…”
 
 	// ƒƒ“ƒoŠÖ”
 	void CalcNum(); // ŒvZ

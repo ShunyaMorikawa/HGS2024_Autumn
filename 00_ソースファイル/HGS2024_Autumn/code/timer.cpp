@@ -15,7 +15,7 @@
 namespace
 {
 	const float INIT_TIME = 30.0f; // 初期値
-	const D3DXVECTOR3 NUMBER_POS = D3DXVECTOR3(SCREEN_WIDTH * 0.65f, 50.0f, 0.0f); // 座標
+	const D3DXVECTOR3 NUMBER_POS = D3DXVECTOR3(SCREEN_WIDTH * 0.72f, 50.0f, 0.0f); // 座標
 }
 
 //==========================================
@@ -96,6 +96,8 @@ void CTimer::Update()
 	{
 		// タイマーを減少
 		m_fTimer -= CManager::GetInstance()->GetDeltaTime();
+
+		DebugProc::Print(DebugProc::POINT_RIGHT, "デルタタイム : %f\n", CManager::GetInstance()->GetDeltaTime());
 	}
 
 #endif
@@ -155,7 +157,7 @@ float CTimer::GetInitTime()
 void CTimer::CalcNum()
 {
 	// タイマーを整数値に変換
-	int nCalc = (float)(m_fTimer * 10000.0f);
+	int nCalc = (float)(m_fTimer * 1000.0f);
 
 	DebugProc::Print(DebugProc::POINT_RIGHT, "\n時間 : %d\n", nCalc);
 
