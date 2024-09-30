@@ -35,7 +35,10 @@ namespace
 	const float SPEED = 240.0f;		// 速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
+	const float ROLL_TIME = 1.0f;	// 転がり継続時間
 	const float RADIUS = 50.0f;		// 半径
+	const float HEIGHT = 100.0f;	// 身長
+	const float HEIGHT_SCALE = 0.5f;	// 転がり中の身長倍率
 }
 
 //========================================
@@ -53,10 +56,14 @@ m_nOldMotion	(0),			// 前回のモーション
 m_WalkCounter	(0),			// 歩行時エフェクト出す用のカウンター
 m_State			(STATE_NONE),	// 状態
 m_fRadius		(0.0f),			// 半径
+m_fHeight		(0.0f),			// 身長
+m_fRollTime		(0.0f),			// 転がり時間
 m_bJump			(false),		// ジャンプフラグ
+m_bRoll			(false),		// 転がりフラグ
 m_pEffect		(nullptr),		// エフェクトのポインタ
 m_pGauge		(nullptr),		// ゲージのポインタ
-m_pMarker		(nullptr)		// ロックオンマーカー表示
+m_type			(TYPE_NONE),	// タイプ
+m_typeDefault	(TYPE_NONE)		// デフォルトタイプ
 {
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
@@ -96,6 +103,7 @@ HRESULT CPlayer::Init(std::string pfile)
 
 	// プレイヤー状態の初期化
 	m_State = STATE_NORMAL;
+	m_type = TYPE_TURTLE;
 
 	// 位置設定
 	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
@@ -109,11 +117,10 @@ HRESULT CPlayer::Init(std::string pfile)
 	// 歩行時のカウンター
 	m_WalkCounter = 0;
 
-	// 体力
+	// 情報を初期化
 	m_nLife = LIFE;
-
-	// 半径
-	m_fRadius;
+	m_fRadius = RADIUS;
+	m_fHeight = HEIGHT;
 
 	// ゲージ生成
 	m_pGauge = CGauge::Create(m_nLife);
@@ -209,6 +216,7 @@ void CPlayer::Update(void)
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーのサイズ：%f、%f、%f\n", m_fRadius, m_fHeight, m_fRadius);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの体力：%d\n", m_nLife);
 }
 
@@ -285,6 +293,13 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	}
 #endif
 
+	// 状態の切り替え
+	if (pPad->GetTrigger(CInputPad::BUTTON_LB, 0) ||
+		pKeyboard->GetTrigger(DIK_LSHIFT))
+	{
+
+	}
+
 	// ジャンプ処理
 	Jump(move, pPad, pKeyboard);
 
@@ -310,6 +325,39 @@ void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard
 
 		// 移動量を加算
 		move.y += JUMP_MOVE;
+	}
+}
+
+//==========================================
+//  転がり処理
+//==========================================
+void CPlayer::Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard, const float fDeltaTime)
+{
+	// 転がり中の場合時間を加算
+	if (m_bRoll)
+	{
+		// 加算
+		m_fRollTime += fDeltaTime;
+
+		// 一定時間経過していない場合関数を抜ける
+		if (m_fRollTime < ROLL_TIME) { return; }
+
+		// 転がり状態を解除する
+		m_fRollTime = 0.0f;
+		m_bRoll = false;
+		m_fHeight = HEIGHT;
+
+		return;
+	}
+
+	// ボタンが押されたら転がり状態になる
+	if (pPad->GetTrigger(CInputPad::BUTTON_A, 0) || pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		// フラグをtrue
+		m_bRoll = true;
+
+		// 身長を減らす
+		m_fHeight *= HEIGHT_SCALE;
 	}
 }
 

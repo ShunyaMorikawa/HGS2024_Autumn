@@ -24,6 +24,7 @@ class CLockonMarker;
 class CPlayer : public CCharacter
 {
 public:
+
 	// 状態
 	enum PLAYERSTATE
 	{// プレイヤーの状態
@@ -32,6 +33,14 @@ public:
 		STATE_DAMAGE,		// ダメージ
 		STATE_DETAH,		// 死亡
 		STATE_MAX
+	};
+
+	enum PLAYERTYPE
+	{// プレイヤーのタイプ
+		TYPE_NONE = 0, // 何もない
+		TYPE_RABBIT, // 兎
+		TYPE_TURTLE, // 亀
+		TYPE_MAX
 	};
 
 	CPlayer(int nPriority = 4);		//コンストラクタ
@@ -59,6 +68,7 @@ private:
 	void Motion();
 	void Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime);
 	void Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard);
+	void Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard, const float fDeltaTime);
 	void Land(D3DXVECTOR3& pos, D3DXVECTOR3& move);
 
 	// メンバ変数
@@ -68,11 +78,16 @@ private:
 	int m_WalkCounter;		// 歩行時のカウンター
 	int m_State;			// 状態
 	float m_fRadius;		// 半径
-	bool m_bJump;			// ジャンプ
+	float m_fHeight;		// 身長
+	float m_fRollTime;		// 転がり時間
+	bool m_bJump;			// ジャンプフラグ
+	bool m_bRoll;			// 転がりフラグ
 	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 	CLockonMarker* m_pMarker;		// ロックオンマーカーのポインタ
+	PLAYERTYPE m_type;				// タイプ
+	PLAYERTYPE m_typeDefault;		// デフォルトタイプ
 
 	// 静的メンバ変数
 	static CPlayer* m_pPlayer;		// 自身のポインタ
