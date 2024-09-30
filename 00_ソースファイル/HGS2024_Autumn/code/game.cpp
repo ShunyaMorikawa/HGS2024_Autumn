@@ -16,6 +16,10 @@
 #include "field.h"
 #include "stageobj.h"
 #include "stagemanager.h"
+#ifdef _DEBUG
+#include "stageEdittor.h"
+#endif // _DEBUG
+
 
 //========================================
 //静的メンバ変数
@@ -40,6 +44,10 @@ CGame::CGame() :
 	m_pFade(nullptr),
 	m_pTimer(nullptr),
 	m_pStageManager(nullptr)
+#ifdef _DEBUG
+	,m_pEdittor(nullptr)		// エディター
+#endif // _DEBUG
+
 {
 	m_pGame = nullptr;
 }
@@ -120,6 +128,16 @@ void CGame::Uninit(void)
 		m_pStageManager = nullptr;
 	}
 
+#ifdef _DEBUG
+
+	if (m_pEdittor != nullptr)
+	{
+		m_pEdittor->Uninit();
+		m_pEdittor = nullptr;
+	}
+
+#endif // _DEBUG
+
 	m_pGame = nullptr;
 }
 
@@ -147,6 +165,26 @@ void CGame::Update(void)
 	if (pInputKeyboard->GetTrigger(DIK_0) == true)
 	{
 		CStageObj::CreateReverse(MyLib::Vector3(500.0f, 500.0f, 0.0f));
+	}
+
+	if (pInputKeyboard->GetTrigger(DIK_5) == true)
+	{
+		if (m_pEdittor == nullptr)
+		{
+			m_pEdittor = CStageEdittor::Create();
+		}
+		else
+		{
+			m_pEdittor->Uninit();
+			m_pEdittor = nullptr;
+		}
+	}
+
+	if (m_pEdittor != nullptr)
+	{
+		// カメラの追従設定
+		CCamera* pCamera = CManager::GetInstance()->GetCamera();
+		pCamera->Following(m_pEdittor->GetObj()->GetPos(), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 	}
 #endif
 }

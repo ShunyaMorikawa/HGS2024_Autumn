@@ -27,6 +27,7 @@ public:
 	void Draw() override;
 	void Kill() override;
 
+	void SetPos(D3DXVECTOR3 pos) override;
 	virtual bool Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize) override;	// プレイヤーとの当たり判定
 	static CListManager<CReverse> GetList() { return m_List; }	// リスト取得
 
