@@ -39,7 +39,7 @@ public:
 	static void DeleteAll(void);
 
 	// ˆÊ’u‚Ìİ’è‚Ææ“¾
-	void SetPos(D3DXVECTOR3 pos);
+	virtual void SetPos(D3DXVECTOR3 pos);
 	D3DXVECTOR3 GetPos(void);
 	void SetOriginPosition(const MyLib::Vector3& pos) { m_posOrigin = pos; }	// ‰ŠúˆÊ’u
 	MyLib::Vector3 GetOriginPosition() { return m_posOrigin; }					// ‰ŠúˆÊ’u

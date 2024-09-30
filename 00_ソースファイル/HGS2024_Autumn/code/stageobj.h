@@ -56,6 +56,7 @@ public:
 	//=============================
 	// ƒƒ“ƒoŠÖ”
 	//=============================
+	void SetPos(D3DXVECTOR3 pos) override;
 	virtual void Kill();		// íœ
 	void SetState(const State& state);	// ó‘Ôİ’è
 	void CollisionRange(const MyLib::Vector3& rPos);	// ”ÍˆÍ”»’è
