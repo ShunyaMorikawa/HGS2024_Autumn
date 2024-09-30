@@ -76,6 +76,8 @@ void CTimer::Uninit()
 			m_pNumber[i] = nullptr;
 		}
 	}
+
+	this->Release();
 }
 
 //==========================================
