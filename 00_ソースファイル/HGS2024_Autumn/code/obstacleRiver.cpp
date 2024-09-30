@@ -73,7 +73,7 @@ void CObstacleRiver::Draw(void)
 //========================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //========================================
-bool CObstacleRiver::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacleRiver::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return false;
 }

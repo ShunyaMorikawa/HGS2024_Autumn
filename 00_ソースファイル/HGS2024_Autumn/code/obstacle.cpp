@@ -72,7 +72,7 @@ void CObstacle::Update(void)
 //========================================
 // プレイヤーとの当たり判定
 //========================================
-bool CObstacle::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacle::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return true;
 }
@@ -132,10 +132,6 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 
 	// 初期化処理に失敗したら、停止
 	if (FAILED(pObstacle->Init(type))) { assert(false); return nullptr; }
-
-	// 値の設定
-	pObstacle->m_pModel->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -500.0f));	// 位置
-	pObstacle->m_pModel->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));			// 向き
 
 	// ポインタを返す
 	return pObstacle;
