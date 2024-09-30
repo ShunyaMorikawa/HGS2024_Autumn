@@ -73,7 +73,7 @@ void CObstacleHole::Draw(void)
 //========================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //========================================
-bool CObstacleHole::Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CObstacleHole::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 {
 	return false;
 }

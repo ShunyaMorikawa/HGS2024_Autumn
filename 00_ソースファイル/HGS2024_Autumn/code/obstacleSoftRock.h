@@ -25,7 +25,7 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	bool Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) override;	// プレイヤーとの当たり判定
+	bool Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) override;	// プレイヤーとの当たり判定
 
 private:
 
