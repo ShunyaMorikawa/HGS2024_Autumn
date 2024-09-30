@@ -46,25 +46,11 @@ public:
 	void Update();
 	void Draw();
 	void Act(float fSpeed);
-	void Attack();
 	void Motion();
-	void CollisionEnemy(int nDamage);
-	void NockBack();
-	void Hit(int nLife);
 
 	float GetRadius() { return m_fRadius; }		// ”¼Œaæ“¾
-
 	int GetLife() { return m_nLife; }			// ‘Ì—Íæ“¾
-
 	int GetState() { return m_nState; }			// ó‘Ôæ“¾
-
-	void CollisionField();
-
-	void CollisionArena();
-
-	void CollisionEnemy(D3DXVECTOR3 pos);
-
-	void LockOn();
 
 	static CPlayer* GetInstance() { return m_pPlayer; }
 

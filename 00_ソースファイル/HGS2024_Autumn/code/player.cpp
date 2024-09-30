@@ -13,7 +13,6 @@
 #include "debugproc.h"
 #include "game.h"
 #include "particle.h"
-#include "enemy.h"
 #include "useful.h"
 #include "gauge.h"
 #include "main.h"
@@ -100,9 +99,6 @@ CPlayer *CPlayer::Create(std::string pfile)
 //========================================
 HRESULT CPlayer::Init(std::string pfile)
 {
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
 	// キャラの初期化
 	CCharacter::Init(pfile);
 
@@ -167,9 +163,6 @@ void CPlayer::Update(void)
 	// サウンド情報取得
 	CSound* pSound = CManager::GetInstance()->GetSound();
 
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
 
@@ -181,18 +174,6 @@ void CPlayer::Update(void)
 
 	// プレイヤー行動
 	Act(SPEED);
-
-#ifdef _DEBUG
-	if (pInputKeyboard->GetPress(DIK_F1))
-	{// 体力減算
-		Hit(1);
-	}
-
-	if (pInputKeyboard->GetPress(DIK_F3))
-	{// 体力減算
-		Hit(LIFE);
-	}
-#endif
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
@@ -242,12 +223,6 @@ void CPlayer::Update(void)
 			}
 		}
 	}
-
-	// 敵との判定
-	CollisionEnemy(pos);
-
-	// ロックオン
-	LockOn();
 
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
@@ -440,68 +415,8 @@ void CPlayer::Act(float fSpeed)
 	// 目的の向き設定
 	SetRotDest(RotDest);
 
-	// 攻撃
-	Attack();
-
 	// モーション
 	Motion();
-
-	// フィールドとの判定
-	CollisionField();
-
-	// 闘技場との当たり判定
-	CollisionArena();
-}
-
-//========================================
-// 攻撃
-//========================================
-void CPlayer::Attack()
-{
-	// キーボードの情報取得
-	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
-
-	// コントローラーの情報取得	
-	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
-
-	// モード取得
-	int nMode = CManager::GetInstance()->GetMode();
-
-	// 移動量取得
-	D3DXVECTOR3 move = GetMove();
-
-	if (pInputKeyboard->GetTrigger(DIK_SPACE) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_X, 0) == true)
-	{// 切りおろし
-		m_bCutdown = true;
-
-		m_bMove = false;
-
-		// 敵との当たり判定
-		CollisionEnemy(1);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_E) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_Y, 0) == true)
-	{// 横薙ぎ
-		m_bMowingdown = true;
-
-		m_bMove = false;
-
-		// 敵との当たり判定
-		CollisionEnemy(2);
-	}
-
-	if (pInputKeyboard->GetTrigger(DIK_Q) == true
-		|| pInputPad->GetTrigger(CInputPad::BUTTON_RB, 0) == true)
-	{// 強攻撃
-		m_bStrongAttack = true;
-
-		m_bMove = false;
-
-		// 敵との当たり判定
-		CollisionEnemy(3);
-	}
 }
 
 //========================================
@@ -542,292 +457,5 @@ void CPlayer::Motion()
 	if (pMotion != nullptr)
 	{// モーション更新
 		pMotion->Update();
-	}
-}
-
-//========================================
-// 敵とプレイヤーの当たり判定
-//========================================
-void CPlayer::CollisionEnemy(int nDamage)
-{
-	// 計算用マトリックス
-	D3DXMATRIX mtxTrans;
-
-	// 武器の位置
-	D3DXMATRIX posWeapon;
-
-	// モーション情報取得
-	CMotion* pMotion = GetMotion();
-
-	// モデルのオフセット取得
-	CModel* pModelOffset = pMotion->GetModel(13);
-
-	// モデルのマトリックス取得
-	D3DXMATRIX MtxModel = pModelOffset->GetMtxWorld();
-
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, 0.0f, 150.0f, 0.0f);
-	D3DXMatrixMultiply(&posWeapon, &mtxTrans, &MtxModel);
-
-	// マトリックスの位置
-	D3DXVECTOR3 pos = D3DXVECTOR3(posWeapon._41, posWeapon._42, posWeapon._43);
-
-#ifdef _DEBUG
-	// エフェクト生成
-	CEffect::Create(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), 100.0f, 1, true, CEffect::TYPE::TYPE_NORMAL);
-#endif
-
-	// 長さ
-	float fLength;
-
-	// プレイヤーの半径
-	float fRadius = RADIUS;
-
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
-	if (pEnemy != nullptr)
-	{
-		// 位置取得
-		D3DXVECTOR3 posEnemy = pEnemy->GetPos();
-
-		// 移動量取得
-		D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
-
-		// 半径
-		float radiusEnemy = pEnemy->GetRadius();
-
-#ifdef _DEBUG
-	CEffect::Create(posEnemy, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), radiusEnemy, 1, true, CEffect::TYPE::TYPE_NORMAL);
-#endif
-		// ベクトルを求める
-		D3DXVECTOR3 vec = posEnemy - pos;
-
-		// ベクトル代入
-		fLength = D3DXVec3Length(&vec);
-
-		// 無敵時間
-		int Invincible = 0;
-
-		if (fLength <= radiusEnemy + fRadius)
-		{// ヒット
-			pEnemy->Hit(nDamage);
-
-			// ノックバック
-			NockBack();
-
-			// サウンド情報取得
-			CSound* pSound = CManager::GetInstance()->GetSound();
-
-			// サウンド再生
-			pSound->PlaySoundA(CSound::SOUND_LABEL_SE_ENEMYHIT);
-		}
-	}
-}
-
-//========================================
-// ノックバック
-//========================================
-void CPlayer::NockBack()
-{
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
-	// 位置取得
-	D3DXVECTOR3 posPlayer = GetPos();
-
-	if (pEnemy != nullptr)
-	{
-		// 敵の位置と移動量
-		D3DXVECTOR3 posEnemy = pEnemy->GetPos();
-		D3DXVECTOR3 moveEnemy = pEnemy->GetMove();
-
-		// 飛ばされる向き
-		float angle = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
-
-		// 位置更新
-		moveEnemy.x = sinf(angle) * -NOCKBACK;
-		moveEnemy.z = cosf(angle) * -NOCKBACK;
-		moveEnemy.y = 25.0f;
-
-		// 移動量設定
-		pEnemy->SetMove(moveEnemy);
-	}
-}
-
-//========================================
-// ヒット処理
-//========================================
-void CPlayer::Hit(int nLife)
-{
-	// サウンド情報取得
-	CSound* pSound = CManager::GetInstance()->GetSound();
-
-	// サウンド再生
-	pSound->PlaySoundA(CSound::SOUND_LABEL_SE_HIT);
-
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// 体力減らす
-	m_nLife -= nLife;
-
-	// ゲージに体力設定
-	m_pGauge->SetLife(m_nLife);
-
-	// パーティクル生成
-	Myparticle::Create(Myparticle::TYPE_DEATH, pos);
-}
-
-//========================================
-// フィールド外に行かないよう
-//========================================
-void CPlayer::CollisionField()
-{
-	// 位置・移動量取得
-	D3DXVECTOR3 posPlayer = GetPos();
-	D3DXVECTOR3 movePlayer = GetMove();
-
-	if (posPlayer.x > FIELD_LIMIT)
-	{
-		posPlayer.x = FIELD_LIMIT;
-		movePlayer.x = 0.0f;
-	}
-	else if (posPlayer.x < -FIELD_LIMIT)
-	{
-		posPlayer.x = -FIELD_LIMIT;
-		movePlayer.x = 0.0f;
-
-	}
-	if (posPlayer.z > FIELD_LIMIT)
-	{
-		posPlayer.z = FIELD_LIMIT;
-		movePlayer.z = 0.0f;
-	}
-	else if (posPlayer.z < -FIELD_LIMIT)
-	{
-		posPlayer.z = -FIELD_LIMIT;
-		movePlayer.z = 0.0f;
-	}
-
-	// 位置・移動量設定
-	SetPos(posPlayer);
-	SetMove(movePlayer);
-}
-
-//========================================
-// 闘技場との判定
-//========================================
-void CPlayer::CollisionArena()
-{
-	// プレイヤー位置
-	D3DXVECTOR3 posPlayer = GetPos();
-	D3DXVECTOR3 vec;
-	D3DXVec3Normalize(&vec, &posPlayer);
-
-	if (USEFUL::CollisionCircle(posPlayer, Constance::ARENA_SIZE))
-	{// 闘技場に当たったら
-		posPlayer = vec * Constance::ARENA_SIZE;
-	}
-
-	// 位置設定
-	SetPos(posPlayer);
-}
-
-//========================================
-// 敵との判定
-//========================================
-void CPlayer::CollisionEnemy(D3DXVECTOR3 pos)
-{
-	// 長さ
-	float fLength;
-
-	// プレイヤーの半径取得
-	float fRadius = GetRadius();
-
-	// プレイヤー位置
-	D3DXVECTOR3 posPlayer = GetPos();
-
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
-	if (pEnemy == nullptr)
-	{
-		return;
-	}
-
-	// プレイヤーの位置
-	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
-
-	// 半径
-	float radiusPlayer = pEnemy->GetRadius();
-
-	// ベクトルを求める
-	D3DXVECTOR3 vec = posEnemy - pos;
-
-	//ベクトル代入
-	fLength = D3DXVec3Length(&vec);
-
-	if (fLength <= radiusPlayer + fRadius)
-	{// 敵に当たった
-		// 位置設定
-		SetPos(posPlayer);
-	}
-}
-
-//========================================
-// ロックオン
-//========================================
-void CPlayer::LockOn()
-{
-	// カメラの情報取得
-	CCamera* pCampera = CManager::GetInstance()->GetCamera();
-
-	// 敵の情報取得
-	CEnemy* pEnemy = CEnemy::GetInstance();
-
-	//テクスチャのポインタ
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-	if (pCampera == nullptr)
-	{
-		return;
-	}
-
-	if (pEnemy == nullptr)
-	{
-		// プレイヤーにカメラを追従させる
-		D3DXVECTOR3 rot = pCampera->GetRot();
-		pCampera->following(GetPos(), D3DXVECTOR3(0.0f, rot.y, 0.0f));
-
-		if (m_pMarker != nullptr)
-		{// マーカー削除
-			m_pMarker->Uninit();
-			m_pMarker = nullptr;
-		}
-
-		return;
-	}
-
-	// プレイヤー・敵の位置
-	D3DXVECTOR3 posPlayer = GetPos();
-	D3DXVECTOR3 posEnemy = pEnemy->GetPos();
-
-	// プレイヤーとの角度
-	float RotDest = atan2f(posPlayer.x - posEnemy.x, posPlayer.z - posEnemy.z);
-
-	if (m_IsLock)
-	{// 敵の方向に向く
-		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, RotDest, 0.0f));
-
-		// マーカーの位置設定
-		D3DXVECTOR3 setpos = posEnemy;
-		setpos.y += MARKERPOS;
-		m_pMarker->SetPos(setpos);
-	}
-	else
-	{// 追従
-		D3DXVECTOR3 rot = pCampera->GetRot();
-		pCampera->following(posPlayer, D3DXVECTOR3(0.0f, rot.y, 0.0f));
 	}
 }
