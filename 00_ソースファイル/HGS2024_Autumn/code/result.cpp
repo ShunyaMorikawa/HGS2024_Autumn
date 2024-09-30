@@ -64,7 +64,7 @@ HRESULT CResult::Init(void)
 	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\result.png"));
 
 	// 今回のスコア
-	m_pScore = CResultScore::Create(m_pObj2D->GetPos() + MyLib::Vector3(0.0f, -50.0f, 0.0f), CTimer::GetTime());
+	m_pScore = CResultScore::Create(m_pObj2D->GetPos() + MyLib::Vector3(-150.0f, -50.0f, 0.0f), CTimer::GetTime(), 120.0f);
 
 
 	// ランキング
