@@ -248,7 +248,7 @@ void CStageObj::CollisionRange(const MyLib::Vector3& rPos)
 
 	if (m_bWorking &&
 		m_state != State::STATE_LEAVE &&
-		rPos.x >= pos.x + ENABLERANGE)
+		rPos.x >= pos.x + ENABLERANGE * 0.5f)
 	{// ‘Şê”ÍˆÍ
 		SetState(State::STATE_LEAVE);
 		m_bWorking = false;
