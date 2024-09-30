@@ -28,6 +28,9 @@
     <Filter Include="direction">
       <UniqueIdentifier>{dc67f9c9-be97-467f-9259-eddbb5154d18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mode\result">
+      <UniqueIdentifier>{49afda24-7438-492d-939a-3e43c387dbbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\billboard.cpp">
@@ -167,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="code\stageEdittor.cpp">
       <Filter>stage</Filter>
+    </ClCompile>
+    <ClCompile Include="code\resultscore.cpp">
+      <Filter>mode\result</Filter>
+    </ClCompile>
+    <ClCompile Include="code\result.cpp">
+      <Filter>mode\result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +319,12 @@
     </ClInclude>
     <ClInclude Include="code\stageEdittor.h">
       <Filter>stage</Filter>
+    </ClInclude>
+    <ClInclude Include="code\resultscore.h">
+      <Filter>mode\result</Filter>
+    </ClInclude>
+    <ClInclude Include="code\result.h">
+      <Filter>mode\result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

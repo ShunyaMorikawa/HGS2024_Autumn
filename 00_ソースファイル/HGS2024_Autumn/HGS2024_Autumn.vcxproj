@@ -56,6 +56,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="code\renderer.cpp" />
+    <ClCompile Include="code\result.cpp" />
+    <ClCompile Include="code\resultscore.cpp" />
     <ClCompile Include="code\reverse.cpp" />
     <ClCompile Include="code\reverse_direction.cpp" />
     <ClCompile Include="code\sound.cpp" />
@@ -105,6 +107,8 @@
     <ClInclude Include="code\player.h" />
     <ClInclude Include="code\precompile.h" />
     <ClInclude Include="code\renderer.h" />
+    <ClInclude Include="code\result.h" />
+    <ClInclude Include="code\resultscore.h" />
     <ClInclude Include="code\reverse.h" />
     <ClInclude Include="code\reverse_direction.h" />
     <ClInclude Include="code\sound.h" />

@@ -14,6 +14,7 @@
 #include "title.h"
 #include "tutorial.h"
 #include "game.h"
+#include "result.h"
 #include "fade.h"
 #include "sound.h"
 
@@ -353,6 +354,11 @@ CScene* CScene::Create(int nMode)
 	case MODE_GAME:
 		// ゲームシーン生成
 		pScene = CGame::Create();
+		break;
+
+	case MODE_RESULT:
+		// リザルト生成
+		pScene = CResult::Create();
 		break;
 	}
 
