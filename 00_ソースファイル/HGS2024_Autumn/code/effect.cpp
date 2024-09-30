@@ -20,7 +20,7 @@ namespace
 	{
 		"data\\TEXTURE\\effect\\effect000.jpg",		// í èÌ
 		"data\\TEXTURE\\effect\\effect_point01.tga",	// ì_
-		"data\\TEXTURE\\effect\\smoke_05.tga",			// âå
+		"data\\TEXTURE\\effect\\smoke_07.png",			// âå
 		"data\\TEXTURE\\effect\\smoke_05.tga",			// çïâå
 		"data\\TEXTURE\\effect\\effect000.png",			// çï
 		"data\\TEXTURE\\effect\\effect001.png",			// è\éö
