@@ -58,6 +58,8 @@ private:
 	// メンバ関数
 	void Motion();
 	void Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime);
+	void Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard);
+	void Land(D3DXVECTOR3& pos, D3DXVECTOR3& move);
 
 	// メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
