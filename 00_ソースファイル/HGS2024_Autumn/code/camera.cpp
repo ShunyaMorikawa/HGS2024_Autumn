@@ -95,16 +95,10 @@ void CCamera::Uninit(void)
 //カメラの更新処理
 //=======================================
 void CCamera::Update(void)
-{	
-	//視点の移動
-	CameraMoveV();
-
-	// 闘技場との判定
-	CollisionArena();
-
+{
 #ifdef _DEBUG
 	//デバッグ表示
-	DebugProc::Print(DebugProc::POINT_LEFT, "\n視点の位置：%f、%f、%f\n", m_posV.x, m_posV.y, m_posV.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "視点の位置：%f、%f、%f\n", m_posV.x, m_posV.y, m_posV.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "注視点の位置：%f、%f、%f\n", m_posR.x, m_posR.y, m_posR.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "カメラの向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 #endif
@@ -219,7 +213,7 @@ float CCamera::RotNor(float RotN)
 //=======================================
 //カメラ追従
 //=======================================
-void CCamera::following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+void CCamera::Following(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	//注視点
 	D3DXVECTOR3 Diff;

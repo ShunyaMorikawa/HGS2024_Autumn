@@ -46,53 +46,30 @@ public:
 	void Update();
 	void Draw();
 	void Act(float fSpeed);
-	void Attack();
 	void Motion();
-	void CollisionEnemy(int nDamage);
-	void NockBack();
-	void Hit(int nLife);
 
 	float GetRadius() { return m_fRadius; }		// 半径取得
-
 	int GetLife() { return m_nLife; }			// 体力取得
-
-	int GetState() { return m_nState; }			// 状態取得
-
-	void CollisionField();
-
-	void CollisionArena();
-
-	void CollisionEnemy(D3DXVECTOR3 pos);
-
-	void LockOn();
+	int GetState() { return m_State; }			// 状態取得
 
 	static CPlayer* GetInstance() { return m_pPlayer; }
 
 private:
-	//メンバ変数
 
+	//メンバ変数
 	int m_apNumModel;		// モデル(パーツ)の総数
 	int m_nLife;			// 体力
 	int m_nOldMotion;		// 前回のモーション
 	int m_WalkCounter;		// 歩行時のカウンター
-
-	int m_nState;			// 状態
-
+	int m_State;			// 状態
 	float m_fRadius;		// 半径
-
 	bool m_bJump;			// ジャンプ
-	bool m_bMove;			// 移動
-	bool m_bWait;			// 待機
-	bool m_bMowingdown;		// 攻撃
-	bool m_bCutdown;		// 切り下ろし
-	bool m_bStrongAttack;	// 強攻撃
-	bool m_IsLock;			// ロックオンフラグ
-
 	CEffect* m_pEffect;				// エフェクトのポインタ
 	CGauge* m_pGauge;				// ゲージのポインタ
 	CModel* m_apModel[MAX_PARTS];	// モデルのダブルポインタ
 	CLockonMarker* m_pMarker;		// ロックオンマーカーのポインタ
 
+	// 静的メンバ変数
 	static CPlayer* m_pPlayer;		// 自身のポインタ
 };
 

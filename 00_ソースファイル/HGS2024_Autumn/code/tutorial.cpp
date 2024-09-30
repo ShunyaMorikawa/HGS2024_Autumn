@@ -8,7 +8,6 @@
 #include "manager.h"
 #include "player.h"
 #include "field.h"
-#include "bullet.h"
 #include "fade.h"
 #include "texture.h"
 #include "wall.h"
