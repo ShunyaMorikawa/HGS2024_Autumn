@@ -30,6 +30,9 @@ public:
 
 private:
 	CObject2D* m_pObj2D;
+	CObject2D* m_pTeam = nullptr;
+	CObject2D* m_pPressEnter = nullptr;
+	float m_fMoveTime;
 };
 
 #endif
