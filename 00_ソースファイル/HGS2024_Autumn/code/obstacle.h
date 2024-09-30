@@ -37,7 +37,7 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	virtual bool Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) = 0;	// プレイヤーとの当たり判定
+	virtual bool Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize);	// プレイヤーとの当たり判定
 
 	// 静的メンバ関数
 	static CObstacle* Create(const EType type, const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRot);

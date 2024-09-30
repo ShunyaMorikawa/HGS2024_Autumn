@@ -57,6 +57,7 @@ public:
 	//=============================
 	void Kill();		// 削除
 	void SetState(const State& state);	// 状態設定
+	virtual bool Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) = 0;	// プレイヤーとの当たり判定
 
 	//=============================
 	// 静的関数

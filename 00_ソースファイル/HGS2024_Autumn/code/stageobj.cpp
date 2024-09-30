@@ -10,6 +10,9 @@
 #include "model.h"
 #include "input.h"
 
+// 派生クラス
+#include "obstacle.h"
+
 //==========================================================================
 // 定数定義
 //==========================================================================
@@ -64,7 +67,20 @@ CStageObj::~CStageObj()
 CStageObj *CStageObj::Create(const Type& type, const MyLib::Vector3& pos)
 {
 	// メモリの確保
-	CStageObj* pObj = new CStageObj;
+	CStageObj* pObj = nullptr;
+
+	switch (type)
+	{
+	case Type::TYPE_BG:
+		break;
+
+	case Type::TYPE_OBSTACLE:
+		pObj = new CObstacle;
+		break;
+
+	default:
+		break;
+	}
 
 	if (pObj != nullptr)
 	{
