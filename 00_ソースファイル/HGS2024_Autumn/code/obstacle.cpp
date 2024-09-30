@@ -30,7 +30,7 @@ namespace
 	const D3DXVECTOR3 SIZEMAX[] =	// サイズの最大値
 	{
 		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// 川
-		D3DXVECTOR3(30.0f, 300.0f, 30.0f),		// 石
+		D3DXVECTOR3(40.0f, 500.0f, 40.0f),		// 石
 		D3DXVECTOR3(50.0f, 0.0f, 50.0f),		// 穴
 		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// 柔らかい岩
 	};
