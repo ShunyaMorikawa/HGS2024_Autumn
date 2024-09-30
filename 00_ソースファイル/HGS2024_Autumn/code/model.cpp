@@ -7,6 +7,9 @@
 #include "model.h"
 #include "renderer.h"
 #include "manager.h"
+#include "texture.h"
+#include "XLoad.h"
+#include "calculation.h"
 
 //========================================
 //コンストラクタ
@@ -20,7 +23,7 @@ CModel::CModel() :
 	m_scale(1.0f),				// スケール
 	m_pParent(nullptr)			//親モデルへのポインタ
 {
-	m_pTexture.clear();			//共有テクスチャ
+	m_nIdxTexture.clear();			//共有テクスチャ
 }
 
 //========================================
@@ -75,41 +78,62 @@ HRESULT CModel::Init(const char *pFilename)
 	// 階層
 	m_nType = CModel::TYPE_HIERARCHY;
 
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX(pFilename,
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		nullptr,
-		&m_pBuffMat,
-		nullptr,
-		&m_dwNumMat,
-		&m_pMesh);
 
-	//マテリアル情報に対するポインタを取得
-	pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+	// Xファイルのデータ取得
+	CXLoad* pXLoad = CXLoad::GetInstance();
 
-	for (int nCntTex = 0; nCntTex < (int)m_dwNumMat; nCntTex++)
-	{
-		if (pMat[nCntTex].pTextureFilename != nullptr)
-		{//テクスチャファイル名が存在する
+	// Xファイルのロード
+	m_nIdxXFile = pXLoad->XLoad(pFilename);
 
-			LPDIRECT3DTEXTURE9 pTex = nullptr;
+	// Xファイルのデータ割り当て
+	BindXData(m_nIdxXFile);
 
-			//テクスチャの読み込み
-			D3DXCreateTextureFromFile(pDevice, pMat[nCntTex].pTextureFilename, &pTex);
+	// Xファイルのデータ取得
+	CXLoad::SXFile* pXData = CXLoad::GetInstance()->GetMyObject(m_nIdxXFile);
 
-			// 最期に追加
-			m_pTexture.push_back(pTex);
-		}
-		else
-		{// 存在しないとき
-			m_pTexture.push_back(nullptr);
-		}
+	// 全頂点チェック
+	UtilFunc::Calculation::CalModelVtx(GetRot().y, &pXData->vtxMax, &pXData->vtxMin, pXData->pMesh, pXData->pVtxBuff);
 
-	}
+	// テクスチャ割り当て
+	BindTexture();
+
+
+
+
+
+
 
 	//成功を返す
 	return S_OK;
+}
+
+//==========================================================================
+// Xファイルのデータ割り当て
+//==========================================================================
+void CModel::BindXData(int nIdxXFile)
+{
+	// 情報割り当て
+	m_nIdxXFile = nIdxXFile;
+
+	// テクスチャ割り当て
+	BindTexture();
+}
+
+//==========================================================================
+// テクスチャ割り当て
+//==========================================================================
+void CModel::BindTexture()
+{
+	m_nIdxTexture.clear();
+
+	// Xファイルのデータ取得
+	CXLoad::SXFile* pXData = CXLoad::GetInstance()->GetMyObject(m_nIdxXFile);
+
+	// テクスチャのインデックス番号
+	for (int i = 0; i < (int)pXData->dwNumMat; i++)
+	{
+		m_nIdxTexture.push_back(pXData->nIdxTexture[i]);
+	}
 }
 
 //========================================
@@ -131,18 +155,18 @@ void CModel::Uninit(void)
 		m_pBuffMat = nullptr;
 	}
 
-	for (int i = 0; i < (int)m_pTexture.size(); i++)
-	{
-		//テクスチャの破棄
-		if (m_pTexture[i] != nullptr)
-		{
-			m_pTexture[i]->Release();
-			m_pTexture[i] = nullptr;
-		}
-	}
+	//for (int i = 0; i < (int)m_nIdxTexture.size(); i++)
+	//{
+	//	//テクスチャの破棄
+	//	if (m_nIdxTexture[i] != nullptr)
+	//	{
+	//		m_nIdxTexture[i]->Release();
+	//		m_nIdxTexture[i] = nullptr;
+	//	}
+	//}
 
 	// 全クリア
-	m_pTexture.clear();
+	m_nIdxTexture.clear();
 }
 
 //========================================
@@ -216,19 +240,26 @@ void CModel::Draw(void)
 	//現在のマテリアルを取得
 	pDevice->GetMaterial(&matDef);
 
-	//マテリアルデータへのポインタを取得
-	pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+	// Xファイルのデータ取得
+	CXLoad::SXFile* pXData = CXLoad::GetInstance()->GetMyObject(m_nIdxXFile);
 
-	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
-	{//マテリアルの数分回す
-		//マテリアル設定
+	// マテリアルデータへのポインタを取得
+	pMat = (D3DXMATERIAL*)pXData->pBuffMat->GetBufferPointer();
+
+	// テクスチャ取得
+	CTexture* pTexture = CTexture::GetInstance();
+
+	// 頂点数分繰り返し
+	for (int nCntMat = 0; nCntMat < (int)pXData->dwNumMat; nCntMat++)
+	{
+		// マテリアルの設定
 		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-		//テクスチャの設定
-		pDevice->SetTexture(0, m_pTexture[nCntMat]); //テクスチャを使用してないときはnullptr
+		// テクスチャの設定
+		pDevice->SetTexture(0, pTexture->GetAddress(m_nIdxTexture[nCntMat])); //テクスチャを使用してないときはnullptr
 
-		//モデル(パーツ)の描画
-		m_pMesh->DrawSubset(nCntMat);
+		// パーツの描画
+		pXData->pMesh->DrawSubset(nCntMat);
 	}
 
 	//保存していたマテリアルを戻す

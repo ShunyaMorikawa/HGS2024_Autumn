@@ -31,6 +31,9 @@ public:
 	void Update(void);		//更新
 	void Draw(void);		//描画
 
+	void BindXData(int nIdxXFile);
+	void BindTexture();	// テクスチャ割り当て
+
 	static CModel *Create(const char *pFilename);	//オブジェクト生成
 	void SetParent(CModel *pModel);	//親
 	D3DXMATRIX GetMtxWorld(void);	//ワールドマトリックスの取得
@@ -66,7 +69,7 @@ private:
 	//メンバ変数
 	HIERARCHY m_nType;
 
-	std::vector<LPDIRECT3DTEXTURE9> m_pTexture;	//共有テクスチャ
+	std::vector<int> m_nIdxTexture;	//共有テクスチャ
 	D3DXMATRIX m_mtxWorld;			//ワールドマトリックス
 	LPD3DXMESH m_pMesh;				//メッシュ(頂点情報)へのポインタ
 	LPD3DXBUFFER m_pBuffMat;		//マテリアルへのポインタ
@@ -75,6 +78,7 @@ private:
 	D3DXVECTOR3 m_rot;				//向き
 	MyLib::Vector3 m_scale;			// スケール
 	CModel *m_pParent;				//親モデルへのポインタ
+	int m_nIdxXFile;				// Xファイルのインデックス番号
 
 	D3DXVECTOR3 m_setPos;
 	D3DXVECTOR3 m_setRot;
