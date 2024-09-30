@@ -202,6 +202,11 @@ void CStageObj::StateLeave()
 
 	// ˆÊ’uÝ’è
 	SetPos(pos);
+
+	if (m_fStateTime >= StateTime::APPEARANCE)
+	{// ŽžŠÔŒo‰ß
+		Kill();
+	}
 }
 
 //==========================================================================

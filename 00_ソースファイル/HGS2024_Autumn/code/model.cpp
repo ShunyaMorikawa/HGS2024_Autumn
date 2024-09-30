@@ -17,6 +17,7 @@ CModel::CModel() :
 	m_dwNumMat(NULL),			//マテリアルの数
 	m_pos(0.0f, 0.0f, 0.0f),	//位置
 	m_rot(0.0f, 0.0f, 0.0f),	//向き
+	m_scale(1.0f),				// スケール
 	m_pParent(nullptr)			//親モデルへのポインタ
 {
 	m_pTexture.clear();			//共有テクスチャ
@@ -161,6 +162,7 @@ void CModel::Draw(void)
 	D3DMATERIAL9 matDef;
 	D3DXMATERIAL *pMat;
 	D3DXMATRIX mtxParent;			//親モデルのマトリックス
+	MyLib::Matrix mtxScale;	// 計算用マトリックス宣言
 
 	//CRenderer型のポインタ
 	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
@@ -170,6 +172,11 @@ void CModel::Draw(void)
 
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
+
+	// スケールを反映する
+	mtxScale.Scaling(m_scale);
+	D3DXMATRIX calMtxScale = mtxScale.ConvertD3DXMATRIX();
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &calMtxScale);
 
 	//向きを反映
 	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
