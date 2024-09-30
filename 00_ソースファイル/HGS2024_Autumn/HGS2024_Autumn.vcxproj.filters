@@ -120,7 +120,10 @@
     <ClCompile Include="code\wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.cpp">
+    <ClCompile Include="code\mylib.cpp">
+      <Filter>souma</Filter>
+    </ClCompile>
+    <ClCompile Include="code\listmanager.cpp">
       <Filter>souma</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,10 +230,13 @@
     <ClInclude Include="code\wall.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\calculation.h">
+    <ClInclude Include="code\mylib.h">
       <Filter>souma</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.h">
+    <ClInclude Include="code\calculation.h">
+      <Filter>souma</Filter>
+    </ClInclude>
+    <ClInclude Include="code\listmanager.h">
       <Filter>souma</Filter>
     </ClInclude>
   </ItemGroup>
