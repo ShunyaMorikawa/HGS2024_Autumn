@@ -64,6 +64,7 @@ private:
 	CIdxMeshField *m_pIdxMesh;	// メッシュフィールドのポインタ
 	CFade* m_pFade;				// フェードのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
+	CPlayer* m_pPlayer;			// プレイヤーポインタ
 };
 
 #endif
