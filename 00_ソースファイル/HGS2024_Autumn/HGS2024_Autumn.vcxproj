@@ -32,13 +32,13 @@
     <ClCompile Include="code\input.cpp" />
     <ClCompile Include="code\light.cpp" />
     <ClCompile Include="code\listmanager.cpp" />
-    <ClCompile Include="code\lockonMarker.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\manager.cpp" />
     <ClCompile Include="code\mapobject.cpp" />
     <ClCompile Include="code\model.cpp" />
     <ClCompile Include="code\motion.cpp" />
     <ClCompile Include="code\mylib.cpp" />
+    <ClCompile Include="code\number.cpp" />
     <ClCompile Include="code\object.cpp" />
     <ClCompile Include="code\object2D.cpp" />
     <ClCompile Include="code\object3D.cpp" />
@@ -59,6 +59,7 @@
     <ClCompile Include="code\sound.cpp" />
     <ClCompile Include="code\stageobj.cpp" />
     <ClCompile Include="code\texture.cpp" />
+    <ClCompile Include="code\timer.cpp" />
     <ClCompile Include="code\title.cpp" />
     <ClCompile Include="code\tutorial.cpp" />
     <ClCompile Include="code\useful.cpp" />
@@ -79,13 +80,13 @@
     <ClInclude Include="code\input.h" />
     <ClInclude Include="code\light.h" />
     <ClInclude Include="code\listmanager.h" />
-    <ClInclude Include="code\lockonMarker.h" />
     <ClInclude Include="code\main.h" />
     <ClInclude Include="code\manager.h" />
     <ClInclude Include="code\mapobject.h" />
     <ClInclude Include="code\model.h" />
     <ClInclude Include="code\motion.h" />
     <ClInclude Include="code\mylib.h" />
+    <ClInclude Include="code\number.h" />
     <ClInclude Include="code\object.h" />
     <ClInclude Include="code\object2D.h" />
     <ClInclude Include="code\object3D.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="code\sound.h" />
     <ClInclude Include="code\stageobj.h" />
     <ClInclude Include="code\texture.h" />
+    <ClInclude Include="code\timer.h" />
     <ClInclude Include="code\title.h" />
     <ClInclude Include="code\tutorial.h" />
     <ClInclude Include="code\useful.h" />

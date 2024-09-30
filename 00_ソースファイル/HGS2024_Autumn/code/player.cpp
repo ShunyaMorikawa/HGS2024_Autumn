@@ -24,7 +24,6 @@
 #include "sound.h"
 #include "fade.h"
 #include "texture.h"
-#include "lockonMarker.h"
 
 #include "stageobj.h"
 #include "reverse.h"
@@ -35,12 +34,12 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
-	const float SPEED = 240.0f;		// 速度
+	const float SPEED = 500.0f;		// 速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float ROLL_TIME = 1.0f;	// 転がり継続時間
-	const float RADIUS = 50.0f;		// 半径
-	const float HEIGHT = 100.0f;	// 身長
+	const float RADIUS = 90.0f;		// 半径
+	const float HEIGHT = 200.0f;	// 身長
 	const float HEIGHT_SCALE = 0.5f;	// 転がり中の身長倍率
 }
 
@@ -191,6 +190,9 @@ void CPlayer::Update(void)
 	SetMove(move);
 	SetRot(rot);
 
+	// 当たり判定処理
+	Collision();
+
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
@@ -224,24 +226,22 @@ void CPlayer::Motion()
 	}
 
 	// モーションを設定
-	switch (m_State)
+	if (m_bJump) // ジャンプ状態
 	{
-	case STATE_NORMAL: // 通常状態
-
+		// TODO : ジャンプモーションを設定
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_STRONGATTACK);
+		DebugProc::Print(DebugProc::POINT_CENTER, "ジャンプ状態\n");
+	}
+	else if (m_bRoll) // 転がり状態
+	{
+		// TODO : 転がりモーションを設定
+		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
+		DebugProc::Print(DebugProc::POINT_CENTER, "転がり状態\n");
+	}
+	else // その他の状態
+	{
 		// 歩行モーションを設定
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
-
-		break;
-
-	default: // その他の場合
-		
-		// 警告
-		assert(false);
-
-		// 待機モーションを設定
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
-
-		break;
 	}
 
 	// モーションを更新
@@ -433,17 +433,59 @@ void CPlayer::CollisionReverseObj()
 	CReverse* pObj = nullptr;
 
 	// 位置取得
-	MyLib::Vector3 pos = GetPos();
+	D3DXMATRIX mtx = GetmtxWorld();
 
 	// 終端までループ
 	while (list.ListLoop(itr))
 	{
 		CReverse* pObj = *itr;
-		if (pObj->Collision(pos, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
+		if (pObj->Collision(mtx, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
 		{
 			// 反転
 			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
 			return;
+		}
+	}
+}
+
+//==========================================
+// 当たり判定
+//==========================================
+void CPlayer::Collision()
+{
+	// 障害物のリスト取得
+	CListManager<CStageObj> list = CStageObj::GetList();
+
+	// 終端を保存
+	std::list<CStageObj*>::iterator itr = list.GetEnd();
+	CStageObj* pObj = nullptr;
+
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 rot = GetRot();
+	D3DXMATRIX mtx;
+	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
+
+	//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&mtx);
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
+	D3DXMatrixMultiply(&mtx, &mtx, &mtxRot);
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
+	D3DXMatrixMultiply(&mtx, &mtx, &mtxTrans);
+
+	// 終端までループ
+	while (list.ListLoop(itr))
+	{
+		CStageObj* pObj = *itr;
+
+		if (pObj->Collision(mtx, D3DXVECTOR3(RADIUS, HEIGHT, RADIUS)))
+		{ // 当たり判定に当たった場合
+
+			int n = 0;
+			// 体力減る？
 		}
 	}
 }

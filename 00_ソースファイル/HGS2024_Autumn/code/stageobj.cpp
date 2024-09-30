@@ -224,7 +224,7 @@ void CStageObj::CollisionRange(const MyLib::Vector3& rPos)
 //==========================================================================
 // ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 //==========================================================================
-bool CStageObj::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
+bool CStageObj::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize)
 {
 	return false;
 }

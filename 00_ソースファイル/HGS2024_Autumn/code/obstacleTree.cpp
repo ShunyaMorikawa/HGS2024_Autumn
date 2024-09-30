@@ -69,11 +69,3 @@ void CObstacleTree::Draw(void)
 	// •`‰æ
 	CObstacle::Draw();
 }
-
-//========================================
-// ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
-//========================================
-bool CObstacleTree::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
-{
-	return false;
-}
