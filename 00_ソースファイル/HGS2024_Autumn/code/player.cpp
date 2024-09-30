@@ -200,6 +200,17 @@ void CPlayer::Update(void)
 	// 当たり判定処理
 	Collision();
 
+#ifdef _DEBUG
+
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	if (pKeyboard->GetTrigger(DIK_DOWN))
+	{
+		--m_nLife;
+	}
+
+#endif
+
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
