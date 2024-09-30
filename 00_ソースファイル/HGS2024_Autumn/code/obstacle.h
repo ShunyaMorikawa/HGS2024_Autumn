@@ -29,13 +29,16 @@ public:
 	~CObstacle();		//デストラクタ
 
 	// メンバ関数
-	HRESULT Init(void);
+	HRESULT Init(void) { return S_OK; }	// 純粋仮想
+	HRESULT Init(const EType type);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
+	virtual bool Collision(D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize) = 0;	// プレイヤーとの当たり判定
+
 	// 静的メンバ関数
-	static CObstacle* Create(std::string pfile);
+	static CObstacle* Create(const EType type, const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRot);
 
 private:
 
