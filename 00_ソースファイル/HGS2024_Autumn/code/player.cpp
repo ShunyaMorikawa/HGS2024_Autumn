@@ -31,13 +31,13 @@
 //========================================
 namespace
 {
-const int LIFE = 10;			// 体力
-const float NOCKBACK = 50.0f;	// ノックバック値
-const float SPEED = 4.0f;		// 速度
-const float INERTIA = 0.3f;		// 慣性
-const float RADIUS = 50.0f;		// 半径
-const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
-const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
+	const int LIFE = 10;			// 体力
+	const float NOCKBACK = 50.0f;	// ノックバック値
+	const float SPEED = 4.0f;		// 速度
+	const float INERTIA = 0.3f;		// 慣性
+	const float RADIUS = 50.0f;		// 半径
+	const float FIELD_LIMIT = 4000.0f;	// フィールドの大きさ
+	const float MARKERPOS = 200.0f;		// ロックオンマーカーの位置
 }
 
 //========================================
@@ -48,24 +48,18 @@ CPlayer* CPlayer::m_pPlayer = nullptr;
 //========================================
 //コンストラクタ
 //========================================
-CPlayer::CPlayer(int nPriority) : CCharacter(nPriority)
-{//値をクリア
-	m_apNumModel = 0;		// モデルの総数
-	m_nLife = 0;			// 体力
-	m_nOldMotion = 0;		// 前回のモーション
-	m_WalkCounter = 0;		// 歩行時エフェクト出す用のカウンター
-	m_nState = STATE_NONE;	// 状態
-	m_fRadius = 0.0f;		// 半径
-	m_bJump  = false;		// ノックバック
-	m_bMove = false;		// 移動
-	m_bWait = false;		// 待機
-	m_bMowingdown = false;	// 攻撃
-	m_bCutdown = false;		// 切り下げ
-	m_bStrongAttack = false;	// 強攻撃
-	m_IsLock = false;		// ロックオン
-	m_pEffect = nullptr;	// エフェクトのポインタ
-	m_pGauge = nullptr;		// ゲージのポインタ
-	m_pMarker = nullptr;	// ロックオンマーカー表示
+CPlayer::CPlayer(int nPriority) : CCharacter(nPriority),
+m_apNumModel	(0),			// モデルの総数
+m_nLife			(0),			// 体力
+m_nOldMotion	(0),			// 前回のモーション
+m_WalkCounter	(0),			// 歩行時エフェクト出す用のカウンター
+m_State			(STATE_NONE),	// 状態
+m_fRadius		(0.0f),			// 半径
+m_bJump			(false),		// ジャンプフラグ
+m_pEffect		(nullptr),		// エフェクトのポインタ
+m_pGauge		(nullptr),		// ゲージのポインタ
+m_pMarker		(nullptr)		// ロックオンマーカー表示
+{
 	memset(&m_apModel[0], 0, sizeof(m_apModel));	//モデル情報
 }
 
@@ -103,7 +97,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	CCharacter::Init(pfile);
 
 	// プレイヤー状態の初期化
-	m_nState = STATE_NORMAL;
+	m_State = STATE_NORMAL;
 
 	// 位置設定
 	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
@@ -172,6 +166,10 @@ void CPlayer::Update(void)
 	// 向き取得
 	D3DXVECTOR3 rot = GetRot();
 
+	// カメラの追従設定
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
+	pCamera->Following(pos, rot);
+
 	// プレイヤー行動
 	Act(SPEED);
 
@@ -202,28 +200,6 @@ void CPlayer::Update(void)
 		Uninit();
 	}
 
-	if (pInputKeyboard->GetTrigger(DIK_R) ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_PUSHING_R, 0))
-	{
-		m_IsLock = m_IsLock ? false : true;
-
-		if (m_IsLock)
-		{// ロックオン
-			if (m_pMarker == nullptr)
-			{// マーカー生成
-				m_pMarker = CLockonMarker::Create(true);
-			}
-		}
-		else
-		{
-			if (m_pMarker != nullptr)
-			{// マーカー削除
-				m_pMarker->Uninit();
-				m_pMarker = nullptr;
-			}
-		}
-	}
-
 	// デバッグ表示
 	DebugProc::Print(DebugProc::POINT_LEFT, "\nプレイヤーの位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
 	DebugProc::Print(DebugProc::POINT_LEFT, "プレイヤーの移動量：%f、%f、%f\n", move.x, move.y, move.z);
@@ -245,23 +221,11 @@ void CPlayer::Draw(void)
 //========================================
 void CPlayer::Act(float fSpeed)
 {
-	// モーション解除
-	m_bMove = false;
-
 	// キーボードの情報取得
 	CInputKeyboard* pInputKeyboard = CManager::GetInstance()->GetInputKeyboard();
 
 	// コントローラーの情報取得	
 	CInputPad* pInputPad = CManager::GetInstance()->GetInputPad();
-
-	//CCamera型のポインタ
-	CCamera* pCamera = CManager::GetInstance()->GetCamera();
-
-	// カメラの向き取得
-	D3DXVECTOR3 Camrot = pCamera->GetRot();
-
-	// 目的の向き
-	D3DXVECTOR3 DiffRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// 位置取得
 	D3DXVECTOR3 pos = GetPos();
@@ -269,151 +233,11 @@ void CPlayer::Act(float fSpeed)
 	// 移動量取得
 	D3DXVECTOR3 move = GetMove();
 
-	// 向き取得
-	D3DXVECTOR3 rot = GetRot();
-
-	// 目的の向き取得
-	D3DXVECTOR3 RotDest = GetRotDest();
-
-	if (pInputKeyboard->GetPress(DIK_A) == true
-		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) < 0)
-	{//Aが押された
-		if (pInputKeyboard->GetPress(DIK_W) == true
-			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-		{//左上
-			m_bMove = true;
-
-			move.x += sinf(Camrot.y + D3DX_PI * 0.75f) * fSpeed;
-			move.z += cosf(Camrot.y + D3DX_PI * 0.75f) * fSpeed;
-
-			//移動方向にモデルを向ける
-			RotDest.y = Camrot.y - D3DX_PI * 0.25f;
-		}
-		else if (pInputKeyboard->GetPress(DIK_S) == true
-			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
-		{//左下
-			m_bMove = true;
-
-			move.x += sinf(Camrot.y + D3DX_PI * 0.25f) * fSpeed;
-			move.z += cosf(Camrot.y + D3DX_PI * 0.25f) * fSpeed;
-
-			//移動方向にモデルを向ける
-			RotDest.y = Camrot.y - D3DX_PI * 0.75f;
-		}
-		else
-		{//左
-			m_bMove = true;
-
-			move.x += sinf(Camrot.y + D3DX_PI * 0.5f) * fSpeed;
-			move.z += cosf(Camrot.y + D3DX_PI * 0.5f) * fSpeed;
-
-			//移動方向にモデルを向ける
-			RotDest.y = Camrot.y - D3DX_PI * 0.5f;
-		}
-	}
-	else if (pInputKeyboard->GetPress(DIK_D) == true
-		|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-	{//Dが押された
-		if (pInputKeyboard->GetPress(DIK_W) == true
-			|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-		{//右上
-			m_bMove = true;
-
-			move.x += sinf(Camrot.y + -D3DX_PI * 0.75f) * fSpeed;
-			move.z += cosf(Camrot.y + -D3DX_PI * 0.75f) * fSpeed;
-
-			//移動方向にモデルを向ける
-			RotDest.y = Camrot.y + D3DX_PI * 0.25f;
-		}
-		else if (pInputKeyboard->GetPress(DIK_S) == true
-			|| pInputPad->GetLStickXPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-		{//右下
-			m_bMove = true;
-
-			move.x += sinf(Camrot.y + -D3DX_PI * 0.25f) * fSpeed;
-			move.z += cosf(Camrot.y + -D3DX_PI * 0.25f) * fSpeed;
-
-			//移動方向にモデルを向ける
-			RotDest.y = Camrot.y + D3DX_PI * 0.75f;
-		}
-		else
-		{//右
-			m_bMove = true;
-
-			move.x += sinf(Camrot.y + -D3DX_PI * 0.5f) * fSpeed;
-			move.z += cosf(Camrot.y + -D3DX_PI * 0.5f) * fSpeed;
-
-			//移動方向にモデルを向ける
-			RotDest.y = Camrot.y + D3DX_PI * 0.5f;
-		}
-	}
-	else if (pInputKeyboard->GetPress(DIK_W) == true
-		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) > 0)
-	{//Wが押された
-		m_bMove = true;
-
-		move.x += sinf(Camrot.y + D3DX_PI) * fSpeed;
-		move.z += cosf(Camrot.y + D3DX_PI) * fSpeed;
-
-		//移動方向にモデルを向ける
-		RotDest.y = Camrot.y;
-	}
-	else if (pInputKeyboard->GetPress(DIK_S) == true
-		|| pInputPad->GetLStickYPress(CInputPad::BUTTON_L_STICK, 0) < 0)
-	{//Sが押された
-		m_bMove = true;
-
-		move.x += sinf(Camrot.y + D3DX_PI * 0.0f) * fSpeed;
-		move.z += cosf(Camrot.y + D3DX_PI * 0.0f) * fSpeed;
-
-		//移動方向にモデルを向ける
-		RotDest.y = Camrot.y + D3DX_PI;
-	}
-
-	if (m_bMove)
-	{//位置を更新
-		pos += move;
-
-		//移動量を更新(減衰させる)
-		move.x += (0.0f - move.x) * INERTIA;
-		move.z += (0.0f - move.z) * INERTIA;
-
-		m_WalkCounter = (m_WalkCounter + 1) % 20;
-
-		if (m_WalkCounter == 0)
-		{
-			// パーティクル生成
-			Myparticle::Create(Myparticle::TYPE_WALK, pos);
-
-			// サウンド再生
-			CSound* pSound = CManager::GetInstance()->GetSound();
-			pSound->PlaySoundA(CSound::SOUND_LABEL_SE_WALK);
-		}
-	}
-
-	//目的の向き
-	DiffRot.y = RotDest.y - rot.y;
-
-	// 向きの正規化
-	USEFUL::NormalizeRotAngle(DiffRot.y);
-
-	//Diffに補正係数をかける
-	rot.y += DiffRot.y * 0.1f;
-
-	// 角度の正規化
-	USEFUL::NormalizeRotAngle(rot.y);
-
 	// 位置設定
 	SetPos(pos);
 
 	// 移動量設定
 	SetMove(move);
-
-	// 向き設定
-	SetRot(rot);
-
-	// 目的の向き設定
-	SetRotDest(RotDest);
 
 	// モーション
 	Motion();
@@ -427,31 +251,24 @@ void CPlayer::Motion()
 	// モーション情報取得
 	CMotion* pMotion = GetMotion();
 
-	if (m_bMove)
-	{// 歩きモーション
+	switch (m_State)
+	{
+	case STATE_NORMAL: // 通常状態
+
+		// 歩行モーションを設定
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_WALK);
-	}
-	else if (m_bCutdown)
-	{// 切り下ろしモーション
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_CUTDOWN);
 
-		m_bCutdown = false;
-	}
-	else if (m_bMowingdown)
-	{// 薙ぎ払い
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_MOWINGDOWN);
+		break;
 
-		m_bMowingdown = false;
-	}
-	else if (m_bStrongAttack)
-	{// 強攻撃
-		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_STRONGATTACK);
+	default: // その他の場合
+		
+		// 警告
+		assert(false);
 
-		m_bStrongAttack = false;
-	}
-	else
-	{// 待機モーション
+		// 待機モーションを設定
 		pMotion->Set(CMotion::PLAYER_MOTIONTYPE_NEUTRAL);
+
+		break;
 	}
 
 	if (pMotion != nullptr)
