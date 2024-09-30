@@ -58,6 +58,8 @@ public:
 	float GetRadius() { return m_fRadius; }		// 半径取得
 	int GetLife() { return m_nLife; }			// 体力取得
 	int GetState() { return m_State; }			// 状態取得
+	void SetType(const PLAYERTYPE type) { m_typeDefault = type; } // デフォルトタイプの変更
+	PLAYERTYPE GetType() { return m_type; } // タイプの取得
 
 	// 静的メンバ関数
 	static CPlayer* GetInstance() { return m_pPlayer; }
@@ -69,6 +71,7 @@ private:
 	void Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime);
 	void Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard);
 	void Roll(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard, const float fDeltaTime);
+	void SwitchType(CInputPad* pPad, CInputKeyboard* pKeyboard);
 	void Land(D3DXVECTOR3& pos, D3DXVECTOR3& move);
 	void CheckStageObjRange();	// ステージオブジェの範囲チェック
 
