@@ -7,6 +7,7 @@
 #include "calculation.h"
 #include "obstacleStone.h"
 #include "player.h"
+#include "sound.h"
 
 #include "model.h"
 
@@ -98,6 +99,12 @@ bool CObstacleStone::Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize,
 	{
  		if (state == CPlayer::STATE_ROLL)
 		{ // 転がり中の場合、抜ける
+
+			// サウンド情報取得
+			CSound* pSound = CManager::GetInstance()->GetSound();
+
+			// サウンド再生
+			pSound->PlaySoundA(CSound::SOUND_LABEL_SE_CLASH);
 
 			// 終了処理
 			Uninit();
