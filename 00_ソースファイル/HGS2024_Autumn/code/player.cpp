@@ -265,6 +265,14 @@ void CPlayer::Move(D3DXVECTOR3& pos, const float fDeltaTime)
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
 	CInputPad* pPad = CManager::GetInstance()->GetInputPad();
 
+#ifdef _DEBUG
+	// デバッグ中は右シフトを押さないと動かない
+	if (!pKeyboard->GetPress(DIK_RSHIFT))
+	{
+		return;
+	}
+#endif
+
 	// 自身の情報を取得
 	D3DXVECTOR3 move = GetMove();
 
