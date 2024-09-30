@@ -57,6 +57,7 @@ public:
 	//=============================
 	void Kill();		// 削除
 	void SetState(const State& state);	// 状態設定
+	void CollisionRange(const D3DXVECTOR3& rPos);	// 範囲判定
 	virtual bool Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize);	// プレイヤーとの当たり判定
 
 	//=============================
@@ -97,6 +98,7 @@ private:
 	//=============================
 	float m_fStateTime;		// 状態カウンター
 	State m_state;			// 状態
+	bool m_bWorking;		// 稼働判定
 	static CListManager<CStageObj> m_List;	// リスト
 
 };

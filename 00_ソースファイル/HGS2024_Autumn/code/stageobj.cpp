@@ -19,6 +19,7 @@
 namespace
 {
 	const char* MODEL = "data\\MODEL\\box.x";
+	const float ENABLERANGE = 1000.0f;	// 有効範囲
 }
 
 namespace StateTime
@@ -48,7 +49,8 @@ CListManager<CStageObj> CStageObj::m_List = {};	// リスト
 CStageObj::CStageObj(int nPriority) : CObject(nPriority),
 m_fStateTime(0.0f),		// 状態タイマー
 m_state(State::STATE_NONE),	// 状態
-m_pModel(nullptr)		// モデル
+m_pModel(nullptr),		// モデル
+m_bWorking(false)		// 稼働判定
 {
 
 }
@@ -72,6 +74,7 @@ CStageObj *CStageObj::Create(const Type& type, const MyLib::Vector3& pos)
 	switch (type)
 	{
 	case Type::TYPE_BG:
+		pObj = new CStageObj;
 		break;
 
 	case Type::TYPE_OBSTACLE:
@@ -175,6 +178,32 @@ void CStageObj::Update()
 		SetState(State::STATE_LEAVE);
 	}
 #endif
+}
+
+//==========================================================================
+// 範囲判定
+//==========================================================================
+void CStageObj::CollisionRange(const D3DXVECTOR3& rPos)
+{
+	MyLib::Vector3 pos = GetPos();
+
+	if (m_bWorking &&
+		m_state != State::STATE_LEAVE &&
+		rPos.x >= pos.x + ENABLERANGE)
+	{// 退場範囲
+		SetState(State::STATE_LEAVE);
+		m_bWorking = false;
+		return;
+	}
+
+	if (!m_bWorking &&
+		m_state == State::STATE_NONE &&
+		rPos.x >= pos.x - ENABLERANGE)
+	{// 登場範囲
+		SetState(State::STATE_APPEARANCE);
+		m_bWorking = true;
+	}
+	
 }
 
 //==========================================================================
