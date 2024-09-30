@@ -61,6 +61,7 @@
     <ClCompile Include="code\resultscore.cpp" />
     <ClCompile Include="code\reverse.cpp" />
     <ClCompile Include="code\reverse_direction.cpp" />
+    <ClCompile Include="code\sky.cpp" />
     <ClCompile Include="code\sound.cpp" />
     <ClCompile Include="code\stageEdittor.cpp" />
     <ClCompile Include="code\stagemanager.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="code\resultscore.h" />
     <ClInclude Include="code\reverse.h" />
     <ClInclude Include="code\reverse_direction.h" />
+    <ClInclude Include="code\sky.h" />
     <ClInclude Include="code\sound.h" />
     <ClInclude Include="code\stageEdittor.h" />
     <ClInclude Include="code\stagemanager.h" />

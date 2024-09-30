@@ -14,6 +14,7 @@
 
 #include "timer.h"
 #include "field.h"
+#include "sky.h"
 #include "stageobj.h"
 #include "stagemanager.h"
 #ifdef _DEBUG
@@ -83,6 +84,7 @@ HRESULT CGame::Init(void)
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
 	CField::Create();
+	CSky::Create();
 
 	// ƒvƒŒƒCƒ„[‚Ì¶¬
 	if (m_pPlayer == nullptr)
