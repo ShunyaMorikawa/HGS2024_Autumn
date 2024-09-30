@@ -48,17 +48,15 @@ CObstacle::~CObstacle()
 //========================================
 HRESULT CObstacle::Init(void)
 {
+	// ƒ‚ƒfƒ‹¶¬
+	m_pModel = CModel::Create(MODEL[m_type]);
+
 	if (FAILED(CStageObj::Init()))
 	{ // ‰Šú‰»‚ÉŽ¸”s‚µ‚½ê‡
 
 		// Ž¸”s‚ð•Ô‚·
 		return E_FAIL;
 	}
-
-	// ƒ‚ƒfƒ‹¶¬
-	m_pModel = CModel::Create(MODEL[m_type]);
-	m_pModel->SetType(CModel::TYPE_NOT_HIERARCHY);
-	m_pModel->SetPosition(GetPos());
 
 	return S_OK;
 }
