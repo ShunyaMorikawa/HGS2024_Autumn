@@ -12,7 +12,10 @@
 #define PRECOMPILE_H__
 
 #include <windows.h>
+
 #define  DIRECTINPUT_VERSION (0x0800)   //ビルド時の警告対処用マクロ
+#include <crtdbg.h>		// メモリリーク検出に必要
+
 #include "d3dx9.h"		//描画処理に必要
 #include "xaudio2.h"	//サウンド処理に必要
 #include "dinput.h"		//入力処理に必要
@@ -24,6 +27,7 @@
 #include <string.h>
 #include <time.h>
 #include <vector>
+#include "debugproc.h"
 
 
 #include <Windows.h>

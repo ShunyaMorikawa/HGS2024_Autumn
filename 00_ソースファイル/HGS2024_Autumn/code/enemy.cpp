@@ -266,12 +266,11 @@ void CEnemy::Update(void)
 #endif
 
 	// デバッグ表示
-	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
-	pDebugProc->Print("\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
-	pDebugProc->Print("敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
-	pDebugProc->Print("敵の移動量：%f、%f、%f\n", move.x, move.y, move.z);
-	pDebugProc->Print("敵の体力：%d\n", m_nLife);
-	pDebugProc->Print("F4で敵の体力0\n");
+	DebugProc::Print(DebugProc::POINT_LEFT, "\n敵の位置：%f、%f、%f\n", pos.x, pos.y, pos.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "敵の向き：%f、%f、%f\n", rot.x, rot.y, rot.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "敵の移動量：%f、%f、%f\n", move.x, move.y, move.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "敵の体力：%d\n", m_nLife);
+	DebugProc::Print(DebugProc::POINT_LEFT, "F4で敵の体力0\n");
 }
 
 //========================================

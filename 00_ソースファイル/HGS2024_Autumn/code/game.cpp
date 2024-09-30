@@ -132,11 +132,8 @@ void CGame::Update(void)
 		}
 	}
 
-	// デバッグ表示の情報取得
-	CDebugProc* pDebugProc = CManager::GetInstance()->GetDebugProc();
-
 	// デバッグ表示
-	pDebugProc->Print("\nカウンター：%d\n", m_nTransition);
+	DebugProc::Print(DebugProc::POINT_LEFT, "\nカウンター：%d\n", m_nTransition);
 
 #ifdef _DEBUG
 	if (pInputKeyboard->GetTrigger(DIK_F2) == true)

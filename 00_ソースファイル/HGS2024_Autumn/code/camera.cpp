@@ -96,9 +96,6 @@ void CCamera::Uninit(void)
 //=======================================
 void CCamera::Update(void)
 {	
-	//CDebugProc型ポインタ
-	CDebugProc *pDebugProc = CManager::GetInstance()->GetDebugProc();
-
 	//視点の移動
 	CameraMoveV();
 
@@ -107,9 +104,9 @@ void CCamera::Update(void)
 
 #ifdef _DEBUG
 	//デバッグ表示
-	pDebugProc->Print("\n視点の位置：%f、%f、%f\n", m_posV.x, m_posV.y, m_posV.z);
-	pDebugProc->Print("注視点の位置：%f、%f、%f\n", m_posR.x, m_posR.y, m_posR.z);
-	pDebugProc->Print("カメラの向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "\n視点の位置：%f、%f、%f\n", m_posV.x, m_posV.y, m_posV.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "注視点の位置：%f、%f、%f\n", m_posR.x, m_posR.y, m_posR.z);
+	DebugProc::Print(DebugProc::POINT_LEFT, "カメラの向き：%f、%f、%f\n", m_rot.x, m_rot.y, m_rot.z);
 #endif
 }
 
@@ -134,12 +131,12 @@ void CCamera::SetCamera(void)
 								10.0f,		//Z値の最小値
 								400000.0f);	//Z値の最大値(描画距離)
 
-	////プロジェクションマトリックスを設定[平行投影]
-	//D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
-	//					SCREEN_WIDTH,	//画面の幅
-	//					SCREEN_HEIGHT,	//画面の高さ
-	//					10.0f,		//Z値の最小値
-	//					1000.0f);	//Z値の最大値
+	//プロジェクションマトリックスを設定[平行投影]
+	D3DXMatrixOrthoLH(&m_mtxProjection,		//プロジェクションマトリックス
+						SCREEN_WIDTH,	//画面の幅
+						SCREEN_HEIGHT,	//画面の高さ
+						10.0f,		//Z値の最小値
+						1000.0f);	//Z値の最大値
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
