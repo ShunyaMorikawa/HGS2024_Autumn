@@ -7,6 +7,7 @@
 #ifndef _OBSTACLE_H_
 #define _OBSTACLE_H_
 
+#include "player.h"
 #include "stageobj.h"
 
 //========================================
@@ -26,8 +27,8 @@ public:
 		TYPE_MAX		// 列挙型の総数
 	};
 
-	CObstacle();		//コンストラクタ
-	~CObstacle();		//デストラクタ
+	CObstacle();		// コンストラクタ
+	~CObstacle();		// デストラクタ
 
 	// メンバ関数
 	HRESULT Init(void);
@@ -37,7 +38,7 @@ public:
 
 	void Kill() override;
 
-	virtual bool Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize) override;	// プレイヤーとの当たり判定
+	virtual bool Collision(const D3DXMATRIX& rMtx, const D3DXVECTOR3& rSize, const CPlayer::PLAYERSTATE state) override;	// プレイヤーとの当たり判定
 
 	// 静的メンバ関数
 	static CObstacle* Create(const EType type, const D3DXVECTOR3& rPos, const D3DXVECTOR3& rRot);

@@ -36,11 +36,14 @@ public:
 
 private:
 
+	// 定数定義
+#define DIGIT (6) // 桁数
+
 	// メンバ関数
 	void CalcNum(); // 計算
 
 	// メンバ変数
 	static float m_fTimer; // 現在の時間
-	CNumber* m_pNumber[2]; // 数字
+	CNumber* m_pNumber[DIGIT]; // 数字
 
 };

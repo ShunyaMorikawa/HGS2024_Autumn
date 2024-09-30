@@ -37,9 +37,9 @@ public:
 	enum MODE
 	{//モードの列挙型
 		MODE_NONE = 0,	//設定なし
-		MODE_TITLE,		//タイトル
-		MODE_TUTORIAL,	//チュートリアル
-		MODE_GAME,		//ゲーム
+		MODE_TITLE,		// タイトル
+		MODE_TUTORIAL,	// チュートリアル
+		MODE_GAME,		// ゲーム
 		MODE_RESULT,	// リザルト
 		MODE_MAX
 	};
