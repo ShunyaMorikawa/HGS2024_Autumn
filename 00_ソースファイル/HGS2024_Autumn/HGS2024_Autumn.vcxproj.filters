@@ -25,6 +25,9 @@
     <Filter Include="mode">
       <UniqueIdentifier>{6febe928-b976-4e16-8940-f5c5d71c069f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="direction">
+      <UniqueIdentifier>{dc67f9c9-be97-467f-9259-eddbb5154d18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\billboard.cpp">
@@ -155,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="code\timer.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="code\reverse_direction.cpp">
+      <Filter>direction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="code\timer.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="code\reverse_direction.h">
+      <Filter>direction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

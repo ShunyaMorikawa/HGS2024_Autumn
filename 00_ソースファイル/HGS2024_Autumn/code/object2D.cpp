@@ -36,6 +36,8 @@ CObject2D::CObject2D(int nPriority) :
 	m_nIdxTexture(0)		//テクスチャの番号
 {//値クリア
 
+	m_size = D3DXVECTOR2(0.0f, 0.0f);		// サイズ
+	m_sizeOrigin = D3DXVECTOR2(0.0f, 0.0f);	// 元のサイズ
 }
 
 //========================================
@@ -219,6 +221,9 @@ void  CObject2D::SetSize(float fWidht, float fHeight)
 
 	//対角線の向き(横、縦)
 	m_fAngle = atan2f(fWidht, fHeight);
+
+	// サイズ
+	m_size = D3DXVECTOR2(fWidht, fHeight);
 
 	//頂点情報
 	SetVertex();
