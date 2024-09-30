@@ -48,6 +48,7 @@ private:
 	CFade* m_pFade;				// フェードのポインタ
 	CMapObject* m_pMobj;		// マップオブジェクトのポインタ
 	CObject2D* m_pObj2D;		// オブジェクト2Dのポインタ
+	bool m_bEnd;
 };
 
 #endif

@@ -63,6 +63,8 @@ HRESULT CTutorial::Init(void)
 	// テクスチャ設定
 	m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\tutorial.png"));
 
+	m_bEnd = false;
+
 	//成功を返す
 	return S_OK;
 }
@@ -93,15 +95,19 @@ void CTutorial::Update(void)
 	//テクスチャのポインタ
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 
-	if (pInputKeyboard->GetTrigger(DIK_D) ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
+	if (!m_bEnd &&
+		(pInputKeyboard->GetTrigger(DIK_D) ||
+		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)))
 	{
 		// テクスチャ設定
 		m_pObj2D->BindTexture(pTexture->Regist("data\\texture\\tutorial2.png"));
+		m_bEnd = true;
+		return;
 	}
 
-	if (pInputKeyboard->GetTrigger(DIK_RETURN) ||
-		pInputPad->GetTrigger(CInputPad::BUTTON_A, 0))
+	
+	if (m_bEnd && 
+		(pInputKeyboard->GetTrigger(DIK_RETURN) || pInputPad->GetTrigger(CInputPad::BUTTON_A, 0)))
 	{
 		// 画面遷移(フェード)
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE_GAME);
