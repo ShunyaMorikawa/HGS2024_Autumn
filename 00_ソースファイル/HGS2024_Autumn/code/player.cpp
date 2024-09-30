@@ -199,6 +199,17 @@ void CPlayer::Update(void)
 	// 当たり判定処理
 	Collision();
 
+#ifdef _DEBUG
+
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetInputKeyboard();
+
+	if (pKeyboard->GetTrigger(DIK_DOWN))
+	{
+		--m_nLife;
+	}
+
+#endif
+
 	D3DXVECTOR3 rot = GetRot();
 
 	// デバッグ表示

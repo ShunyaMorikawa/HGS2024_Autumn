@@ -56,7 +56,7 @@ CListManager<CObstacle> CObstacle::m_List = {};	// リスト
 //コンストラクタ
 //========================================
 CObstacle::CObstacle() : CStageObj(),
-m_type(TYPE_TREE)
+m_type(TYPE_RIVER)
 {//値をクリア
 }
 
@@ -142,12 +142,6 @@ CObstacle* CObstacle::Create(const EType type, const D3DXVECTOR3& rPos, const D3
 
 	switch (type)
 	{
-	case CObstacle::TYPE_TREE:
-
-		pObstacle = new CObstacleTree;
-
-		break;
-
 	case CObstacle::TYPE_RIVER:
 
 		pObstacle = new CObstacleRiver;
