@@ -170,6 +170,9 @@ void CModel::Draw(void)
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
 
+	// 自動正規化をONにする
+	pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+
 	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
@@ -230,6 +233,9 @@ void CModel::Draw(void)
 
 	//保存していたマテリアルを戻す
 	pDevice->SetMaterial(&matDef);
+
+	// 自動正規化をデフォルトにする
+	pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, FALSE);
 }
 
 //========================================

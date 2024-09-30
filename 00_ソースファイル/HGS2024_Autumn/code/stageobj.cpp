@@ -116,7 +116,7 @@ HRESULT CStageObj::Init()
 	m_pModel->SetScale(0.0f);
 
 	// ìoèÍ
-	SetState(State::STATE_NONE);
+	SetState(State::STATE_APPEARANCE);
 	return S_OK;
 }
 
