@@ -26,6 +26,7 @@ public:
 	void Update(void);		//更新
 	void Draw(void);		//描画
 
+	virtual void SetVertex3D() override;
 private:
 	//メンバ変数
 	static 	LPDIRECT3DTEXTURE9 m_pTexture;		//テクスチャへのポインタ

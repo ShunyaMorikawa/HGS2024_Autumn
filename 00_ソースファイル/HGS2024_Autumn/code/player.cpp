@@ -27,6 +27,7 @@
 #include "lockonMarker.h"
 
 #include "stageobj.h"
+#include "reverse.h"
 
 //========================================
 // 定数定義
@@ -34,7 +35,7 @@
 namespace
 {
 	const int LIFE = 10;			// 体力
-	const float SPEED = 240.0f;		// 速度
+	const float SPEED = 500.0f;		// 速度
 	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
 	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float ROLL_TIME = 1.0f;	// 転がり継続時間
@@ -108,7 +109,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	m_typeDefault = m_type = TYPE_TURTLE;
 
 	// 位置設定
-	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
+	SetPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	// 向き設定
 	SetRot(D3DXVECTOR3(0.0f, -D3DX_PI * 0.5f, 0.0f));
@@ -176,38 +177,11 @@ void CPlayer::Update(void)
 	// ステージオブジェとの範囲チェック
 	CheckStageObjRange();
 
+	// 反転オブジェの当たり判定
+	CollisionReverseObj();
+
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
-
-	if (m_nLife <= 0)
-	{
-		//テクスチャの情報取得
-		CTexture* pTexture = CManager::GetInstance()->GetTexture();
-
-		// サウンド情報取得
-		CSound* pSound = CManager::GetInstance()->GetSound();
-
-		// 生成
-		CObject2D* pObje2D = CObject2D::Create();
-
-		// 位置設定
-		pObje2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
-
-		// サイズ設定
-		pObje2D->SetSize(SCREEN_WIDTH, 200.0f);
-
-		// 敗北テクスチャ
-		pObje2D->BindTexture(pTexture->Regist("data\\texture\\lose.png"));
-
-		// サウンド停止
-		pSound->Stop(CSound::SOUND_LABEL_BGM_GAME);
-
-		// サウンド再生
-		pSound->PlaySoundA(CSound::SOUND_LABEL_BGM_LOSE);
-
-		// 終了
-		Uninit();
-	}
 
 	// モーション
 	Motion();
@@ -287,7 +261,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	CInputPad* pPad = CManager::GetInstance()->GetInputPad();
 
 #ifdef _DEBUG
-	// 0キーで初期位置に戻る
+	// 2キーで初期位置に戻る
 	if (pKeyboard->GetTrigger(DIK_2))
 	{
 		pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -299,6 +273,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 	{
 		return;
 	}
+
 #endif
 
 	// 状態の切り替え
@@ -430,7 +405,7 @@ void CPlayer::Land(D3DXVECTOR3& pos, D3DXVECTOR3& move)
 //==========================================
 void CPlayer::CheckStageObjRange()
 {
-	// 障害物のリスト取得
+	// ステージオブジェのリスト取得
 	CListManager<CStageObj> list = CStageObj::GetList();
 
 	// 終端を保存
@@ -447,6 +422,32 @@ void CPlayer::CheckStageObjRange()
 		pObj->CollisionRange(pos);
 	}
 }
+
+//==========================================
+// 反転オブジェの当たり判定
+//==========================================
+void CPlayer::CollisionReverseObj()
+{
+	// 反転オブジェのリスト取得
+	CListManager<CReverse> list = CReverse::GetList();
+
+	// 終端を保存
+	std::list<CReverse*>::iterator itr = list.GetEnd();
+	CReverse* pObj = nullptr;
+
+	// 位置取得
+	MyLib::Vector3 pos = GetPos();
+
+	// 終端までループ
+	while (list.ListLoop(itr))
+	{
+		CReverse* pObj = *itr;
+		if (pObj->Collision(pos, MyLib::Vector3(RADIUS, HEIGHT, RADIUS)))
+		{
+			// 反転
+			m_typeDefault = (m_typeDefault == TYPE_RABBIT) ? PLAYERTYPE::TYPE_TURTLE : PLAYERTYPE::TYPE_RABBIT;
+			return;
+		}
 
 //==========================================
 // 当たり判定

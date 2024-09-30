@@ -58,7 +58,8 @@ public:
 	float GetRadius() { return m_fRadius; }		// 半径取得
 	int GetLife() { return m_nLife; }			// 体力取得
 	int GetState() { return m_State; }			// 状態取得
-	void SetType(const PLAYERTYPE type) { m_typeDefault = type; } // デフォルトタイプの変更
+	void SetDefaultType(const PLAYERTYPE type) { m_typeDefault = type; } // デフォルトタイプの変更
+	PLAYERTYPE GetDefaultType() { return m_typeDefault; } // デフォルトタイプの取得
 	PLAYERTYPE GetType() { return m_type; } // タイプの取得
 
 	// 静的メンバ関数
@@ -74,6 +75,7 @@ private:
 	void SwitchType(CInputPad* pPad, CInputKeyboard* pKeyboard);
 	void Land(D3DXVECTOR3& pos, D3DXVECTOR3& move);
 	void CheckStageObjRange();	// ステージオブジェの範囲チェック
+	void CollisionReverseObj();	// 反転オブジェの当たり判定
 	void Collision();	// 当たり判定
 
 	// メンバ変数
