@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="souma">
+      <UniqueIdentifier>{1c8cf538-7cbc-45fb-90b0-71d89fb5b37b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\billboard.cpp">
@@ -117,6 +120,9 @@
     <ClCompile Include="code\wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.cpp">
+      <Filter>souma</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="code\wall.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\calculation.h">
+      <Filter>souma</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.h">
+      <Filter>souma</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

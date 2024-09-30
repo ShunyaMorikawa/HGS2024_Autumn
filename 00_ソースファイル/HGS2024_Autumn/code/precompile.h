@@ -25,4 +25,35 @@
 #include <time.h>
 #include <vector>
 
+
+#include <Windows.h>
+#include <stdio.h>
+#include <time.h>
+#include <string.h>
+#include <DirectXMath.h>
+#include <D3DX9Math.h>
+#include <assert.h>
+
+// C++のstd用
+#include <vector>
+#include <algorithm>
+#include <list>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <cmath>
+#include <iterator>
+#include <codecvt>
+#include <fstream>
+#include <thread>
+#include <chrono>
+#include <mutex>
+#include <condition_variable>
+#include <stack>
+#include <filesystem>
+
+// マイライブラリ
+#include "mylib.h"
+
 #endif // _PRECOMPILE_H_

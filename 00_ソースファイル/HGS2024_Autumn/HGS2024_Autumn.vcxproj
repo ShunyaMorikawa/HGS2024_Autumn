@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.cpp" />
     <ClCompile Include="code\billboard.cpp" />
     <ClCompile Include="code\bullet.cpp" />
     <ClCompile Include="code\camera.cpp" />
@@ -57,6 +58,8 @@
     <ClCompile Include="code\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\calculation.h" />
+    <ClInclude Include="..\..\..\..\..\チーム手稲\2024Team_TGS\202404_TGS\Source\mylib.h" />
     <ClInclude Include="code\billboard.h" />
     <ClInclude Include="code\bullet.h" />
     <ClInclude Include="code\camera.h" />

@@ -1,48 +1,70 @@
-//========================================
-//
-//シューティングアクション[texture.h]
-//Author：森川駿弥
-//
-//========================================
+//=============================================================================
+// 
+// テクスチャヘッダー [texture.h]
+//  Author : 相馬靜雅
+// 
+//=============================================================================
+
 #ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#define _TEXTURE_H_	// 二重インクルード防止
+
 #include "main.h"
 
-//=======================================
-// 定数定義
-//=======================================
-namespace
-{
-const int MAX_TEXTURE = 64;	// テクスチャの最大数
-}
-
-//========================================
-//テクスチャクラス
-//========================================
+//==========================================================================
+// クラス定義
+//==========================================================================
+//テクスチャクラス定義
 class CTexture
 {
-public:
-	enum Texture
-	{// テクスチャ管理
-		TYPE_TITLE = 0,
-		TYPE_MAX
+private:
+
+	//=============================
+	// 構造体定義
+	//=============================
+	struct STexture
+	{
+		LPDIRECT3DTEXTURE9 pTexture;	// テクスチャのポインタ
+		D3DXIMAGE_INFO imageInfo;		// テクスチャ素材情報
+		D3DXVECTOR2 aspectratio;		// アスペクト比
+		std::string filename;			// ファイル名
+		int nFileNameLen;				// ファイル名の文字数
 	};
 
-	CTexture();		//コンストラクタ
-	~CTexture();	//デストラクタ
+public:
 
-	//メンバ関数
-	HRESULT Load(void);		//テクスチャ読み込み
-	void Unload(void);		//テクスチャ破棄
+	CTexture();
+	~CTexture();
 
-	int Regist(std::string pfile);			//テクスチャ割り当て
-	LPDIRECT3DTEXTURE9 GetAddress(int nIdx);	//テクスチャのアドレス取得
+	void Init();	// 初期化処理
+	HRESULT LoadAll();	// 全てのテクスチャ読み込み
+	void Unload();
+	int Regist(const std::string& file);	// 読み込み
+	LPDIRECT3DTEXTURE9 GetAddress(int nIdx);
+	D3DXVECTOR2 GetImageSize(int nIdx);		// テクスチャ素材のサイズ取得
 
+	int GetNumAll();		// 読み込んだ総数
+	STexture GetTextureInfo(const std::string& file);	// テクスチャ情報取得
+	STexture GetTextureInfo(int nIdxTex);	// テクスチャ情報取得
+
+	static CTexture* Create();
+	static CTexture* GetInstance() { return m_pTexture; }
 private:
-	//メンバ変数
-	LPDIRECT3DTEXTURE9 m_apTexture[MAX_TEXTURE];	//テクスチャの配列
-	std::string m_apPath[MAX_TEXTURE];
-	static int m_nNumAll;		//総数
+
+	//=============================
+	// メンバ関数
+	//=============================
+	HRESULT LoadTex(const std::string& file);
+	void SearchAllImages(const std::wstring& folderPath);
+
+	//=============================
+	// メンバ変数
+	//=============================
+	std::vector<STexture> m_TexInfo;			// テクスチャの情報
+	std::vector<std::string> m_ImageNames;		// 読み込み用文字列
+	std::vector<std::string> m_FolderFilePath;	// フォルダー格納のファイルパス
+	static CTexture* m_pTexture;				// 自身のポインタ
 };
+
+
 
 #endif

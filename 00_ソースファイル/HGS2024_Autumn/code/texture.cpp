@@ -1,141 +1,305 @@
-//========================================
-//
-//シューティングアクション[texture.cpp]
-//Author：森川駿弥
-//
-//========================================
+//=============================================================================
+// 
+//  テクスチャ処理 [texture.cpp]
+//  Author : 相馬靜雅
+// 
+//=============================================================================
 #include "texture.h"
-#include "renderer.h"
 #include "manager.h"
+#include "renderer.h"
+#include "calculation.h"
 
-//一括管理
-const char *str[] = 
-{"data\\texture\\Player.png"};
-
-//========================================
-//静的メンバ変数
-//========================================
-int CTexture::m_nNumAll = 0;
-
-//========================================
-//コンストラクタ
-//========================================
-CTexture::CTexture()
+//==========================================================================
+// 定数定義
+//==========================================================================
+namespace
 {
-	for (int nCntTex = 0; nCntTex < MAX_TEXTURE; nCntTex++)
-	{
-		m_apTexture[nCntTex] = {};	//テクスチャのポインタ
-		m_apPath[nCntTex] = "\0";
-	}
+	const std::wstring MAINFOLODER = L"data\\TEXTURE";
 }
 
-//========================================
-//デストラクタ
-//========================================
+//==========================================================================
+// 静的メンバ変数宣言
+//==========================================================================
+CTexture* CTexture::m_pTexture = nullptr;	// 自身のポインタ
+
+//==========================================================================
+// コンストラクタ
+//==========================================================================
+CTexture::CTexture()
+{
+	m_TexInfo.clear();
+	m_ImageNames.clear();	// 読み込み用文字列
+	m_FolderFilePath.clear();	// フォルダー格納のファイルパス
+}
+
+//==========================================================================
+// デストラクタ
+//==========================================================================
 CTexture::~CTexture()
 {
 
 }
 
-//========================================
-//テクスチャ一括読み込み
-//========================================
-HRESULT CTexture::Load(void)
+//==========================================================================
+// 生成処理
+//==========================================================================
+CTexture* CTexture::Create()
 {
-	////CRenderer型のポインタ
-	//CRenderer *pRenderer = CManager::GetRenderer();
+	if (m_pTexture == nullptr)
+	{// まだ生成していなかったら
 
-	////デバイスの取得
-	//LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
+		// インスタンス生成
+		m_pTexture = new CTexture;
+		m_pTexture->Init();
+	}
 
-	//for (int nCntTex = 0; nCntTex < m_nNumAll; nCntTex++)
-	//{//全てのテクスチャの読み込み
-	//	if (FAILED(D3DXCreateTextureFromFile(pDevice,
-	//		str[nCntTex],
-	//		&m_apTexture[nCntTex])))
-	//	{// 失敗を返す
-	//		return E_FAIL;
-	//	}
-	//}
+	return m_pTexture;
+}
 
+//==========================================================================
+// 初期化処理
+//==========================================================================
+void CTexture::Init()
+{
+	STexture init = {};
+	m_TexInfo.emplace_back();		// 最初にnullを追加
+	m_ImageNames.emplace_back();	// 最初にnullを追加
+}
 
-	//デバイスの取得
-	CRenderer* pRenderer = CManager::GetInstance()->GetRenderer();
-	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
+//==========================================================================
+// 全てのテクスチャ読み込み
+//==========================================================================
+HRESULT CTexture::LoadAll()
+{
+#ifndef _DEBUG
 
-	//指定のテクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\NULL.png", &m_apTexture[0]);
+	// 全検索
+	SearchAllImages(MAINFOLODER);
 
-	//総数をカウントアップ
-	m_nNumAll++;
+	// 読み込んだファイル名コピー
+	std::vector<std::string> filenames = m_FolderFilePath;
+	for (const auto& name : filenames)
+	{
+		LoadTex(name);
+	}
+
+#endif
 
 	return S_OK;
 }
 
-//========================================
-//テクスチャ破棄
-//========================================
-void CTexture::Unload(void)
+//==========================================================================
+// 全ての画像検索
+//==========================================================================
+void CTexture::SearchAllImages(const std::wstring& folderPath)
 {
-	for (int nCntTex = 0; nCntTex < m_nNumAll; nCntTex++)
-	{//テクスチャの終了処理
-		if (m_apTexture[nCntTex] != nullptr)
-		{//m_apTexture[nCntTex]がnullptrじゃないとき
-			m_apTexture[nCntTex]->Release();
-			m_apTexture[nCntTex] = nullptr;
-		}
-	}
-}
+	std::stack<std::wstring> folderStack;
+	folderStack.push(folderPath);
 
-//========================================
-//テクスチャ個別割り当て
-//========================================
-int CTexture::Regist(std::string pfile)
-{
-	for (int nCntTex = 0; nCntTex < MAX_TEXTURE; nCntTex++)
+	while (!folderStack.empty())
 	{
-		if (m_apPath[nCntTex] == pfile)
-		{//ファイル名が一致したとき
-			//nCntTex番目を返す
-			return nCntTex;
+		std::wstring currentFolder = folderStack.top();
+		folderStack.pop();
+
+		WIN32_FIND_DATAW findFileData;
+		HANDLE hFind = FindFirstFileW((currentFolder + L"\\*").c_str(), &findFileData);
+
+		if (hFind == INVALID_HANDLE_VALUE)
+		{
+			continue;
 		}
 
-		if (m_apTexture[nCntTex] == nullptr)
-		{//nullptrの時
-			//CRenderer型のポインタ
-			CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
+		do {
 
-			//デバイスの取得
-			LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice();
+			if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{// ファイルパス格納
+				std::string fileName = UtilFunc::Transformation::WideToMultiByte((currentFolder + L"\\" + findFileData.cFileName).c_str());
+				if (fileName.find(".png") != std::string::npos || fileName.find(".jpg") != std::string::npos || fileName.find(".tga") != std::string::npos)
+				{
+					m_FolderFilePath.push_back(fileName);
+				}
+			}
+			else if (lstrcmpW(findFileData.cFileName, L".") != 0 && lstrcmpW(findFileData.cFileName, L"..") != 0)
+			{// 階層確認
+				std::wstring subFolderPath = currentFolder + L"\\" + findFileData.cFileName;
+				folderStack.push(subFolderPath);
+			}
 
-			//指定のテクスチャの読み込み
-			D3DXCreateTextureFromFile(pDevice, pfile.c_str(), &m_apTexture[nCntTex]);
+		} while (FindNextFileW(hFind, &findFileData) != 0);	// 終端のフォルダまで確認
 
-			//ファイル名を入れる
-			m_apPath[nCntTex] = pfile;
-
-			//総数をカウントアップ
-			m_nNumAll++;
-
-			//nCntTex番目を返す
-			return nCntTex;
-		}
+		FindClose(hFind);
 	}
 
-	//NULLを返す
-	return NULL;
+	int n = 0;
 }
 
-//========================================
-//テクスチャのアドレス取得
-//========================================
+//==========================================================================
+// 全てのテクスチャの破棄
+//==========================================================================
+void CTexture::Unload()
+{
+
+	for (const auto& texture : m_TexInfo)
+	{
+		if (texture.pTexture == nullptr)
+		{
+			continue;
+		}
+		texture.pTexture->Release();
+	}
+
+	m_TexInfo.clear();
+	m_TexInfo.shrink_to_fit();
+}
+
+//==========================================================================
+// テクスチャの割り当て処理
+//==========================================================================
+int CTexture::Regist(const std::string& file)
+{
+	if (file == "")
+	{
+		return 0;
+	}
+
+	// 変換後のパス
+	std::string transformFile(file);
+
+	// \\変換
+	transformFile = UtilFunc::Transformation::ReplaceBackslash(transformFile);
+	transformFile = UtilFunc::Transformation::ReplaceForwardSlashes(transformFile);
+
+	auto itr = std::find(m_ImageNames.begin(), m_ImageNames.end(), transformFile);
+	if (itr != m_ImageNames.end())
+	{
+		return  static_cast<int>(std::distance(m_ImageNames.begin(), itr));
+	}
+
+	// 総数保存
+	int nNumAll = GetNumAll();
+
+	// テクスチャ読み込み
+	HRESULT hr = LoadTex(transformFile);
+	if (FAILED(hr))
+	{
+		return 0;
+	}
+
+	return nNumAll;
+}
+
+//==========================================================================
+// テクスチャの読み込み処理
+//==========================================================================
+HRESULT CTexture::LoadTex(const std::string& file)
+{
+	HRESULT hr;
+	int nIdx = static_cast<int>(m_TexInfo.size());
+
+	// 割り当て
+	m_TexInfo.emplace_back();
+	m_ImageNames.emplace_back();	// 読み込み用文字列
+
+	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevive = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	// テクスチャの読み込み
+	hr = D3DXCreateTextureFromFile(pDevive,
+		file.c_str(),
+		&m_TexInfo[nIdx].pTexture);
+
+	if (FAILED(hr))
+	{
+		// 要素削除
+		m_TexInfo.erase(m_TexInfo.end() - 1);
+
+		std::string error = "テクスチャ読み込み失敗！" + file;
+		//MyAssert::CustomAssert(false, error);
+		return E_FAIL;
+	}
+
+	// テクスチャ素材情報
+	D3DXGetImageInfoFromFile(file.c_str(), &m_TexInfo[nIdx].imageInfo);
+
+	// ファイル名と長さ保存
+	m_TexInfo[nIdx].filename = file;
+	m_TexInfo[nIdx].nFileNameLen = m_TexInfo[nIdx].filename.length();
+
+	m_ImageNames.back() = file;	// 読み込み用文字列
+
+	return S_OK;
+}
+
+//==========================================================================
+// テクスチャのアドレス取得
+//==========================================================================
 LPDIRECT3DTEXTURE9 CTexture::GetAddress(int nIdx)
 {
-	if (nIdx >= 0 && nIdx <= m_nNumAll)
+	if (static_cast<int>(m_TexInfo.size()) <= nIdx)
 	{
-		return m_apTexture[nIdx];
+		return nullptr;
+	}
+	return m_TexInfo[nIdx].pTexture;
+}
+
+//==========================================================================
+// テクスチャの総数取得
+//==========================================================================
+int CTexture::GetNumAll()
+{
+	return static_cast<int>(m_TexInfo.size());
+}
+
+//==========================================================================
+// テクスチャ情報取得
+//==========================================================================
+CTexture::STexture CTexture::GetTextureInfo(const std::string& file)
+{
+	// 最大数取得
+	int nNumAll = GetNumAll() + 1;
+
+	if (file == "")
+	{
+		return m_TexInfo[nNumAll];
 	}
 
-	//nullptrを返す
-	return nullptr;
+	int nNowLen = file.length();	// 今回のファイル名長さ
+
+	for (int nCntData = 0; nCntData < nNumAll; nCntData++)
+	{
+		if (m_TexInfo[nCntData].nFileNameLen != nNowLen)
+		{// ファイル名の長さが違ったら
+			continue;
+		}
+
+		// 既にテクスチャが読み込まれてないかの最終確認
+		if (m_TexInfo[nCntData].filename == file)
+		{// ファイル名が一致している
+
+			return m_TexInfo[nCntData];
+		}
+	}
+
+	int nIdx = nNumAll + 1;
+	return m_TexInfo[nIdx];
+}
+
+//==========================================================================
+// テクスチャ情報取得
+//==========================================================================
+CTexture::STexture CTexture::GetTextureInfo(int nIdxTex)
+{
+	return m_TexInfo[nIdxTex];
+}
+
+//==========================================================================
+// テクスチャ素材のサイズ取得
+//==========================================================================
+D3DXVECTOR2 CTexture::GetImageSize(int nIdx)
+{
+	if (static_cast<int>(m_TexInfo.size()) <= nIdx)
+	{
+		return D3DXVECTOR2(0.0f, 0.0f);
+	}
+	return D3DXVECTOR2((float)m_TexInfo[nIdx].imageInfo.Width, (float)m_TexInfo[nIdx].imageInfo.Height);
 }
