@@ -160,16 +160,45 @@ void CGame::Uninit(void)
 //========================================
 void CGame::Update(void)
 {
+	//ポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+
 	// タイマーか体力が0を下回った場合終了
 	if (m_pTimer->GetTimeZero() || CPlayer::GetInstance()->GetLife() <= 0.0f)
 	{
+		// タイトルに遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
+
+		// インスタンス生成
+		CObject2D* Obj2D = CObject2D::Create();
+
+		// 位置設定
+		Obj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
+
+		// サイズ設定
+		Obj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+		// テクスチャ設定
+		Obj2D->BindTexture(pTexture->Regist("data\\texture\\over.png"));
 	}
 
 	// ゴール
 	if (CPlayer::GetInstance()->GetPos().x >= 50000.0f)
 	{
+		// リザルトに遷移
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
+
+		// インスタンス生成
+		CObject2D* Obj2D = CObject2D::Create();
+
+		// 位置設定
+		Obj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f, 0.0f));
+
+		// サイズ設定
+		Obj2D->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+		// テクスチャ設定
+		Obj2D->BindTexture(pTexture->Regist("data\\texture\\clear.png"));
 	}
 
 #ifdef _DEBUG
