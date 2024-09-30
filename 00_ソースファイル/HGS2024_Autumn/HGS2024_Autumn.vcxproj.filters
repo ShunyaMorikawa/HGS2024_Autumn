@@ -16,6 +16,9 @@
     <Filter Include="souma">
       <UniqueIdentifier>{1c8cf538-7cbc-45fb-90b0-71d89fb5b37b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="stage">
+      <UniqueIdentifier>{a1edd2e0-0d6e-45aa-8a8e-4fbbb781c06c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\billboard.cpp">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="code\listmanager.cpp">
       <Filter>souma</Filter>
+    </ClCompile>
+    <ClCompile Include="code\stageobj.cpp">
+      <Filter>stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="code\listmanager.h">
       <Filter>souma</Filter>
+    </ClInclude>
+    <ClInclude Include="code\stageobj.h">
+      <Filter>stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
