@@ -29,17 +29,16 @@ namespace
 
 	const D3DXVECTOR3 SIZEMAX[] =	// サイズの最大値
 	{
-		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 川
-		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 石
-		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 穴
-		D3DXVECTOR3(60.0f, 200.0f, 60.0f),		// 柔らかい岩
+		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// 川
+		D3DXVECTOR3(30.0f, 40.0f, 30.0f),		// 石
+		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// 穴
+		D3DXVECTOR3(60.0f, 0.0f, 60.0f),		// 柔らかい岩
 	};
 
 	const D3DXVECTOR3 SIZEMIN[] =	// サイズの最小値
 	{
-		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 木
 		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 川
-		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 石
+		D3DXVECTOR3(-30.0f, 0.0f, -30.0f),		// 石
 		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 穴
 		D3DXVECTOR3(-60.0f, 0.0f, -60.0f),		// 柔らかい岩
 	};
