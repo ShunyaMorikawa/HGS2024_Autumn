@@ -46,6 +46,9 @@ namespace
 	const float HEIGHT = 200.0f;	// 身長
 	const float HEIGHT_SCALE = 0.5f;	// 転がり中の身長倍率
 	const int DAMAGE_COUNT = 80;		// ダメージカウント
+
+	const char* RABBIT_PASS = "data\\FILE\\rabbit.txt"; // 兎パス
+	const char* TURTLE_PASS = "data\\FILE\\turtle.txt"; // 亀パス
 }
 
 //========================================
@@ -163,6 +166,9 @@ void CPlayer::Uninit(void)
 //========================================
 void CPlayer::Update(void)
 {
+	// 状態を保存する
+	PLAYERTYPE type = m_type;
+
 	// 自身の情報を取得
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 move = GetMove();
@@ -191,6 +197,37 @@ void CPlayer::Update(void)
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
+
+	// 状態が変わっていた場合モデルを変更する
+	if (type != m_type)
+	{
+		// モーション情報の取得
+		CMotion* pMotion = GetMotion();
+
+		// モーションを削除
+		if (pMotion != nullptr)
+		{//モーション破棄
+			pMotion->Uninit();
+			delete pMotion;
+			pMotion = nullptr;
+		}
+
+		switch (m_type)
+		{
+		case TYPE_RABBIT:
+			// モーション読み込み
+			GetMotion()->Load(RABBIT_PASS);
+			break;
+
+		case TYPE_TURTLE:
+			// モーション読み込み
+			GetMotion()->Load(TURTLE_PASS);
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	// モーション
 	Motion();
