@@ -156,6 +156,9 @@
     <ClCompile Include="code\timer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="code\stagemanager.cpp">
+      <Filter>stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\billboard.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="code\timer.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="code\stagemanager.h">
+      <Filter>stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
