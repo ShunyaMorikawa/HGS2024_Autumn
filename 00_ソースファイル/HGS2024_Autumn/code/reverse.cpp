@@ -7,13 +7,16 @@
 #include "reverse.h"
 #include "model.h"
 #include "calculation.h"
+#include "billboard.h"
+#include "manager.h"
+#include "texture.h"
 
 //========================================
 //名前空間
 //========================================
 namespace
 {
-	const char* MODEL = "data\\MODEL\\obstacle\\wood00.x";	// モデルのパス
+	const char* TEXTURE = "data\\TEXTURE\\reverse.png";	// モデルのパス
 	const float COLLISIONRANGE = 200.0f;	// 有効範囲
 }
 CListManager<CReverse> CReverse::m_List = {};	// リスト
@@ -21,7 +24,8 @@ CListManager<CReverse> CReverse::m_List = {};	// リスト
 //========================================
 //コンストラクタ
 //========================================
-CReverse::CReverse() : CStageObj()
+CReverse::CReverse() : CStageObj(),
+m_pBillboard(nullptr)
 {
 
 }
@@ -42,8 +46,13 @@ HRESULT CReverse::Init(void)
 	// リストに追加
 	m_List.Regist(this);
 
-	// モデル生成
-	m_pModel = CModel::Create(MODEL);
+	// ビルボード生成
+	m_pBillboard = CBillboard::Create(GetPos(), 200.0f, 200.0f);
+
+	//テクスチャのポインタ
+	CTexture* pTexture = CManager::GetInstance()->GetTexture();
+	int texIdx = pTexture->Regist(TEXTURE);
+	m_pBillboard->BindTexture(texIdx);
 
 	if (FAILED(CStageObj::Init()))
 	{
@@ -66,12 +75,47 @@ void CReverse::Uninit(void)
 }
 
 //========================================
+// 削除
+//========================================
+void CReverse::Kill()
+{
+	if (m_pBillboard != nullptr)
+	{
+		m_pBillboard->Uninit();
+		m_pBillboard = nullptr;
+	}
+
+	// 終了
+	CReverse::Uninit();
+}
+
+//========================================
 // 更新
 //========================================
 void CReverse::Update(void)
 {
 	// 更新
 	CStageObj::Update();
+
+	if (m_pBillboard != nullptr)
+	{
+		m_pBillboard->SetPos(GetPos());
+		m_pBillboard->Update();
+	}
+}
+
+//========================================
+// 描画
+//========================================
+void CReverse::Draw(void)
+{
+	if (m_pBillboard != nullptr)
+	{
+		m_pBillboard->Draw();
+	}
+
+	// 描画
+	CStageObj::Draw();
 }
 
 //========================================
@@ -86,7 +130,7 @@ bool CReverse::Collision(const D3DXVECTOR3& rPos, const D3DXVECTOR3& rSize)
 
 	if (UtilFunc::Collision::CircleRange3D(pos, rPos, COLLISIONRANGE, rSize.x))
 	{
-		Uninit();
+		Kill();
 		bHit = true;
 	}
 
