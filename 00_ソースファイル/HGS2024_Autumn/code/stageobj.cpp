@@ -75,7 +75,7 @@ CStageObj *CStageObj::Create(const Type& type, const MyLib::Vector3& pos)
 		break;
 
 	case Type::TYPE_OBSTACLE:
-		pObj = new CObstacle;
+		pObj = CObstacle::Create(CObstacle::TYPE_TREE, pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		break;
 
 	default:

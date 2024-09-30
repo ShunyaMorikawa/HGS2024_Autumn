@@ -33,6 +33,8 @@ namespace
 {
 	const int LIFE = 10;			// 体力
 	const float SPEED = 240.0f;		// 速度
+	const float JUMP_MOVE = 1500.0f;	// ジャンプ量
+	const float JUMP_SAB = JUMP_MOVE * 0.04f;	// ジャンプ減衰
 	const float RADIUS = 50.0f;		// 半径
 }
 
@@ -99,7 +101,7 @@ HRESULT CPlayer::Init(std::string pfile)
 	SetPos(D3DXVECTOR3(0.0f, 0.0f, 500.0f));
 
 	// 向き設定
-	SetRot(D3DXVECTOR3(0.0f, D3DX_PI * 0.5f, 0.0f));
+	SetRot(D3DXVECTOR3(0.0f, -D3DX_PI * 0.5f, 0.0f));
 
 	// 移動量設定
 	SetMove(D3DXVECTOR3(SPEED, 0.0f, 0.0));
@@ -154,10 +156,13 @@ void CPlayer::Update(void)
 
 	// カメラの追従設定
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
-	pCamera->Following(pos, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	pCamera->Following(pos, D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 
 	// 移動処理
 	Move(pos, move, fDeltaTime);
+
+	// 着地判定
+	Land(pos, move);
 
 	// ゲージに体力設定
 	m_pGauge->SetLife(m_nLife);
@@ -267,7 +272,7 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 
 #ifdef _DEBUG
 	// 0キーで初期位置に戻る
-	if (pKeyboard->GetTrigger(DIK_0))
+	if (pKeyboard->GetTrigger(DIK_2))
 	{
 		pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		return;
@@ -279,8 +284,56 @@ void CPlayer::Move(D3DXVECTOR3& pos, D3DXVECTOR3& move, const float fDeltaTime)
 		return;
 	}
 #endif
+
+	// ジャンプ処理
+	Jump(move, pPad, pKeyboard);
+
 	// TODO : タイマーが出来次第加速処理を追加
 
 	// 座標に移動量を加算
 	pos += move * fDeltaTime;
+}
+
+//==========================================
+//  ジャンプ処理
+//==========================================
+void CPlayer::Jump(D3DXVECTOR3& move, CInputPad* pPad, CInputKeyboard* pKeyboard)
+{
+	// ジャンプ中の場合関数を抜ける
+	if (m_bJump) { return; }
+
+	// ボタンが押されたらジャンプする
+	if (pPad->GetTrigger(CInputPad::BUTTON_A, 0) || pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		// ジャンプフラグを設定
+		m_bJump = true;
+
+		// 移動量を加算
+		move.y += JUMP_MOVE;
+	}
+}
+
+//==========================================
+//  着地判定
+//==========================================
+void CPlayer::Land(D3DXVECTOR3& pos, D3DXVECTOR3& move)
+{
+	// y座標が0.0を下回った場合補正する
+	if (pos.y < 0.0f)
+	{
+		// ジャンプフラグをfalse
+		m_bJump = false;
+
+		// 座標を補正
+		pos.y = 0.0f;
+
+		// 移動量を削除
+		move.y = 0.0f;
+	}
+
+	// ジャンプ中なら移動量を減少させる
+	if (m_bJump)
+	{
+		move.y -= JUMP_SAB;
+	}
 }
